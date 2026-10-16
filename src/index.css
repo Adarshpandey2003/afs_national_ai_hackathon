@@ -1,0 +1,220 @@
+@import "tailwindcss";
+
+/* ── Tokens ─────────────────────────────────────────────────────────────
+   AFS navy ink on a cool lab-grey canvas. The spectrum gradient is reserved
+   for the light path (logo, agent pipeline, visible band, fiber line). */
+:root {
+  color-scheme: light dark;
+  --canvas: light-dark(#edf1f6, #0a1224);
+  --surface: light-dark(#ffffff, #101a30);
+  --surface-2: light-dark(#f5f7fb, #142039);
+  --surface-3: light-dark(#e6ebf2, #1b2846);
+  --ink: light-dark(#13203b, #e6ebf5);
+  --ink-2: light-dark(#3c4862, #b7c1d4);
+  --ink-3: light-dark(#5f6b84, #8c97ae);
+  --rule: light-dark(#d8dee8, #24314f);
+  --rule-strong: light-dark(#b6c0d0, #354466);
+  --action: light-dark(#13203b, #e6ebf5);
+  --action-hover: light-dark(#24365e, #ffffff);
+  --on-action: light-dark(#ffffff, #0a1224);
+  --focus: light-dark(#2f6fe4, #7fa8ff);
+
+  --fact: light-dark(#1f5fcc, #86adff);
+  --fact-bg: light-dark(#e8f0fd, #172a52);
+  --sourced: light-dark(#0b7a55, #4ccb98);
+  --sourced-bg: light-dark(#e1f3eb, #11332a);
+  --assume: light-dark(#8a5300, #f2b350);
+  --assume-bg: light-dark(#fcf0da, #3a2a10);
+  --infer: light-dark(#596579, #a2adc1);
+  --infer-bg: light-dark(#eceff4, #1f2a42);
+
+  --ok: var(--sourced);
+  --ok-bg: var(--sourced-bg);
+  --warn: var(--assume);
+  --warn-bg: var(--assume-bg);
+  --warn-bar: light-dark(#dd9a1c, #f2b350);
+  --bad: light-dark(#b42318, #ff8075);
+  --bad-bg: light-dark(#fde9e7, #3d1616);
+
+  --clarifier: light-dark(#6a3fd4, #b39bff);
+  --researcher: light-dark(#0a7690, #4fcbe5);
+  --writer: light-dark(#4352c2, #98a3ff);
+  --critic: light-dark(#ad2466, #ff86c0);
+
+  --spectrum: linear-gradient(90deg, #6a3fd0, #2f6fe4 18%, #12a3b8 34%, #23a55a 50%, #e3b505 66%, #f08a24 82%, #d7263d);
+  --spectrum-v: linear-gradient(180deg, #6a3fd0, #2f6fe4 18%, #12a3b8 34%, #23a55a 50%, #e3b505 66%, #f08a24 82%, #d7263d);
+}
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-action: var(--action);
+  --color-action-hover: var(--action-hover);
+  --color-on-action: var(--on-action);
+  --color-focus: var(--focus);
+  --color-fact: var(--fact);
+  --color-fact-bg: var(--fact-bg);
+  --color-sourced: var(--sourced);
+  --color-sourced-bg: var(--sourced-bg);
+  --color-assume: var(--assume);
+  --color-assume-bg: var(--assume-bg);
+  --color-infer: var(--infer);
+  --color-infer-bg: var(--infer-bg);
+  --color-ok: var(--ok);
+  --color-ok-bg: var(--ok-bg);
+  --color-warn: var(--warn);
+  --color-warn-bg: var(--warn-bg);
+  --color-bad: var(--bad);
+  --color-bad-bg: var(--bad-bg);
+  --color-clarifier: var(--clarifier);
+  --color-researcher: var(--researcher);
+  --color-writer: var(--writer);
+  --color-critic: var(--critic);
+
+  --font-sans: "Atkinson Hyperlegible Next", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Archivo", "Atkinson Hyperlegible Next", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Atkinson Hyperlegible Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+@layer base {
+  html { background: var(--canvas); color: var(--ink); }
+  body {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    font-variant-numeric: tabular-nums;
+  }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+  ::selection { background: color-mix(in oklab, var(--focus) 28%, transparent); }
+  textarea, select, input { font: inherit; color: inherit; }
+  summary { cursor: pointer; }
+  summary::-webkit-details-marker { display: none; }
+}
+
+@layer components {
+/* Display face: Archivo at a semi-expanded width, used for verdicts and headings. */
+.display { font-family: var(--font-display); font-stretch: 112%; font-weight: 640; letter-spacing: -0.01em; }
+
+/* ── Form controls ── */
+.field {
+  width: 100%;
+  border: 1px solid var(--rule-strong);
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+  transition: border-color .15s, box-shadow .15s;
+}
+.field:hover { border-color: var(--ink-3); }
+.field:focus { outline: none; border-color: var(--focus); box-shadow: 0 0 0 3px color-mix(in oklab, var(--focus) 22%, transparent); }
+.field:disabled, .field[readonly] { background: var(--surface-2); color: var(--ink-2); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  border-radius: 8px; padding: .55rem .95rem; font-weight: 600; line-height: 1.2;
+  transition: background-color .15s, border-color .15s, color .15s;
+}
+.btn:disabled { cursor: not-allowed; opacity: .55; }
+.btn-primary { background: var(--action); color: var(--on-action); }
+.btn-primary:not(:disabled):hover { background: var(--action-hover); }
+.btn-secondary { border: 1px solid var(--rule-strong); background: var(--surface); color: var(--ink); }
+.btn-secondary:not(:disabled):hover { border-color: var(--ink-3); background: var(--surface-2); }
+.btn-quiet { color: var(--ink-2); padding: .4rem .55rem; }
+.btn-quiet:hover { color: var(--ink); background: var(--surface-3); }
+
+/* ── Claim kinds (frontend.md §4 ClaimItem) ── */
+.kind-chip {
+  display: inline-flex; align-items: center; gap: .3rem; vertical-align: 1px;
+  font-size: 11.5px; font-weight: 700; line-height: 1; letter-spacing: .01em;
+  padding: .28rem .45rem; border-radius: 5px; margin-right: .5rem; white-space: nowrap;
+}
+.kind-chip::before { content: ""; width: 6px; height: 6px; border-radius: 2px; background: currentColor; }
+[data-kind="fact"] > .kind-chip, .kind-chip[data-kind="fact"] { color: var(--fact); background: var(--fact-bg); }
+[data-kind="sourced"] > .kind-chip, .kind-chip[data-kind="sourced"] { color: var(--sourced); background: var(--sourced-bg); }
+[data-kind="assumption"] > .kind-chip, .kind-chip[data-kind="assumption"] { color: var(--assume); background: var(--assume-bg); }
+[data-kind="inference"] > .kind-chip, .kind-chip[data-kind="inference"] { color: var(--infer); background: var(--infer-bg); }
+.kind-chip[aria-pressed="true"] { box-shadow: inset 0 0 0 1.5px currentColor; }
+
+.claim { transition: opacity .2s; }
+.report[data-focus] .claim { opacity: .3; }
+.report[data-focus="fact"] .claim[data-kind="fact"],
+.report[data-focus="sourced"] .claim[data-kind="sourced"],
+.report[data-focus="assumption"] .claim[data-kind="assumption"],
+.report[data-focus="inference"] .claim[data-kind="inference"] { opacity: 1; }
+
+/* ── Citation chips ── */
+.cite {
+  display: inline-flex; align-items: center; gap: .25rem; vertical-align: 1px;
+  font-size: 12px; font-weight: 600; line-height: 1; white-space: nowrap;
+  padding: .3rem .45rem; margin: 0 .15rem; border-radius: 5px;
+  color: var(--ink-2); background: var(--surface-2);
+  border: 1px solid var(--rule); border-left: 3px solid var(--sourced);
+  transition: border-color .15s, color .15s, background-color .15s;
+}
+.cite:hover { color: var(--ink); border-color: var(--ink-3); border-left-color: var(--sourced); background: var(--surface); }
+.cite[data-tone="warn"] { border-left-color: var(--warn); }
+.cite[data-tone="muted"] { border-left-color: var(--rule-strong); }
+.cite[data-tone="ext"] { border-left-color: var(--clarifier); border-style: dashed solid dashed solid; }
+
+/* ── Report ── */
+.subhead { font-size: 13px; font-weight: 700; color: var(--ink-2); margin-bottom: .6rem; }
+.prose-measure { max-width: 68ch; }
+
+/* Decision ladder: how far an assessment can go; "validated" needs the experiment. */
+.ladder { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }
+.ladder > li { display: flex; flex-direction: column; gap: .45rem; font-size: 12px; color: var(--ink-3); }
+.ladder > li::before { content: ""; height: 6px; border-radius: 3px; background: var(--surface-3); }
+.ladder > li[data-state="past"]::before { background: color-mix(in oklab, var(--status) 32%, var(--surface-3)); }
+.ladder > li[data-state="current"]::before { background: var(--status); }
+.ladder > li[data-state="current"] { color: var(--ink); font-weight: 700; }
+.ladder > li[data-state="locked"]::before {
+  background: repeating-linear-gradient(135deg, var(--surface-3) 0 5px, transparent 5px 9px);
+  outline: 1px dashed var(--rule-strong); outline-offset: -1px;
+}
+
+/* ── Light path: agent pipeline ── */
+.fiber { position: relative; height: 3px; border-radius: 2px; background: var(--rule); overflow: hidden; }
+.fiber[data-state="done"] { background: var(--ink-3); }
+.fiber[data-state="live"]::after {
+  content: ""; position: absolute; inset: 0 auto 0 0; width: 45%;
+  background: var(--spectrum); border-radius: 2px;
+  animation: photon 1.5s cubic-bezier(.5, 0, .5, 1) infinite;
+}
+.fiber[data-state="pending"] { background: repeating-linear-gradient(90deg, var(--rule-strong) 0 4px, transparent 4px 8px); }
+}
+
+@keyframes photon { from { transform: translateX(-100%); } to { transform: translateX(230%); } }
+
+.node-active { animation: ring 1.6s ease-out infinite; }
+@keyframes ring {
+  0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--agent) 45%, transparent); }
+  100% { box-shadow: 0 0 0 9px color-mix(in oklab, var(--agent) 0%, transparent); }
+}
+
+@layer components {
+  .skeleton { background: linear-gradient(90deg, var(--surface-3) 0%, var(--surface-2) 50%, var(--surface-3) 100%); background-size: 200% 100%; animation: shimmer 1.8s linear infinite; border-radius: 6px; }
+}
+@keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0s !important; animation-iteration-count: 1 !important; transition-duration: 0s !important; scroll-behavior: auto !important; }
+  .fiber[data-state="live"]::after { width: 100%; transform: none; }
+}
+
+/* ── Print: the report only ── */
+@media print {
+  html, body { background: white; }
+  .no-print { display: none !important; }
+  .print-full { height: auto !important; overflow: visible !important; display: block !important; }
+  details > *:not(summary) { display: block !important; }
+  .cite { border-left-width: 1px; }
+}

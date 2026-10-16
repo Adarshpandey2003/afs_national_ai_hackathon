@@ -1,0 +1,384 @@
+{
+ "sources": [
+  {
+   "source_id": "S01",
+   "title": "Multispectral Laboratory of Optical Analysis Methods: purpose, methods, and applications",
+   "short": "Multispectral laboratory",
+   "file": "S01_Multispectral_Laboratory.pdf",
+   "url": "",
+   "pages": 19,
+   "evidence_level": "vendor_overview",
+   "description": "Overview of optical analysis methods and application examples. Methods p.2–6 (Table 1 on p.6), combining methods p.7–9, kits and probes p.10–12, application cases p.13–18.",
+   "page_topics": {
+    "1": "Title page and scope",
+    "2": "Optical spectroscopy and chemometrics",
+    "3": "Purpose of the multispectral laboratory",
+    "4": "Information capability of spectral methods",
+    "5": "NIR, mid-IR, Raman, UV-Vis and fluorimetry: strengths and limits",
+    "6": "Table 1: spectral methods and measurement techniques",
+    "7": "Synergy of combining spectral methods",
+    "8": "Simultaneous measurement and multispectral data analysis",
+    "9": "Optical multisensor systems; mid-IR spectrometry",
+    "10": "ATR fiber probes; near-IR spectrometry",
+    "11": "Transflexion probes; Raman spectroscopy",
+    "12": "Raman and fluorescence fiber probes",
+    "13": "Application: tumor margin recognition",
+    "14": "Multispectral tissue examples; pharmaceutical blend potency",
+    "15": "NIR + Raman probe in a tablet press feed frame",
+    "16": "Fiber optic techniques for bioprocess monitoring",
+    "17": "Bioprocess spectral ranges; inline milk analysis by NIR reflection",
+    "18": "NIR transmission for clear dairy streams; milk lab",
+    "19": "Disclaimer and contacts"
+   }
+  },
+  {
+   "source_id": "S02",
+   "title": "Process-Control in-line with Spectral Fiber Systems",
+   "short": "AFS process-control slides",
+   "file": "S02_AFS_Process_Control_Slides.pdf",
+   "url": "",
+   "pages": 20,
+   "evidence_level": "vendor_slides",
+   "description": "AFS slides on process control: fiber types and transmission ranges (p.6–10), probes, water in petroleum (p.13), API in polymer extrusion (p.14), combined probes (p.15–16). Mostly images.",
+   "page_topics": {
+    "1": "Title slide",
+    "2": "Spectroscopy market forecast",
+    "3": "Choosing system and method for in-line control",
+    "4": "History of multi-spectral fiber systems",
+    "5": "Multi-spectral fiber systems for method selection",
+    "6": "Fiber transmission ranges, 0.2–18 µm",
+    "7": "Vis-NIR silica cables for industrial process control",
+    "8": "Mid-IR fibre optics; PIR fibers",
+    "9": "CIR and PIR fibers vs hollow waveguides",
+    "10": "PIR fibers or hollow waveguides for FTIR",
+    "11": "Silica reflection probes: FT-NIR vs grating spectrometers",
+    "12": "NIR-LED fiber sensor for moisture",
+    "13": "Application: water content in petroleum (MIR ATR)",
+    "14": "NIR reflection and MIR ATR in polymer extrusion",
+    "15": "Combi probe: mid-IR + fluorescence",
+    "16": "Combi fiber systems: ATR + fluorescence or Raman",
+    "17": "IR-fiber coupled lasers for biomedical diagnostics",
+    "18": "Spectral IoT sensors vs multiplexed fiber analyzers",
+    "19": "Market for photonics sensors",
+    "20": "The AFS pathway"
+   }
+  },
+  {
+   "source_id": "S03",
+   "title": "Development and Testing of an LED-Based Near-Infrared Sensor for Human Kidney Tumor Diagnostics",
+   "short": "LED NIR kidney study (2017)",
+   "file": "S03_LED_Kidney_Study_2017.pdf",
+   "url": "",
+   "pages": 17,
+   "evidence_level": "research_in_vitro_poc",
+   "description": "Research paper: LED-based NIR sensor for kidney tumour diagnostics, tested on 14 in vitro samples from 7 patients. A proof of concept.",
+   "page_topics": {}
+  },
+  {
+   "source_id": "S04",
+   "title": "Fiber Probe for Simultaneous Mid-Infrared and Fluorescence Spectroscopic Analysis",
+   "short": "MIR + fluorescence combi probe (2021)",
+   "file": "S04_Combi_MIR_Fluorescence_2021.pdf",
+   "url": "",
+   "pages": 6,
+   "evidence_level": "research_lab_note",
+   "description": "Research paper: fiber probe for simultaneous MIR (ATR) and fluorescence measurement, demonstrated on model biological tissues.",
+   "page_topics": {}
+  },
+  {
+   "source_id": "S05",
+   "title": "Art Fiber Systems flyer",
+   "short": "AFS flyer",
+   "file": "S05_AFS_Flyer.pdf",
+   "url": "",
+   "pages": 2,
+   "evidence_level": "business_context",
+   "description": "Company and product overview. Business context, not evidence of technical performance.",
+   "page_topics": {}
+  },
+  {
+   "source_id": "S06",
+   "title": "MIR Photonics laboratory",
+   "short": "Laboratory website",
+   "file": "",
+   "url": "https://mirphotonics.com/laboratory/",
+   "pages": 0,
+   "evidence_level": "business_context",
+   "description": "Link to the laboratory website. Business context.",
+   "page_topics": {}
+  },
+  {
+   "source_id": "TABLE",
+   "title": "Method comparison table (transcription of S01 Table 1, p.6)",
+   "short": "Method table",
+   "file": "AFS_method_comparison_table.xlsx",
+   "url": "",
+   "pages": 0,
+   "evidence_level": "reference_doc",
+   "description": "Machine-readable transcription of S01 Table 1: method, technique, phenomenon, sample type, optical path, and qualitative sensitivity, selectivity and cost.",
+   "page_topics": {}
+  },
+  {
+   "source_id": "REF",
+   "title": "AFS Examples and Reference",
+   "short": "Examples and reference",
+   "file": "AFS_Examples_and_Reference.docx",
+   "url": "",
+   "pages": 0,
+   "evidence_level": "reference_doc",
+   "description": "Organizers' development scenarios, worked examples, method overview and fiber families.",
+   "page_topics": {}
+  }
+ ],
+ "method_table": [
+  {
+   "method": "IR spectroscopy",
+   "measurement_technique": "ATR platform",
+   "physical_phenomenon": "absorption",
+   "sample_type": "liquid, paste, soft",
+   "optical_path_or_depth": "1-6 um",
+   "sensitivity": "average",
+   "selectivity": "high",
+   "cost": "high"
+  },
+  {
+   "method": "IR spectroscopy",
+   "measurement_technique": "ATR probe*",
+   "physical_phenomenon": "absorption",
+   "sample_type": "liquid, paste, soft",
+   "optical_path_or_depth": "1-6 um",
+   "sensitivity": "average",
+   "selectivity": "high",
+   "cost": "high"
+  },
+  {
+   "method": "IR spectroscopy",
+   "measurement_technique": "cuvette",
+   "physical_phenomenon": "absorption",
+   "sample_type": "liquid",
+   "optical_path_or_depth": "10-100 um",
+   "sensitivity": "high",
+   "selectivity": "high",
+   "cost": "average"
+  },
+  {
+   "method": "IR spectroscopy",
+   "measurement_technique": "sample layer",
+   "physical_phenomenon": "absorption",
+   "sample_type": "solid film",
+   "optical_path_or_depth": "5-50 um",
+   "sensitivity": "high",
+   "selectivity": "high",
+   "cost": "average"
+  },
+  {
+   "method": "IR spectroscopy",
+   "measurement_technique": "sample surface",
+   "physical_phenomenon": "diffuse reflection",
+   "sample_type": "solid",
+   "optical_path_or_depth": "10 um",
+   "sensitivity": "average",
+   "selectivity": "high",
+   "cost": "average"
+  },
+  {
+   "method": "NIR spectroscopy",
+   "measurement_technique": "cuvette",
+   "physical_phenomenon": "transmission",
+   "sample_type": "liquid",
+   "optical_path_or_depth": "1-5 mm",
+   "sensitivity": "average",
+   "selectivity": "average",
+   "cost": "average"
+  },
+  {
+   "method": "NIR spectroscopy",
+   "measurement_technique": "transmission or transflection probe",
+   "physical_phenomenon": "transmission",
+   "sample_type": "liquid, colloidal",
+   "optical_path_or_depth": "1-10 mm",
+   "sensitivity": "average",
+   "selectivity": "average",
+   "cost": "average"
+  },
+  {
+   "method": "NIR spectroscopy",
+   "measurement_technique": "diffuse reflection probe",
+   "physical_phenomenon": "diffuse reflection",
+   "sample_type": "scattering media, powder",
+   "optical_path_or_depth": "0.5-1 mm",
+   "sensitivity": "average",
+   "selectivity": "average",
+   "cost": "average"
+  },
+  {
+   "method": "NIR spectroscopy",
+   "measurement_technique": "integrating sphere",
+   "physical_phenomenon": "diffuse reflection",
+   "sample_type": "solid, powder",
+   "optical_path_or_depth": "5-10 mm",
+   "sensitivity": "average",
+   "selectivity": "average",
+   "cost": "average"
+  },
+  {
+   "method": "NIR spectroscopy",
+   "measurement_technique": "surface at a distance",
+   "physical_phenomenon": "diffuse reflection",
+   "sample_type": "solid, powder",
+   "optical_path_or_depth": "2-5 mm",
+   "sensitivity": "average",
+   "selectivity": "average",
+   "cost": "average"
+  },
+  {
+   "method": "Raman spectroscopy",
+   "measurement_technique": "cuvette 90 deg",
+   "physical_phenomenon": "Raman scattering (emission)",
+   "sample_type": "liquid",
+   "optical_path_or_depth": "2-5 mm",
+   "sensitivity": "average",
+   "selectivity": "high",
+   "cost": "high"
+  },
+  {
+   "method": "Raman spectroscopy",
+   "measurement_technique": "Raman probe",
+   "physical_phenomenon": "Raman scattering (emission)",
+   "sample_type": "liquid, powder, solid",
+   "optical_path_or_depth": "2-5 mm",
+   "sensitivity": "average",
+   "selectivity": "high",
+   "cost": "high"
+  },
+  {
+   "method": "UV/Visible spectroscopy",
+   "measurement_technique": "cuvette",
+   "physical_phenomenon": "absorption",
+   "sample_type": "liquid",
+   "optical_path_or_depth": "1-5 mm",
+   "sensitivity": "high",
+   "selectivity": "low",
+   "cost": "low"
+  },
+  {
+   "method": "UV/Visible spectroscopy",
+   "measurement_technique": "ATR probe",
+   "physical_phenomenon": "absorption",
+   "sample_type": "liquid",
+   "optical_path_or_depth": "0.1-1 um",
+   "sensitivity": "low",
+   "selectivity": "low",
+   "cost": "average"
+  },
+  {
+   "method": "UV/Visible spectroscopy",
+   "measurement_technique": "diffuse reflection probe",
+   "physical_phenomenon": "diffuse reflection",
+   "sample_type": "solid, pill",
+   "optical_path_or_depth": "1-5 mm",
+   "sensitivity": "low",
+   "selectivity": "low",
+   "cost": "low"
+  },
+  {
+   "method": "UV/Visible spectroscopy",
+   "measurement_technique": "transmission or transflection probe",
+   "physical_phenomenon": "transmission",
+   "sample_type": "liquid",
+   "optical_path_or_depth": "1-10 mm",
+   "sensitivity": "low",
+   "selectivity": "low",
+   "cost": "low"
+  },
+  {
+   "method": "UV/Visible spectroscopy",
+   "measurement_technique": "probe, lens",
+   "physical_phenomenon": "emission of an external source",
+   "sample_type": "radiating sample",
+   "optical_path_or_depth": "any",
+   "sensitivity": "high",
+   "selectivity": "low",
+   "cost": "low"
+  },
+  {
+   "method": "Fluorimetry",
+   "measurement_technique": "cuvette 90 deg",
+   "physical_phenomenon": "fluorescence (emission)",
+   "sample_type": "liquid",
+   "optical_path_or_depth": "10 mm",
+   "sensitivity": "high",
+   "selectivity": "low",
+   "cost": "low"
+  },
+  {
+   "method": "Fluorimetry",
+   "measurement_technique": "fluorimetric probe",
+   "physical_phenomenon": "fluorescence (emission)",
+   "sample_type": "liquid, solid",
+   "optical_path_or_depth": "1-5 mm",
+   "sensitivity": "high",
+   "selectivity": "low",
+   "cost": "low"
+  }
+ ],
+ "method_ranges": {
+  "NIR": {
+   "min_nm": 780,
+   "max_nm": 2500,
+   "label": "NIR nominal range",
+   "cite": "S01 p.10"
+  },
+  "MIR": {
+   "min_nm": 2500,
+   "max_nm": 25000,
+   "label": "Mid-IR nominal range (4000–400 cm⁻¹)",
+   "cite": "S01 p.9"
+  }
+ },
+ "fiber_families": [
+  {
+   "name": "UV-Vis silica",
+   "detail": "Standard and Al/Cu-coated",
+   "min_nm": 190,
+   "max_nm": 1200
+  },
+  {
+   "name": "Vis-NIR silica",
+   "detail": "Standard and Al/Cu-coated",
+   "min_nm": 350,
+   "max_nm": 2400
+  },
+  {
+   "name": "Chalcogenide (CIR)",
+   "detail": "As-S IR fibers",
+   "min_nm": 1100,
+   "max_nm": 6500
+  },
+  {
+   "name": "Polycrystalline (PIR)",
+   "detail": "Silver halide IR fibers",
+   "min_nm": 3000,
+   "max_nm": 17000
+  },
+  {
+   "name": "Hollow waveguide (HWG)",
+   "detail": "Hollow glass waveguides",
+   "min_nm": 2000,
+   "max_nm": 18000
+  },
+  {
+   "name": "Indium fluoride",
+   "detail": "InF3 fibers",
+   "min_nm": 300,
+   "max_nm": 5500
+  },
+  {
+   "name": "Zirconium fluoride",
+   "detail": "ZrF4 fibers",
+   "min_nm": 300,
+   "max_nm": 4500
+  }
+ ],
+ "fiber_families_note": "Approximate ranges read from the S02 p.6 figure. Check the figure before relying on an exact number."
+}

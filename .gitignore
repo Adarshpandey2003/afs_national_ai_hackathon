@@ -50,3 +50,9 @@ National AI Hackathon 2026 by SchubKI - Q&A*.txt
 .DS_Store
 Thumbs.db
 *.log
+
+# Internal working docs (kept locally, not published)
+code_explainer.md
+understand_arc.md
+frontend.md
+frontend/frontend.md

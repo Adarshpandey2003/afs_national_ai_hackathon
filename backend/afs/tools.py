@@ -44,6 +44,11 @@ def parse_range_um(text: str) -> tuple[float, float] | None:
     return round(lo, 4), round(hi, 4)
 
 
+# Words in fiber family names that do not identify the family (what remains: silica, pir, chalcogenide, hollow, ...).
+_GENERIC_FIBER_WORDS = {"standard", "al", "cu", "coated", "uv", "vis", "nir", "ir", "as", "s", "glass", "infrared",
+                        "fibers", "fiber", "waveguides"}
+
+
 def _words(text: str) -> set[str]:
     text = text.lower()
     for long, short in (("mid-infrared", "mir"), ("mid infrared", "mir"), ("mid-ir", "mir"),
@@ -195,8 +200,23 @@ class Toolbox:
                 lines.append(f"- {f['fiber_type']} ({f['range_text']}): {verdict}")
             covering = [f["fiber_type"] for f in fibers if f["min_um"] < hi and f["max_um"] > lo]
             lines.append("Fiber families overlapping the target at least partly: " + "; ".join(covering))
+            lines += self._link_evidence(matched)
             return "\n".join(lines)
         return fiber_check
+
+    def _link_evidence(self, fibers: list[dict]) -> list[str]:
+        """Cable / remote-link pages for the matched fiber family, so remote-analyzer questions are grounded.
+        Only pages that name the family itself are kept (a silica-cable slide is no evidence for PIR cables)."""
+        names = set().union(*(_words(f["fiber_type"]) for f in fibers)) - _GENERIC_FIBER_WORDS
+        found = []
+        for hit in self.retriever.search(f"{fibers[0]['fiber_type']} cables length remote process control", k=4):
+            if any(n in _words(hit["text"]) for n in names) and hit["label"] not in {h["label"] for h in found}:
+                self._record_chunk(hit)
+                found.append(hit)
+        if not found:
+            return []
+        return ["Cable / link evidence for this fiber family (check its scope):"] + \
+            [f"[{h['label']}] {h['text'][:400]}" for h in found[:2]]
 
     def _search_papers(self):
         @tool
@@ -204,10 +224,13 @@ class Toolbox:
             """Search peer-reviewed research papers (OpenAlex; abstracts only). Use ONLY for points the AFS knowledge
             base does not cover, and at most twice. Results are external evidence, weaker than AFS material; a claim
             based on one must quote a sentence of the abstract verbatim and give the paper's url."""
+            params = {"search": query, "per-page": 4,
+                      "filter": "has_abstract:true,cited_by_count:>9",  # established, cited papers only
+                      "select": "id,doi,title,publication_year,abstract_inverted_index,authorships"}
+            if os.environ.get("OPENALEX_API_KEY"):  # free key; anonymous search can be rate-limited
+                params["api_key"] = os.environ["OPENALEX_API_KEY"]
             try:
-                r = httpx.get(OPENALEX_URL, timeout=20, params={
-                    "search": query, "per-page": 4, "filter": "has_abstract:true",
-                    "select": "id,doi,title,publication_year,abstract_inverted_index,authorships"})
+                r = httpx.get(OPENALEX_URL, timeout=20, params=params)
                 r.raise_for_status()
             except httpx.HTTPError as exc:
                 return f"Paper search unavailable ({exc.__class__.__name__}); continue with the AFS sources."

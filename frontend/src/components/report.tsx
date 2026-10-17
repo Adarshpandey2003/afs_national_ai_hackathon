@@ -120,9 +120,27 @@ export function Requirements({ r }: { r: Report }) {
 }
 
 export function QuestionList({ qs, answers }: { qs: Question[]; answers: Report['user_answers'] }) {
-  if (!qs.length) return <Empty>No open questions</Empty>
+  // Questions the customer already answered during clarification (they are no longer among the open questions).
+  const open = new Set(qs.map((q) => q.question_id))
+  const answered = answers.filter((a) => a.question && !open.has(a.question_id))
+  if (!qs.length && !answered.length) return <Empty>No open questions</Empty>
   const byId = new Map(answers.map((a) => [a.question_id, a.answer]))
   return (
+    <>
+    {answered.length > 0 && (
+      <div className="mb-4 rounded-xl border border-fact/30 p-4">
+        <p className="text-[13px] font-semibold text-fact">Answered by the customer</p>
+        <ul className="mt-2 space-y-3">
+          {answered.map((a) => (
+            <li key={a.question_id} className="text-[15px]">
+              <p className="font-semibold leading-snug">{a.question}</p>
+              <p className="mt-1 border-l-2 border-fact pl-3">{a.answer}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+    {qs.length === 0 ? <Empty>No open questions</Empty> : (
     <ol className="space-y-3">
       {[...qs].sort((a, b) => a.priority - b.priority).map((q) => {
         const answer = byId.get(q.question_id)
@@ -150,6 +168,8 @@ export function QuestionList({ qs, answers }: { qs: Question[]; answers: Report[
         )
       })}
     </ol>
+    )}
+    </>
   )
 }
 
@@ -347,12 +367,14 @@ const SOURCE_ORDER = ['S01', 'S02', 'S03', 'S04', 'S05', 'S06', 'TABLE', 'REF', 
 export function SourcesList({ r }: { r: Report }) {
   const { sources } = useData()
   const index = citationIndex(r)
-  const ids = [...new Set(index.map((x) => x.cite.source))].sort((a, b) => SOURCE_ORDER.indexOf(a) - SOURCE_ORDER.indexOf(b))
+  const rank = (id: string) => (SOURCE_ORDER.includes(id) ? SOURCE_ORDER.indexOf(id) : SOURCE_ORDER.indexOf('TABLE') - 0.5) // added sources (S07+) after S06
+  const ids = [...new Set(index.map((x) => x.cite.source))].sort((a, b) => rank(a) - rank(b))
   const problems = index.flatMap(({ cite }) => {
     if (cite.source === 'EXT') return cite.quote && cite.url ? [] : [`${cite.label}: external citations need a URL and a quoted passage.`]
+    const live = sources.find((s) => s.source_id === cite.source)
     const meta = sourceMeta(cite.source)
-    if (!meta) return [`${cite.label}: unknown source.`]
-    const pages = sources.find((s) => s.source_id === cite.source)?.pages || meta.pages
+    if (!live && !meta) return [`${cite.label}: unknown source.`]
+    const pages = live?.pages || meta?.pages
     return cite.page != null && pages && cite.page > pages ? [`${cite.label}: ${cite.source} has only ${pages} pages.`] : []
   })
   if (!index.length) return <Empty>No sources cited</Empty>

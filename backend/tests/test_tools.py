@@ -48,3 +48,10 @@ def test_evidence_pack_records_tool_results(tb):
     assert ("S02", 13) in tb.evidence_pages() and ("S01", 17) in tb.evidence_pages()
     assert "[S01 p.17]" in tb.evidence_text()
     assert "Fluorimetry" in call(tb, "method_table", method="fluor")
+
+
+def test_fiber_check_attaches_cable_evidence_for_the_same_family_only(tb):
+    silica = call(tb, "fiber_check", fiber="Vis-NIR silica", method="NIR")
+    assert "[S02 p.7]" in silica and ("S02", 7) in tb.evidence_pages()  # 100-300 m silica cables
+    pir = call(tb, "fiber_check", fiber="PIR", method="MIR")
+    assert "[S02 p.7]" not in pir  # a silica-cable slide is no evidence for PIR cables

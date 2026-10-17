@@ -25,7 +25,8 @@ Work through:
    and in which application examples (process, laboratory, research)?
 2. For EACH client premise: evidence that supports or contradicts it. Search with several phrasings; this is where
    assessments most often go wrong.
-3. If fibers, a remote analyzer or a specific spectral range are involved, run fiber_check.
+3. If fibers, a remote analyzer or a specific spectral range are involved, run fiber_check, and search the sources
+   for cable length / remote-link evidence.
 4. Limitations: selectivity, interferences, physical sample variation, calibration needs, interface and fouling.
 5. Scope of the evidence: laboratory vs process, in vitro vs clinical, vendor overview vs validated performance.
    Read the full page (get_page) before relying on a key page.

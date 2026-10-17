@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useRef, useState, type ReactNode } from 'react'
-import { API_BASE, api, ApiError } from '../api'
+import { API_BASE, MOCK, api, ApiError } from '../api'
 import type {
   AgentName, AgentStep, Answer, AssessmentSnapshot, ClarificationNeeded, CriticIssue, Mode, Question, Report, RunEvent,
 } from '../api/types'
@@ -182,24 +182,72 @@ const readChats = (): Chat[] => {
   }
 }
 export const chats = createStore<Chat[]>(readChats())
-session.subscribe(() => chats.set(readChats()))
+
+const writeLocal = (list: Chat[]) => {
+  // Reports are large: when storage is full, drop the oldest chats until the list fits.
+  let next = list
+  for (;;) {
+    try {
+      localStorage.setItem(chatsKey(), JSON.stringify(next)) // also writes an empty list, e.g. after deleting the last chat
+      return
+    } catch {
+      if (!next.length) return
+      next = next.slice(0, -1)
+    }
+  }
+}
+
+/** Signed in to the real backend: the server holds the chats, so they follow the user to any browser. */
+const synced = () => !MOCK && !!session.get()
+
+/** Load the signed-in user's chats from the server; this browser's copy stays as a fast cache and fallback. */
+function loadServerChats() {
+  if (!synced()) return
+  const owner = session.get()?.id
+  api.chats().then((list) => {
+    if (session.get()?.id !== owner || !Array.isArray(list)) return
+    const server = new Set(list.map((c) => c.id))
+    const merged = [...list, ...readChats().filter((c) => !server.has(c.id))].sort((a, b) => b.at - a.at).slice(0, 20)
+    chats.set(merged)
+    writeLocal(merged)
+  }, () => { /* offline or not configured: keep the local copy */ })
+}
+session.subscribe(() => {
+  chats.set(readChats())
+  loadServerChats()
+})
+loadServerChats()
+
+// Chats change on every agent event; send each one to the server once it has been quiet for a moment.
+const pendingSync = new Map<string, number>()
+
+/** Delete a chat from Recent, this browser and the server (with its saved runs). Reset the view first if it is open. */
+export function deleteChat(id: string) {
+  clearTimeout(pendingSync.get(id))
+  pendingSync.delete(id)
+  const next = chats.get().filter((c) => c.id !== id)
+  chats.set(next)
+  writeLocal(next)
+  if (synced()) api.deleteChat(id).catch(() => { /* the server copy goes with the next successful delete */ })
+}
+function syncChat(chat: Chat) {
+  if (!synced()) return
+  clearTimeout(pendingSync.get(chat.id))
+  pendingSync.set(chat.id, window.setTimeout(() => {
+    pendingSync.delete(chat.id)
+    api.saveChat(chat).catch(() => { /* retried with the next change */ })
+  }, 1500))
+}
 
 function settle(s: RunState): RunState {
   return { ...s, link: 'idle', submitting: false, answerError: undefined, pending: undefined, restoring: false }
 }
 
 function saveChat(chat: Chat) {
-  let next = [chat, ...chats.get().filter((c) => c.id !== chat.id)].sort((a, b) => b.at - a.at).slice(0, 20)
+  const next = [chat, ...chats.get().filter((c) => c.id !== chat.id)].sort((a, b) => b.at - a.at).slice(0, 20)
   chats.set(next)
-  // Reports are large: when storage is full, drop the oldest chats until the list fits.
-  while (next.length) {
-    try {
-      localStorage.setItem(chatsKey(), JSON.stringify(next))
-      return
-    } catch {
-      next = next.slice(0, -1)
-    }
-  }
+  writeLocal(next)
+  syncChat(chat)
 }
 
 /**

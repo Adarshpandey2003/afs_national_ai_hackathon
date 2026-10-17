@@ -9,7 +9,8 @@ import { findQuote } from '../lib/report'
 import { closeSource, drawerStore } from '../lib/ui-state'
 import { EvidenceTag, Rating, cn } from './ui'
 
-const PAGED = new Set<SourceId>(['S01', 'S02', 'S03', 'S04', 'S05'])
+/** Sources with readable pages: every S-numbered source, including documents added later (S07, S08, ...). */
+const hasPages = (id: SourceId) => /^S\d+$/.test(id)
 const cache = new Map<string, KbPage>()
 
 /** S01 Table 1 as transcribed by the organizers (AFS_method_comparison_table.xlsx). */
@@ -72,7 +73,7 @@ export function SourceDrawer() {
   const [shown, setShown] = useState(target)
   if (target !== shown) {
     setShown(target)
-    setPage(target && PAGED.has(target.source) ? target.page ?? 1 : null)
+    setPage(target && hasPages(target.source) ? target.page ?? 1 : null)
   }
 
   // Modal behaviour: background inert, focus moves in and back, Esc closes.

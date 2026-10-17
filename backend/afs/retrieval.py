@@ -94,6 +94,20 @@ def add_to_index(chunks: list[dict], index_dir: Path = INDEX_DIR) -> int:
     return index.ntotal
 
 
+def remove_from_index(chunk_ids: set[str], index_dir: Path = INDEX_DIR) -> int:
+    """Drop chunks from the index without re-embedding anything: the stored vectors of all other chunks are kept."""
+    meta = _read_json(index_dir / "meta.json")
+    index = faiss.read_index(str(index_dir / "chunks.faiss"))
+    keep = [i for i, cid in enumerate(meta["chunk_ids"]) if cid not in chunk_ids]
+    rebuilt = faiss.IndexFlatIP(index.d)
+    if keep:
+        rebuilt.add(np.ascontiguousarray(index.reconstruct_n(0, index.ntotal)[keep]))
+    faiss.write_index(rebuilt, str(index_dir / "chunks.faiss"))
+    meta["chunk_ids"] = [meta["chunk_ids"][i] for i in keep]
+    (index_dir / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
+    return rebuilt.ntotal
+
+
 class HybridRetriever:
     def __init__(self, kb: KnowledgeBase, index_dir: Path = INDEX_DIR):
         meta = _read_json(index_dir / "meta.json")

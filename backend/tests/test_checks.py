@@ -107,3 +107,21 @@ def test_citations_can_be_written_as_labels():
     assert Citation.model_validate(ext).url == "https://doi.org/x"
     r = report(risks=[{"text": "t", "kind": "sourced", "citations": ["S02 p.6"]}])
     assert r.risks[0].citations[0].source == "S02" and checks_by_name(r)["citations_valid"].passed
+
+
+def test_primary_recommendation_must_be_a_single_method():
+    def rec(method, role):
+        return {"method": method, "technique": "t", "role": role,
+                "rationale": [{"text": "y", "kind": "sourced", "citations": [CITE]}]}
+    ok = report(recommendations=[rec("NIR", "primary"), rec("NIR + fluorescence", "combination")])
+    assert checks_by_name(ok)["simplest_first"].passed
+    bad = report(recommendations=[rec("NIR + fluorescence (data fusion)", "primary"), rec("Raman", "comparison")])
+    assert not checks_by_name(bad)["simplest_first"].passed
+
+
+def test_combination_primary_allowed_when_the_client_asked_for_it():
+    rec = {"method": "MIR ATR + fluorescence combined probe", "technique": "t", "role": "primary",
+           "rationale": [{"text": "y", "kind": "sourced", "citations": [CITE]}]}
+    r = report(recommendations=[rec])
+    assert checks_by_name(r, client="We want to compare MIR ATR and fluorescence information")["simplest_first"].passed
+    assert not checks_by_name(r, client="We want to monitor glucose with our fluorescence spectrometer")["simplest_first"].passed

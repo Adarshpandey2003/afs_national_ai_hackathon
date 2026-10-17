@@ -12,6 +12,8 @@ export type HealthState =
 interface Data {
   health: HealthState
   retryHealth(): void
+  /** Re-read the source list, e.g. after a document was added. */
+  reloadSources(): void
   cases: Case[]
   sources: SourceInfo[]
   outputs: OutputSummary[]
@@ -69,7 +71,10 @@ export function DataProvider({ children }: { children: ReactNode }) {
   }, [ready, signedIn])
 
   const value = useMemo<Data>(
-    () => ({ health, retryHealth: () => setAttempt((a) => a + 1), cases, sources, outputs, outputsLoaded }),
+    () => ({
+      health, retryHealth: () => setAttempt((a) => a + 1), cases, sources, outputs, outputsLoaded,
+      reloadSources: () => { api.sources().then((s) => s.length && setSources(s), () => {}) },
+    }),
     [health, cases, sources, outputs, outputsLoaded],
   )
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>

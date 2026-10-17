@@ -7,6 +7,7 @@ export type EvidenceLevel =
   | "research_in_vitro_poc"
   | "research_lab_note"
   | "business_context"
+  | "expert_notes"
   | "reference_doc"
   | "external";
 
@@ -80,7 +81,7 @@ export interface Report {
   requirements: { stated_facts: Claim[]; key_unknowns: string[]; client_premises: Premise[]; };
   clarification_questions: Question[];
   assumptions: string[];
-  user_answers: { question_id: string; answer: string }[];   // interactive mode only
+  user_answers: { question_id: string; question?: string; answer: string }[];   // interactive mode only
   recommendations: MethodRecommendation[];
   measurement_concept: { probe_geometry: Claim[]; location: Claim[]; fiber_link: Claim[]; };
   spectral_ranges: SpectralRange[];

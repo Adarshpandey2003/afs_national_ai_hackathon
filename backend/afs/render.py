@@ -35,7 +35,7 @@ def render_markdown(r: Report) -> str:
     out += [f"{i}. (P{q.priority}, {q.affects}) {q.text} *{q.why_it_matters}*"
             for i, q in enumerate(sorted(r.clarification_questions, key=lambda q: q.priority), 1)]
     if r.user_answers:
-        out += ["**Client answers**", *[f"- {a.question_id}: {a.answer}" for a in r.user_answers]]
+        out += ["**Client answers**", *[f"- Q: {a.question or a.question_id} → A: {a.answer}" for a in r.user_answers]]
     out += ["## Assumptions", *_bullets(r.assumptions), "## Recommendation"]
     for m in r.recommendations:
         out.append(f"### {m.method} ({m.technique}): {m.role.replace('_', ' ')}{_cites(m.citations)}")

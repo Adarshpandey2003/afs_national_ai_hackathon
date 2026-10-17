@@ -227,6 +227,18 @@ export const mockApi: Api = {
     if (!r) throw new ApiError(404, 'not_found', `No precomputed report for ${caseId}.`)
     return r
   },
+  // Mock chats stay in this browser (localStorage); nothing to sync.
+  async chats() {
+    return []
+  },
+  async saveChat() {},
+  async deleteChat() {},
+  async removeDocument() {
+    throw new ApiError(501, 'not_available', 'Removing documents needs the real backend (set VITE_API_BASE_URL).')
+  },
+  async addDocument() {
+    throw new ApiError(501, 'not_available', 'Adding documents needs the real backend (set VITE_API_BASE_URL).')
+  },
 }
 
 // Short excerpts so the mock drawer can show quote highlighting.

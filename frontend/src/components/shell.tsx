@@ -1,11 +1,11 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { flushSync } from 'react-dom'
-import { FileText, Library, LogOut, Menu, Moon, PanelLeftClose, PanelLeftOpen, Plus, Sun, X, type LucideIcon } from 'lucide-react'
+import { FileText, Library, LogOut, Menu, Moon, PanelLeftClose, PanelLeftOpen, Plus, Sun, Trash2, X, type LucideIcon } from 'lucide-react'
 import { API_BASE, MOCK } from '../api'
 import { session, signOut } from '../lib/auth'
 import { clock, useData, useNow } from '../lib/data'
 import { Link, navigate, setQueryParam, usePath } from '../lib/router'
-import { chats, useRun } from '../lib/run'
+import { chats, deleteChat, useRun } from '../lib/run'
 import { createStore } from '../lib/store'
 import { BrandLogo } from './brand'
 import { STATUS_COLOR, cn } from './ui'
@@ -119,17 +119,28 @@ function ChatHistory({ onPick }: { onPick(): void }) {
             const n = chat.turns.length
             const current = run.chatId === chat.id
             return (
-              <li key={chat.id}>
+              <li key={chat.id} className="group relative">
                 <button
                   type="button" aria-current={current ? 'page' : undefined}
                   onClick={() => { onPick(); navigate('/'); if (!current) run.openChat(chat.id) }}
-                  className={cn('flex w-full items-start gap-2.5 rounded-lg px-3 py-2 text-left transition-colors', current ? 'bg-surface-3' : 'hover:bg-surface-2')}
+                  className={cn('flex w-full items-start gap-2.5 rounded-lg py-2 pl-3 pr-9 text-left transition-colors', current ? 'bg-surface-3' : 'hover:bg-surface-2')}
                 >
                   <span className={cn('mt-[7px] size-2 shrink-0 rounded-full', !status && last.phase !== 'failed' && 'animate-pulse')} style={{ background: color }} aria-hidden />
                   <span className="min-w-0 flex-1">
                     <span className="block truncate text-[14px] font-medium leading-snug">{c ? `${c.case_id} – ${c.title}` : first.message ?? first.enquiry}</span>
                     <span className="mt-0.5 block text-[13px] text-ink-3">{n > 1 ? `${n} questions, ` : ''}{day(chat.at)}</span>
                   </span>
+                </button>
+                <button
+                  type="button" aria-label="Delete chat" title="Delete chat"
+                  className="absolute right-1.5 top-2 rounded-md p-1.5 text-ink-3 opacity-0 transition-opacity hover:bg-surface-3 hover:text-bad focus-visible:opacity-100 group-hover:opacity-100"
+                  onClick={() => {
+                    if (!window.confirm('Delete this chat and its saved results? This cannot be undone.')) return
+                    if (current) run.reset()
+                    deleteChat(chat.id)
+                  }}
+                >
+                  <Trash2 size={15} aria-hidden />
                 </button>
               </li>
             )

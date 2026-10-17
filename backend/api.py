@@ -11,11 +11,13 @@ import sys
 import tempfile
 import threading
 import uuid
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Literal
 
+import httpx
 from dotenv import load_dotenv
-from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
+from fastapi import Body, Depends, FastAPI, File, Form, Header, HTTPException, Request, UploadFile
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, PlainTextResponse
@@ -26,6 +28,7 @@ from contextlib import asynccontextmanager
 
 load_dotenv()
 
+from afs import history  # noqa: E402
 from afs.pipeline import run_assessment  # noqa: E402
 from afs.render import render_markdown  # noqa: E402
 from afs.checks import _kb_quantities  # noqa: E402
@@ -73,6 +76,14 @@ async def api_error_handler(_: Request, exc: ApiError):
     return JSONResponse({"error": {"code": exc.code, "message": exc.detail}}, status_code=exc.status_code)
 
 
+@app.exception_handler(httpx.HTTPError)
+async def storage_error_handler(_: Request, exc: httpx.HTTPError):
+    """Supabase unreachable or misconfigured (e.g. a missing table): a clear 503 instead of a 500."""
+    print(f"history storage error: {exc}", flush=True)
+    return JSONResponse({"error": {"code": "history_unavailable", "message": "Chat history storage is unavailable."}},
+                        status_code=503)
+
+
 @app.exception_handler(RequestValidationError)
 async def validation_error_handler(_: Request, exc: RequestValidationError):
     message = "; ".join(f"{'.'.join(map(str, e['loc']))}: {e['msg']}" for e in exc.errors())
@@ -84,9 +95,9 @@ async def validation_error_handler(_: Request, exc: RequestValidationError):
 class Run:
     """One assessment. The pipeline runs in a worker thread and talks to the API through emit() and ask()."""
 
-    def __init__(self, enquiry: str, mode: str, case_id: str | None):
+    def __init__(self, enquiry: str, mode: str, case_id: str | None, user_id: str | None = None):
         self.thread_id = uuid.uuid4().hex
-        self.enquiry, self.mode, self.case_id = enquiry, mode, case_id
+        self.enquiry, self.mode, self.case_id, self.user_id = enquiry, mode, case_id, user_id
         self.status = "running"
         self.events: list[dict] = []
         self.report: Report | None = None
@@ -100,6 +111,20 @@ class Run:
     def _set_status(self, status: str) -> None:
         self.status = status
         self.emit("status", {"status": status})
+        self._persist()
+
+    def _persist(self) -> None:
+        """Save to the logged-in user's history (Supabase). A failed save never breaks the assessment."""
+        if not (self.user_id and history.enabled()):
+            return
+        record = {"thread_id": self.thread_id, "user_id": self.user_id, "enquiry": self.enquiry, "mode": self.mode,
+                  "case_id": self.case_id, "status": self.status, "events": self.events,
+                  "report": self.report.model_dump(mode="json") if self.report else None,
+                  "updated_at": datetime.now(timezone.utc).isoformat()}
+        try:
+            history.save(record)
+        except Exception as exc:
+            print(f"history save failed for {self.thread_id}: {exc}", flush=True)
 
     def ask(self, payload: dict) -> dict:
         self.clarification = {k: payload[k] for k in ("round", "max_rounds", "questions")}
@@ -130,6 +155,7 @@ class Run:
             self.emit("error", self.error)
             self.status = "failed"
         self.emit("done", {"status": self.status})
+        self._persist()
 
 
 RUNS: dict[str, Run] = {}
@@ -175,7 +201,8 @@ class AssessmentSnapshot(BaseModel):
 @app.get("/health")
 def health():
     llm_ready = bool(os.environ.get("DEEPSEEK_API_KEY") and os.environ.get("LLM_MODEL"))
-    return {"status": "ok", "version": VERSION, "llm_ready": llm_ready, "mock_mode": False}
+    return {"status": "ok", "version": VERSION, "llm_ready": llm_ready, "mock_mode": False,
+            "auth_required": history.enabled()}  # the UI shows its sign-in screen when true
 
 
 @app.get("/cases")
@@ -191,9 +218,85 @@ def get_case(case_id: str):
     return case
 
 
+# ---------------------------------------------------------------- login and history (Supabase)
+
+def optional_user(authorization: str | None = Header(None)) -> dict | None:
+    """The logged-in user from `Authorization: Bearer <token>`, or None without a token."""
+    if not authorization:
+        return None
+    if not history.enabled():
+        raise ApiError(503, "auth_unavailable", "Login is not configured on this server")
+    try:
+        return history.user_from_token(authorization.removeprefix("Bearer ").strip())
+    except history.AuthError as exc:
+        raise ApiError(401, "unauthorized", str(exc))
+
+
+def required_user(user: dict | None = Depends(optional_user)) -> dict:
+    if user is None:
+        raise ApiError(401, "unauthorized", "Log in to see your history")
+    return user
+
+
+class LoginRequest(BaseModel):
+    username: str = Field(min_length=1)
+    password: str = Field(min_length=1)
+
+
+@app.post("/auth/login")
+def auth_login(body: LoginRequest):
+    """Returns {access_token, expires_in, user}. Send the token as `Authorization: Bearer <token>`."""
+    if not history.enabled():
+        raise ApiError(503, "auth_unavailable", "Login is not configured on this server")
+    try:
+        return history.login(body.username, body.password)
+    except history.AuthError as exc:
+        raise ApiError(401, "invalid_credentials", str(exc))
+
+
+@app.get("/auth/me")
+def auth_me(user: dict = Depends(required_user)):
+    return user
+
+
+@app.get("/history")
+def list_history(user: dict = Depends(required_user)):
+    """The user's past assessments, newest first."""
+    return history.list_for(user["id"])
+
+
+@app.get("/history/{thread_id}")
+def get_history(thread_id: str, user: dict = Depends(required_user)):
+    """One past assessment with its report and agent timeline (`events`), to reopen it later."""
+    record = history.get(thread_id, user["id"])
+    if not record:
+        raise ApiError(404, "not_found", f"No assessment {thread_id} in your history")
+    return record
+
+
+@app.get("/chats")
+def list_chats(user: dict = Depends(required_user)):
+    """The user's chats as the UI saved them ({id, at, turns}), newest first, so Recent works on any device."""
+    return history.list_chats(user["id"])
+
+
+@app.put("/chats/{chat_id}", status_code=204)
+def save_chat(chat_id: str, chat: dict = Body(...), user: dict = Depends(required_user)):
+    if chat.get("id") != chat_id or not isinstance(chat.get("turns"), list):
+        raise ApiError(422, "validation_error", "Body must be the chat object {id, at, turns} with the same id")
+    history.save_chat(user["id"], chat_id, chat)
+
+
+@app.delete("/chats/{chat_id}", status_code=204)
+def delete_chat(chat_id: str, user: dict = Depends(required_user)):
+    """Delete one of the user's chats and the saved runs it contains (idempotent)."""
+    history.delete_chat(user["id"], chat_id)
+
+
 @app.post("/assessments", status_code=201)
-def start_assessment(body: AssessmentRequest):
-    run = Run(body.enquiry.strip(), body.mode, body.case_id)
+def start_assessment(body: AssessmentRequest, user: dict | None = Depends(optional_user)):
+    """Logged in: the assessment is saved to the user's history. Without a token it still runs, unsaved."""
+    run = Run(body.enquiry.strip(), body.mode, body.case_id, user["id"] if user else None)
     RUNS[run.thread_id] = run
     threading.Thread(target=run.execute, daemon=True).start()
     return {"thread_id": run.thread_id, "status": "running"}
@@ -231,6 +334,14 @@ def answer_clarification(thread_id: str, body: AnswersRequest):
 
 @app.get("/assessments/{thread_id}", response_model=AssessmentSnapshot)
 def assessment_snapshot(thread_id: str):
+    if thread_id not in RUNS and history.enabled():  # e.g. after a server restart: rebuild from saved history
+        record = history.get(thread_id)
+        if record:
+            status = record["status"] if record["status"] in ("completed", "failed") else "failed"
+            return AssessmentSnapshot(thread_id=thread_id, status=status, enquiry=record["enquiry"],
+                                      mode=record["mode"], report=record["report"],
+                                      error=None if record["report"] else {"code": "interrupted",
+                                                                           "message": "The run did not finish."})
     run = get_run(thread_id)
     return AssessmentSnapshot(thread_id=run.thread_id, status=run.status, enquiry=run.enquiry, mode=run.mode,
                               clarification=run.clarification, report=run.report, error=run.error)
@@ -285,6 +396,24 @@ def add_kb_document(file: UploadFile = File(...), title: str = Form(..., min_len
         _kb_quantities.cache_clear()
         get_retriever()
     return _source_info(entry)
+
+
+@app.delete("/kb/sources/{source_id}")
+def remove_kb_document(source_id: str):
+    """Remove a document added earlier (S07 onwards). The supplied AFS materials S01-S06 are protected."""
+    from ingest import remove_document
+
+    with INGEST_LOCK:
+        try:
+            entry = remove_document(source_id)
+        except PermissionError as exc:
+            raise ApiError(403, "protected_source", str(exc))
+        except LookupError as exc:
+            raise ApiError(404, "not_found", str(exc))
+        reload_kb()  # running assessments keep their loaded KB; new ones no longer see the document
+        _kb_quantities.cache_clear()
+        get_retriever()
+    return {"removed": _source_info(entry)}
 
 
 def _load_output(path: Path) -> Report:

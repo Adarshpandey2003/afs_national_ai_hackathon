@@ -88,6 +88,14 @@ def build_graph(ctx: RunContext):
     return graph.compile()
 
 
+def renumber_open_questions(questions: list) -> None:
+    """The report's open questions, sorted by priority and numbered open-1, open-2, … in place. Distinct from the
+    IDs of questions the client already answered (q1, q2.1, …), so an answer is never shown under another question."""
+    questions.sort(key=lambda q: q.priority)
+    for i, q in enumerate(questions, 1):
+        q.question_id = f"open-{i}"
+
+
 def run_assessment(enquiry: str, mode: Literal["interactive", "batch"], ctx: RunContext) -> Report:
     started = time.time()
     s = build_graph(ctx).invoke({"enquiry": enquiry, "mode": mode, "revision": 0},
@@ -101,6 +109,7 @@ def run_assessment(enquiry: str, mode: Literal["interactive", "batch"], ctx: Run
             seen.add(c.label)
             sources.append(c)
     draft.sources = sources
+    renumber_open_questions(draft.clarification_questions)
 
     review_errors = [i for i in issues if i["severity"] == "error"]
     checks = s["checks"] + [VerificationCheck(
@@ -109,7 +118,8 @@ def run_assessment(enquiry: str, mode: Literal["interactive", "batch"], ctx: Run
                           {c.name for c in s["checks"]}) or "No issues raised.")]
     return Report(
         **draft.model_dump(), enquiry=enquiry,
-        user_answers=[UserAnswer(question_id=a["question_id"], answer=a["answer"]) for a in s["answers"]],
+        user_answers=[UserAnswer(question_id=a["question_id"], question=a.get("question", ""), answer=a["answer"])
+                      for a in s["answers"]],
         verification=Verification(passed=all(c.passed for c in checks),
                                   revisions=min(s["revision"], MAX_REVISIONS), checks=checks),
         meta={"model": writer_model(mode), "mode": mode, "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),

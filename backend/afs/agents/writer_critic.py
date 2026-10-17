@@ -30,7 +30,11 @@ Rules:
   word for word from that abstract>"}. Say in the claim that it comes from external literature; it is weaker
   evidence than AFS material and never overrides it.
 - Never invent spectra, results, accuracy, detection limits, response times, fiber lengths, ratings, product codes,
-  prices, or client data. Every number with a unit must come from the evidence or the client.
+  prices, or client data. Every number with a unit must come from the evidence or the client. Quote numbers exactly
+  as the source prints them: never add a unit, conversion or precision the source does not give.
+- Cite a page only for what it states. A page about a different sample or setting may support a general principle at
+  most, and that claim is an inference; if no page states a point, write it as inference or assumption without a
+  citation rather than citing a loosely related page.
 - client_premises: give EVERY premise from the intake an explicit verdict (supported / refuted / unverified) with the
   reason and citations. Do not accept a premise just because the client states it.
 - decision_status, decided in this order:
@@ -78,13 +82,17 @@ Check in particular:
 4. decision_status fits the facts, in this order: outside_supported_scope only if the request itself (approval,
    proof, guaranteed performance, clinical / final readiness) cannot be given; else insufficient_information if no
    method choice is justified yet; else provisional. A refuted premise alone is not a reason for either.
+   A decision_status that breaks this order is an error.
 5. Questions are prioritised, specific and would change the method, setup or plan.
 6. The feasibility plan is practical and staged: lab screening of a few samples, a chemometric model against a named
-   independent reference method, an in-line / in-situ trial where applicable, and a go / no-go basis.
+   independent reference method, an in-line / in-situ trial where applicable, and a go / no-go basis. The final
+   outlook step towards a simpler dedicated sensor is intended; do not flag it as premature.
 7. The primary recommendation is the simplest adequate method; a combination is justified, not added by default;
    a refuted client premise comes with a corrected concept.
 Use severity "error" only for problems that make the assessment wrong, ungrounded or unsafe to send to the expert;
 use "warning" for improvements. Report at most 6 issues, most important first, one sentence each.
+Never ask for numbers, thresholds or acceptance targets that are not in the sources or the client's text: leaving
+them to be agreed with the client is correct, and suggesting example values would invent them.
 passed = true when there is no error."""
 
 

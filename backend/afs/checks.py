@@ -12,6 +12,8 @@ UNIT = r"nm|µm|μm|um|cm⁻¹|cm-1|cm\^-1|mm|cm|km|m|°C|K|%|ppm|ppb|mM|µM|μM
 NUMBER = r"\d{1,3}(?:[  ]\d{3})+|\d+(?:[.,]\d+)?"
 QUANTITY = re.compile(rf"(?<![\w.])({NUMBER})(?:\s*(?:-|–|to)\s*({NUMBER}))?\s*({UNIT})(?![\w/])")
 SPECTRAL = {"nm": 1e-3, "µm": 1.0, "μm": 1.0, "um": 1.0}
+COMBINATION = re.compile(r"\+|\bfusion\b|\bcombin", re.I)  # "NIR + Raman", "data fusion", "combined probe"
+METHOD_WORD = re.compile(r"\b(nir|mir|atr|raman|fluorescence|fluorimetry|uv|vis|infrared)\b", re.I)
 
 
 def _value(raw: str) -> float:
@@ -178,4 +180,18 @@ def run_checks(report: ReportBody, kb: KnowledgeBase, evidence_pages: set[tuple[
     checks.append(VerificationCheck(
         name="premises_addressed", passed=got >= n_premises,
         details=f"{got} of {n_premises} client premise(s) given an explicit verdict."))
+
+    # "As simple as possible, as complicated as necessary": a combination is a hypothesis to test against the best
+    # single method, not the primary recommendation, unless the client itself asked to evaluate that combination.
+    def requested(method: str) -> bool:  # the client named every method in the combination
+        words = {w.lower() for w in METHOD_WORD.findall(method)}
+        return bool(words) and all(re.search(rf"\b{w}\b", client_text, re.I) for w in words)
+
+    combined = [m.method for m in report.recommendations
+                if m.role == "primary" and COMBINATION.search(m.method) and not requested(m.method)]
+    checks.append(VerificationCheck(
+        name="simplest_first", passed=not combined,
+        details=(f"Primary recommendation is a combination ({'; '.join(combined)}): make the best single method "
+                 "primary and give the combination the role 'combination'") if combined
+        else "Every primary recommendation is a single method."))
     return checks

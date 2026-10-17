@@ -19,6 +19,7 @@ export const EVIDENCE: Record<EvidenceLevel, { label: string; tone: 'info' | 'wa
   research_in_vitro_poc: { label: 'In vitro proof of concept', tone: 'warn' },
   research_lab_note: { label: 'Lab research note', tone: 'neutral' },
   business_context: { label: 'Business context', tone: 'muted' },
+  expert_notes: { label: 'AFS expert notes', tone: 'neutral' },
   reference_doc: { label: 'Reference document', tone: 'neutral' },
   external: { label: 'External source', tone: 'ext' },
 }

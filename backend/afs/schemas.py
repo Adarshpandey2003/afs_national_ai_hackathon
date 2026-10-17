@@ -94,6 +94,7 @@ class MeasurementConcept(BaseModel):
 
 class UserAnswer(BaseModel):
     question_id: str
+    question: str = ""  # the question as the client saw it (empty in reports saved before this field existed)
     answer: str
 
 

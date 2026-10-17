@@ -1,4 +1,5 @@
 import { currentToken } from '../lib/auth'
+import type { Chat } from '../lib/run'
 import {
   EVENT_TYPES,
   type Answer, type AssessmentSnapshot, type Case, type Health, type KbPage, type LoginResult, type Mode,
@@ -31,6 +32,15 @@ export interface Api {
   page(sourceId: SourceId, page: number): Promise<KbPage>
   outputs(): Promise<OutputSummary[]>
   output(caseId: string): Promise<Report>
+  /** The signed-in user's chats, newest first (stored on the server, so Recent works on any device). */
+  chats(): Promise<Chat[]>
+  saveChat(chat: Chat): Promise<void>
+  /** Delete a chat and its saved runs on the server. */
+  deleteChat(chatId: string): Promise<void>
+  /** Add a PDF, TXT or MD file to the knowledge base (POST /kb/documents, multipart). */
+  addDocument(form: FormData): Promise<SourceInfo>
+  /** Remove a document added earlier (S07 onwards); the supplied S01–S06 are protected. */
+  removeDocument(sourceId: string): Promise<{ removed: SourceInfo }>
 }
 
 export function realApi(base: string): Api {
@@ -42,7 +52,7 @@ export function realApi(base: string): Api {
         ...init,
         headers: {
           Accept: as === 'json' ? 'application/json' : 'text/markdown',
-          ...(init?.body ? { 'Content-Type': 'application/json' } : {}),
+          ...(typeof init?.body === 'string' ? { 'Content-Type': 'application/json' } : {}),
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
       })
@@ -78,6 +88,11 @@ export function realApi(base: string): Api {
     reportMarkdown: (t) => request(`/assessments/${id(t)}/report.md`, undefined, 'text'),
     sources: () => request('/kb/sources'),
     page: (s, p) => request(`/kb/${id(s)}/pages/${p}`),
+    chats: () => request('/chats'),
+    deleteChat: (c) => request(`/chats/${id(c)}`, { method: 'DELETE' }, 'text').then(() => undefined),
+    addDocument: (form) => request('/kb/documents', { method: 'POST', body: form }),
+    removeDocument: (s) => request(`/kb/sources/${id(s)}`, { method: 'DELETE' }),
+    saveChat: (c) => request(`/chats/${id(c.id)}`, { method: 'PUT', body: JSON.stringify(c) }, 'text').then(() => undefined),
     outputs: () => request('/outputs'),
     output: (c) => request(`/outputs/${id(c)}`),
 

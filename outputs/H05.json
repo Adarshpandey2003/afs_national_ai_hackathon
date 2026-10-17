@@ -1,0 +1,928 @@
+{
+  "decision_status": "outside_supported_scope",
+  "decision_rationale": "The enquiry asks for an immediate best spectroscopy method and exact sensor configuration before the contaminant or affected quality variable is known. The supplied sources do not support final method or configuration selection without first measuring the customer process; the AFS workflow begins with a multi-method laboratory/in-situ test of the customer process, then selection of key spectral features, then a tailored system [S05 p.1; S02 p.3; S01 p.9]. The client premise that a best method and exact configuration can be specified immediately is refuted by the evidence. The correct next step is information gathering and a multi-method screening experiment, not a configuration.",
+  "summary": "You ask for a best spectroscopy method and exact sensor configuration immediately. The evidence shows that the choice must follow measurement, not precede it. AFS's documented route is: multi-method laboratory/in-situ test across 0.3–16 µm, selection of key spectral features, then development of a tailored system. We therefore cannot recommend a final method or exact sensor now. Instead we give prioritized questions, the information needed, and a first multi-method screening experiment on retained normal and off-spec samples with independent reference analysis. Candidate methods for that screening are MIR ATR, NIR and Raman; combinations are only a later hypothesis.",
+  "requirements": {
+    "stated_facts": [
+      {
+        "text": "The client has a liquid process.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "The process occasionally goes off specification.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "The client suspects contamination.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "The client cannot yet name the contaminant.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "The client cannot yet name the affected quality variable.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "The client asks what information and what first experiment should come before a method decision.",
+        "kind": "fact",
+        "citations": []
+      }
+    ],
+    "key_unknowns": [
+      "Which quality variable or product property defines the specification, and its limit.",
+      "The suspected contaminant or contaminant class and its expected concentration level (trace ppm, minor %, major %).",
+      "The nature of the liquid stream (composition, aqueous or solvent-based, phase, homogeneity).",
+      "The current reference method (laboratory analysis) and how often the process is sampled.",
+      "Whether off-spec samples or historical batch/lab data have been retained.",
+      "The intended measurement point and process conditions (temperature, pressure, flow, access, fouling, vibration).",
+      "The required response time and accuracy for acting on the measurement.",
+      "The consequence of an off-spec batch and how often it occurs.",
+      "Whether the excursions are intermittent events or gradual drifts."
+    ],
+    "client_premises": [
+      {
+        "statement": "A 'best spectroscopy method' can be recommended immediately, before the contaminant or the affected quality variable is known.",
+        "verdict": "refuted",
+        "explanation": "The sources state that selecting a spectral method for a specific analytical problem is complex and requires considering many factors [S01 p.5]. The AFS workflow requires a multi-method measurement of the customer process before selecting the best solution [S02 p.3; S05 p.1].",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 5,
+            "label": "S01 p.5",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S02",
+            "page": 3,
+            "label": "S02 p.3",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S05",
+            "page": 1,
+            "label": "S05 p.1",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "statement": "An 'exact sensor configuration' can be specified immediately, before the measurement task is defined.",
+        "verdict": "refuted",
+        "explanation": "Configuration depends on the analyte and matrix: optical path differs by orders of magnitude between methods [S01 Table 1 (p.6)], and the OMS development route begins with in-depth studies of the analysed object to calculate the optimal configuration and spectral ranges [S01 p.9]. AFS's pathway includes selection of key spectral features before designing a system [S05 p.1].",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 6,
+            "label": "S01 Table 1 (p.6)",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 9,
+            "label": "S01 p.9",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S05",
+            "page": 1,
+            "label": "S05 p.1",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "statement": "The problem is attributable to contamination, which is a suspicion rather than a confirmed cause.",
+        "verdict": "unverified",
+        "explanation": "No source supports attributing off-spec product to contamination without evidence. The sources show off-spec/quality variance can have multiple causes, and documented applications target named variables such as water in oil, API potency, or milk fat/protein [S05 p.2; S02 p.13; S01 p.14–17]. The cause needs confirmation by reference analysis.",
+        "citations": [
+          {
+            "source": "S05",
+            "page": 2,
+            "label": "S05 p.2",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S02",
+            "page": 13,
+            "label": "S02 p.13",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 14,
+            "label": "S01 p.14",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "statement": "The missing information and a first experiment can be listed in advance of any knowledge of the process or the analyte.",
+        "verdict": "supported",
+        "explanation": "The AFS pathway explicitly provides this structure: a multi-method laboratory/in-situ test of the customer process, followed by multivariate analysis and data fusion to select key spectral features [S05 p.1; S02 p.3]. The first experiment should use standard laboratory spectrometers before calculating an optimal configuration [S01 p.9].",
+        "citations": [
+          {
+            "source": "S05",
+            "page": 1,
+            "label": "S05 p.1",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S02",
+            "page": 3,
+            "label": "S02 p.3",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 9,
+            "label": "S01 p.9",
+            "quote": null,
+            "url": null
+          }
+        ]
+      }
+    ]
+  },
+  "clarification_questions": [
+    {
+      "question_id": "q1",
+      "text": "What exactly does 'off specification' mean in this process - which product property or quality variable is out of limits, and what is the limit?",
+      "priority": 1,
+      "why_it_matters": "The quality variable sets what the measurement must detect; without it no method or sensor can be chosen.",
+      "affects": "method"
+    },
+    {
+      "question_id": "q2",
+      "text": "Which contaminant or class of contaminants do you suspect, and at what level would it have to be detected (trace ppm, minor %, major %)?",
+      "priority": 1,
+      "why_it_matters": "Analyte identity and concentration range determine whether the measurement is trace-level or major-component, which drives the spectroscopy method and the optical path length.",
+      "affects": "method"
+    },
+    {
+      "question_id": "q3",
+      "text": "What reference method is used today to judge the stream, how often is it sampled, and do you still have off-spec samples or historical batch and lab data?",
+      "priority": 1,
+      "why_it_matters": "The reference method and retained samples define the accuracy benchmark and provide the samples needed for a first feasibility experiment; archived data may reveal whether the excursions are events or drifts.",
+      "affects": "plan"
+    },
+    {
+      "question_id": "q4",
+      "text": "Where would the measurement be made, and what are the conditions there - phase, temperature, pressure, flow, access, and tendency for fouling or coating?",
+      "priority": 2,
+      "why_it_matters": "Process conditions and access determine whether an in-line probe, a bypass cell or another interface is practical, and which materials and path lengths are viable.",
+      "affects": "setup"
+    },
+    {
+      "question_id": "q5",
+      "text": "How quickly after an excursion do you need a reading, and how accurate must it be to act on it?",
+      "priority": 2,
+      "why_it_matters": "The required response time and accuracy decide between continuous in-line measurement and intermittent sampling, and set the feasibility target.",
+      "affects": "plan"
+    },
+    {
+      "question_id": "q6",
+      "text": "What happens when a batch goes off specification - rework, reject, safety issue or delay - and roughly how often does it occur?",
+      "priority": 3,
+      "why_it_matters": "The consequence and frequency indicate how much measurement effort and cost the application can justify, and shape acceptance criteria.",
+      "affects": "acceptance"
+    }
+  ],
+  "assumptions": [
+    "The liquid stream can be sampled or accessed either at-line or via laboratory grab samples for the first experiment.",
+    "A reference method or confirmed sample status (normal/off-spec) exists or can be established.",
+    "The contaminant concentration, once named, is within the detection capability of at least one candidate spectroscopy method.",
+    "The process operates within standard optical-probe material and temperature limits until stated otherwise."
+  ],
+  "recommendations": [
+    {
+      "method": "Immediate selection of a single best method and exact sensor configuration",
+      "technique": "N/A",
+      "role": "not_recommended",
+      "rationale": [
+        {
+          "text": "The sources state that selecting a spectral method for a specific analytical problem is complex and requires considering many factors [S01 p.5].",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 5,
+              "label": "S01 p.5",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "The AFS workflow requires a multi-method measurement of the customer process before selecting the best solution [S02 p.3; S05 p.1].",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S02",
+              "page": 3,
+              "label": "S02 p.3",
+              "quote": null,
+              "url": null
+            },
+            {
+              "source": "S05",
+              "page": 1,
+              "label": "S05 p.1",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "Exact configuration requires knowledge of the analyte, matrix and diagnostic bands; path lengths differ by orders of magnitude between methods [S01 p.9; S01 Table 1 (p.6)].",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 9,
+              "label": "S01 p.9",
+              "quote": null,
+              "url": null
+            },
+            {
+              "source": "S01",
+              "page": 6,
+              "label": "S01 Table 1 (p.6)",
+              "quote": null,
+              "url": null
+            }
+          ]
+        }
+      ],
+      "conditions": [],
+      "citations": []
+    },
+    {
+      "method": "Multi-method laboratory screening",
+      "technique": "comparative spectroscopy (MIR ATR, NIR, Raman; optionally UV/Vis or fluorescence if justified)",
+      "role": "primary",
+      "rationale": [
+        {
+          "text": "This is the corrected concept from the refuted premises: the AFS pathway begins with a multi-method test of the customer process across 0.3–16 µm using robust fiber probes [S02 p.3; S05 p.1].",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S02",
+              "page": 3,
+              "label": "S02 p.3",
+              "quote": null,
+              "url": null
+            },
+            {
+              "source": "S05",
+              "page": 1,
+              "label": "S05 p.1",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "Only after measuring and comparing spectral data and selecting key spectral features can a method and system be chosen for the specific process [S05 p.1; S02 p.3].",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S05",
+              "page": 1,
+              "label": "S05 p.1",
+              "quote": null,
+              "url": null
+            },
+            {
+              "source": "S02",
+              "page": 3,
+              "label": "S02 p.3",
+              "quote": null,
+              "url": null
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        "Representative normal and off-spec liquid samples must be available.",
+        "An independent reference method or agreed sample classification must be available."
+      ],
+      "citations": []
+    },
+    {
+      "method": "MIR (ATR)",
+      "technique": "ATR platform or ATR probe for liquids, pastes and soft solids",
+      "role": "comparison",
+      "rationale": [
+        {
+          "text": "MIR band spectra contain well-defined peaks, which is attractive for identifying an unknown species rather than only regression [S01 p.5].",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 5,
+              "label": "S01 p.5",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "ATR probes allow in-line/in-situ liquid analysis without sampling and are suited to liquids, pastes and soft solids [S01 p.10; S01 Table 1 (p.6)].",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 10,
+              "label": "S01 p.10",
+              "quote": null,
+              "url": null
+            },
+            {
+              "source": "S01",
+              "page": 6,
+              "label": "S01 Table 1 (p.6)",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "A vendor slide shows water content in petroleum resolved from 0.1–2.0 % water in the 4000–2000 cm⁻¹ region, supporting that MIR ATR is worth testing for a minor contaminant in a liquid [S02 p.13].",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S02",
+              "page": 13,
+              "label": "S02 p.13",
+              "quote": null,
+              "url": null
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        "Sample must contact the ATR crystal; fouling and chemical compatibility must be checked.",
+        "If the contaminant is below the MIR sensitivity floor for this matrix, this method alone may be insufficient."
+      ],
+      "citations": []
+    },
+    {
+      "method": "NIR",
+      "technique": "transmission/transflection or diffuse reflection probe for liquids",
+      "role": "comparison",
+      "rationale": [
+        {
+          "text": "NIR is suitable for online liquids and remote fiber probes, with average sensitivity and selectivity [S01 Table 1 (p.6); S01 p.5].",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 6,
+              "label": "S01 Table 1 (p.6)",
+              "quote": null,
+              "url": null
+            },
+            {
+              "source": "S01",
+              "page": 5,
+              "label": "S01 p.5",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "NIR is effective for major components in the millimolar range but may lack sensitivity to detect trace compounds below 0.1 percent [S01 p.16].",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 16,
+              "label": "S01 p.16",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "Broad overlapping NIR bands require chemometrics and matrix-specific calibration [S01 p.5].",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 5,
+              "label": "S01 p.5",
+              "quote": null,
+              "url": null
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        "Include NIR in screening if the unknown may be a major component or process-state change, not a trace contaminant."
+      ],
+      "citations": []
+    },
+    {
+      "method": "Raman",
+      "technique": "Raman probe for liquids",
+      "role": "comparison",
+      "rationale": [
+        {
+          "text": "Raman is particularly well-suited to aqueous environments because water has low absorbance compared to infrared methods [S01 p.16].",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 16,
+              "label": "S01 p.16",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "Raman provides high selectivity but weak signal and possible fluorescence background are limitations [S01 p.5; S01 Table 1 (p.6)].",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 5,
+              "label": "S01 p.5",
+              "quote": null,
+              "url": null
+            },
+            {
+              "source": "S01",
+              "page": 6,
+              "label": "S01 Table 1 (p.6)",
+              "quote": null,
+              "url": null
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        "Include in screening, especially if the stream is aqueous or the contaminant is expected to have a Raman fingerprint."
+      ],
+      "citations": []
+    }
+  ],
+  "measurement_concept": {
+    "probe_geometry": [
+      {
+        "text": "For the first screening, use each candidate's standard laboratory geometry: MIR ATR platform or ATR probe (1–6 µm optical path), NIR transmission/transflection probe or cuvette (1–10 mm), and Raman probe (2–5 mm) [S01 Table 1 (p.6)].",
+        "kind": "sourced",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 6,
+            "label": "S01 Table 1 (p.6)",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "text": "The exact process probe geometry cannot be fixed until the signal-bearing method and diagnostic bands are known.",
+        "kind": "inference",
+        "citations": []
+      }
+    ],
+    "location": [
+      {
+        "text": "The first measurement should be in the laboratory or at-line on controlled samples, not as an installed in-line sensor, following the AFS step of testing the customer process before designing a system [S05 p.1; S01 p.9].",
+        "kind": "sourced",
+        "citations": [
+          {
+            "source": "S05",
+            "page": 1,
+            "label": "S05 p.1",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 9,
+            "label": "S01 p.9",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "text": "A later in-line location would depend on process conditions, access and cleaning requirements, which are not yet known.",
+        "kind": "inference",
+        "citations": []
+      }
+    ],
+    "fiber_link": [
+      {
+        "text": "Fiber link must match the selected spectral range: standard UV-Vis silica fibers cover 190–1200 nm, Vis-NIR silica fibers cover 350–2400 nm, and chalcogenide As-S IR fibers cover 1.1–6.5 µm [S02 p.6].",
+        "kind": "sourced",
+        "citations": [
+          {
+            "source": "S02",
+            "page": 6,
+            "label": "S02 p.6",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "text": "No exact fiber length, material or connector can be specified before the method and spectral band selection.",
+        "kind": "inference",
+        "citations": []
+      }
+    ]
+  },
+  "spectral_ranges": [
+    {
+      "method": "MIR (ATR)",
+      "range_text": "4000–400 cm⁻¹ nominal mid-IR range [S01 p.9]; the usable range is limited by fiber and ATR crystal, and the water-in-petroleum example shows a discriminating region from 4000 to 2000 cm⁻¹ [S02 p.13].",
+      "note": "Do not assume full coverage of a specific probe; confirm actual usable range with AFS after sample data.",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 9,
+          "label": "S01 p.9",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S02",
+          "page": 13,
+          "label": "S02 p.13",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "method": "NIR",
+      "range_text": "No single instrument range can be fixed from the supplied pages; the relevant NIR diagnostic bands must be selected from screening data. Standard fiber links cover only part of the common NIR window: UV-Vis silica 190–1200 nm and Vis-NIR silica 350–2400 nm [S02 p.6].",
+      "note": "Confirm actual instrument and fiber coverage with AFS; the nominal NIR region is only a starting point.",
+      "citations": [
+        {
+          "source": "S02",
+          "page": 6,
+          "label": "S02 p.6",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "method": "Raman",
+      "range_text": "Excitation wavelength and Raman shift range cannot be set before sample data; Raman is recorded in the visible and NIR spectral regions [S01 p.5].",
+      "note": "State the excitation wavelength separately from the Raman shift once a system is chosen.",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 5,
+          "label": "S01 p.5",
+          "quote": null,
+          "url": null
+        }
+      ]
+    }
+  ],
+  "risks": [
+    {
+      "text": "Choosing a method or configuration before defining the quality variable and contaminant would be unsupported by the sources and likely mis-specified [S01 p.5; S05 p.1].",
+      "kind": "inference",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 5,
+          "label": "S01 p.5",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S05",
+          "page": 1,
+          "label": "S05 p.1",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "text": "If the contaminant is below about 0.1%, NIR may lack sensitivity, making MIR, Raman or fluorescence more relevant [S01 p.16].",
+      "kind": "sourced",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 16,
+          "label": "S01 p.16",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "text": "Models built on few off-spec samples risk overfitting; validation on independent samples is required [S03 p.6; S03 p.10].",
+      "kind": "sourced",
+      "citations": [
+        {
+          "source": "S03",
+          "page": 6,
+          "label": "S03 p.6",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S03",
+          "page": 10,
+          "label": "S03 p.10",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "text": "Physical variation, fouling, fluorescence or matrix effects can degrade measurements; combining methods is not a guaranteed fix and remains a hypothesis to test [S01 p.5; S04 p.4].",
+      "kind": "sourced",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 5,
+          "label": "S01 p.5",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S04",
+          "page": 4,
+          "label": "S04 p.4",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "text": "The premise that contamination is the cause is unverified; off-spec could have another root cause, so reference analysis must confirm before a contaminant-specific method is pursued [S05 p.2].",
+      "kind": "inference",
+      "citations": [
+        {
+          "source": "S05",
+          "page": 2,
+          "label": "S05 p.2",
+          "quote": null,
+          "url": null
+        }
+      ]
+    }
+  ],
+  "feasibility_plan": {
+    "objective": "Use retained normal and off-spec liquid samples to screen candidate spectral methods, identify informative ranges, and establish whether a reproducible spectroscopy-based difference exists before any sensor configuration is attempted.",
+    "samples": [
+      "A representative set of normal, on-spec liquid samples.",
+      "Archived or newly generated off-spec samples spanning the observed excursions.",
+      "If available, samples with suspected contamination or spiked reference material."
+    ],
+    "reference_measurements": [
+      "Independent laboratory reference analysis or confirmed classification of each sample (e.g. chromatography, mass spectrometry, titration, assay) agreed with the client.",
+      "Timestamps and process/batch context so spectra can be linked to off-spec events."
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "Collect and organise samples",
+        "description": "Assemble retained normal and off-spec samples; record their quality-variable status and reference results; archive aliquots for later validation.",
+        "citations": []
+      },
+      {
+        "order": 2,
+        "title": "Run multi-method laboratory screening",
+        "description": "Measure all samples with candidate methods covering 0.3–16 µm (MIR ATR, NIR, Raman; include UV/Vis or fluorescence only if justified) using standard laboratory geometries, not installed sensors [S02 p.3; S01 p.9].",
+        "citations": [
+          {
+            "source": "S02",
+            "page": 3,
+            "label": "S02 p.3",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 9,
+            "label": "S01 p.9",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Exploratory spectral inspection and feature selection",
+        "description": "Compare spectra from normal vs off-spec samples; identify spectral ranges and signal types that differ. Use multivariate analysis/data fusion only as a hypothesis to test [S05 p.1; S01 p.9].",
+        "citations": [
+          {
+            "source": "S05",
+            "page": 1,
+            "label": "S05 p.1",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 9,
+            "label": "S01 p.9",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "order": 4,
+        "title": "Build and validate a provisional model",
+        "description": "Build classification or calibration models on the screening data with thorough validation (cross-validation, held-out samples) to test whether spectra can separate off-spec from normal; do not rely on limited data alone [S03 p.6; S03 p.10].",
+        "citations": [
+          {
+            "source": "S03",
+            "page": 6,
+            "label": "S03 p.6",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S03",
+            "page": 10,
+            "label": "S03 p.10",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "order": 5,
+        "title": "Decision gate before in-line trial",
+        "description": "Only if screening shows a useable, validated spectroscopic signal and after the quality variable/contaminant is defined, start an in-line probe feasibility test against timed reference samples; otherwise continue root-cause analysis.",
+        "citations": []
+      }
+    ],
+    "comparison": "Compare candidate methods on their ability to distinguish normal from off-spec samples, including spectral interpretability, sensitivity range, and stability; also compare against the independent reference method, not only between spectroscopic methods.",
+    "go_no_go": "Go/no-go is agreed with the client after defining the quality variable and detection requirement: proceed to a method-specific calibration only if at least one method shows a reproducible, validated spectral difference between off-spec and normal samples that is tied to the reference results; otherwise no sensor configuration can be specified."
+  },
+  "sources": [
+    {
+      "source": "S01",
+      "page": 5,
+      "label": "S01 p.5",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S02",
+      "page": 3,
+      "label": "S02 p.3",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S05",
+      "page": 1,
+      "label": "S05 p.1",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 6,
+      "label": "S01 Table 1 (p.6)",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 9,
+      "label": "S01 p.9",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S05",
+      "page": 2,
+      "label": "S05 p.2",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S02",
+      "page": 13,
+      "label": "S02 p.13",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 14,
+      "label": "S01 p.14",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 10,
+      "label": "S01 p.10",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 16,
+      "label": "S01 p.16",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S02",
+      "page": 6,
+      "label": "S02 p.6",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S03",
+      "page": 6,
+      "label": "S03 p.6",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S03",
+      "page": 10,
+      "label": "S03 p.10",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S04",
+      "page": 4,
+      "label": "S04 p.4",
+      "quote": null,
+      "url": null
+    }
+  ],
+  "case_id": "H05",
+  "enquiry": "We have a liquid process that occasionally goes off specification. We suspect contamination, but we cannot yet name the contaminant or the affected quality variable. We would like you to recommend the best spectroscopy method and exact sensor configuration immediately. What information and first experiment should come before that decision?",
+  "user_answers": [],
+  "verification": {
+    "passed": true,
+    "revisions": 0,
+    "checks": [
+      {
+        "name": "citations_valid",
+        "passed": true,
+        "details": "All citations point to retrieved evidence pages."
+      },
+      {
+        "name": "numbers_supported",
+        "passed": true,
+        "details": "Every number with a unit appears in the sources or the client's text."
+      },
+      {
+        "name": "sections_complete",
+        "passed": true,
+        "details": "All sections present."
+      },
+      {
+        "name": "premises_addressed",
+        "passed": true,
+        "details": "4 of 4 client premise(s) given an explicit verdict."
+      },
+      {
+        "name": "expert_review",
+        "passed": true,
+        "details": "[warning] The status 'outside_supported_scope' is defensible because the request asks for immediate final method and exact configuration, but the draft could more precisely use 'insufficient_information' since the core issue is missing process/analyte data rather than an inherently unsupported request.; [warning] The citation to S01 p.14 for 'documented applications target named variables such as water in oil, API potency, or milk fat/protein' is weak: that page discusses tissue discrimination and pharmaceutical blend potency, not water in oil or milk fat/protein.; [warning] The claim 'The AFS workflow requires a multi-method measurement of the customer process before selecting the best solution [S02 p.3; S05 p.1]' is supported, but S02 p.3 says 'Comparison of spectral data for customer process enables to select the best process-control solution', which is a comparison step, not necessarily a full multi-method measurement before any selection.; [warning] The plan is practical and staged, but it could more explicitly name the independent reference method (e.g., chromatography, titration) as required by the critique, rather than listing generic examples.; [warning] The questions are prioritized and specific, but q6 about consequence/frequency is lower priority and may not directly change the method or setup; it could be merged or deferred.; [warning] The draft lists MIR, NIR, and Raman as comparison methods, which is appropriate for screening, but it should explicitly state that a combination is only a later hypothesis and not a default recommendation."
+      }
+    ]
+  },
+  "meta": {
+    "model": "deepseek-v4-pro",
+    "mode": "batch",
+    "generated_at": "2026-10-17T16:09:16+00:00",
+    "duration_s": 157.1
+  }
+}

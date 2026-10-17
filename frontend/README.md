@@ -1,25 +1,16 @@
 # AFS Spectroscopy Assistant — frontend
 
-React + Vite + TypeScript + Tailwind UI for the AFS in-line spectroscopy assistant. It implements the contract in `frontend.md` (routes, SSE events, `Report` types) and runs against the real backend or a built-in mock.
+React + Vite + TypeScript + Tailwind UI for the AFS in-line spectroscopy assistant. It implements the contract in `frontend.md` (routes, SSE events, `Report` types) against the real backend.
 
 ## Run it
 
 ```bash
 npm install
+cp .env.example .env.local   # VITE_API_BASE_URL=http://localhost:8000 (also the default)
 npm run dev
 ```
 
-With no `VITE_API_BASE_URL` set, the app uses an in-browser **mock backend** (the header shows "Mock data"). The mock replays a full run for the soil example from the challenge brief, whatever you type: clarifier questions, researcher tool calls, a critic rejection, a revision, then the report. `/reports` shows the organizers' D01/D02 worked examples. None of the mock content is assistant output.
-
-To use the real backend, create `.env.local`:
-
-```
-VITE_API_BASE_URL=https://afs-backend.onrender.com
-```
-
-To use the backend's own mock instead, run it with `MOCK_MODE=1` and point `VITE_API_BASE_URL` at it.
-
-Checks: `npm run typecheck`, `npm run build`.
+Start the backend first (see the root README). Checks: `npm run typecheck`, `npm run build`.
 
 ## Deploy (Vercel)
 

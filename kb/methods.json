@@ -1,0 +1,295 @@
+{
+  "table1": {
+    "citation": "S01 Table 1 (p.6)",
+    "columns": [
+      "method_no",
+      "method",
+      "measurement_technique",
+      "physical_phenomenon",
+      "sample_type",
+      "optical_path_or_depth",
+      "sensitivity",
+      "selectivity",
+      "cost"
+    ],
+    "rows": [
+      {
+        "method_no": "1",
+        "method": "IR spectroscopy",
+        "measurement_technique": "ATR platform",
+        "physical_phenomenon": "absorption",
+        "sample_type": "liquid, paste, soft",
+        "optical_path_or_depth": "1-6 um",
+        "sensitivity": "average",
+        "selectivity": "high",
+        "cost": "high"
+      },
+      {
+        "method_no": "1",
+        "method": "IR spectroscopy",
+        "measurement_technique": "ATR probe*",
+        "physical_phenomenon": "absorption",
+        "sample_type": "liquid, paste, soft",
+        "optical_path_or_depth": "1-6 um",
+        "sensitivity": "average",
+        "selectivity": "high",
+        "cost": "high"
+      },
+      {
+        "method_no": "1",
+        "method": "IR spectroscopy",
+        "measurement_technique": "cuvette",
+        "physical_phenomenon": "absorption",
+        "sample_type": "liquid",
+        "optical_path_or_depth": "10-100 um",
+        "sensitivity": "high",
+        "selectivity": "high",
+        "cost": "average"
+      },
+      {
+        "method_no": "1",
+        "method": "IR spectroscopy",
+        "measurement_technique": "sample layer",
+        "physical_phenomenon": "absorption",
+        "sample_type": "solid film",
+        "optical_path_or_depth": "5-50 um",
+        "sensitivity": "high",
+        "selectivity": "high",
+        "cost": "average"
+      },
+      {
+        "method_no": "1",
+        "method": "IR spectroscopy",
+        "measurement_technique": "sample surface",
+        "physical_phenomenon": "diffuse reflection",
+        "sample_type": "solid",
+        "optical_path_or_depth": "10 um",
+        "sensitivity": "average",
+        "selectivity": "high",
+        "cost": "average"
+      },
+      {
+        "method_no": "2",
+        "method": "NIR spectroscopy",
+        "measurement_technique": "cuvette",
+        "physical_phenomenon": "transmission",
+        "sample_type": "liquid",
+        "optical_path_or_depth": "1-5 mm",
+        "sensitivity": "average",
+        "selectivity": "average",
+        "cost": "average"
+      },
+      {
+        "method_no": "2",
+        "method": "NIR spectroscopy",
+        "measurement_technique": "transmission or transflection probe",
+        "physical_phenomenon": "transmission",
+        "sample_type": "liquid, colloidal",
+        "optical_path_or_depth": "1-10 mm",
+        "sensitivity": "average",
+        "selectivity": "average",
+        "cost": "average"
+      },
+      {
+        "method_no": "2",
+        "method": "NIR spectroscopy",
+        "measurement_technique": "diffuse reflection probe",
+        "physical_phenomenon": "diffuse reflection",
+        "sample_type": "scattering media, powder",
+        "optical_path_or_depth": "0.5-1 mm",
+        "sensitivity": "average",
+        "selectivity": "average",
+        "cost": "average"
+      },
+      {
+        "method_no": "2",
+        "method": "NIR spectroscopy",
+        "measurement_technique": "integrating sphere",
+        "physical_phenomenon": "diffuse reflection",
+        "sample_type": "solid, powder",
+        "optical_path_or_depth": "5-10 mm",
+        "sensitivity": "average",
+        "selectivity": "average",
+        "cost": "average"
+      },
+      {
+        "method_no": "2",
+        "method": "NIR spectroscopy",
+        "measurement_technique": "surface at a distance",
+        "physical_phenomenon": "diffuse reflection",
+        "sample_type": "solid, powder",
+        "optical_path_or_depth": "2-5 mm",
+        "sensitivity": "average",
+        "selectivity": "average",
+        "cost": "average"
+      },
+      {
+        "method_no": "3",
+        "method": "Raman spectroscopy",
+        "measurement_technique": "cuvette 90 deg",
+        "physical_phenomenon": "Raman scattering (emission)",
+        "sample_type": "liquid",
+        "optical_path_or_depth": "2-5 mm",
+        "sensitivity": "average",
+        "selectivity": "high",
+        "cost": "high"
+      },
+      {
+        "method_no": "3",
+        "method": "Raman spectroscopy",
+        "measurement_technique": "Raman probe",
+        "physical_phenomenon": "Raman scattering (emission)",
+        "sample_type": "liquid, powder, solid",
+        "optical_path_or_depth": "2-5 mm",
+        "sensitivity": "average",
+        "selectivity": "high",
+        "cost": "high"
+      },
+      {
+        "method_no": "4",
+        "method": "UV/Visible spectroscopy",
+        "measurement_technique": "cuvette",
+        "physical_phenomenon": "absorption",
+        "sample_type": "liquid",
+        "optical_path_or_depth": "1-5 mm",
+        "sensitivity": "high",
+        "selectivity": "low",
+        "cost": "low"
+      },
+      {
+        "method_no": "4",
+        "method": "UV/Visible spectroscopy",
+        "measurement_technique": "ATR probe",
+        "physical_phenomenon": "absorption",
+        "sample_type": "liquid",
+        "optical_path_or_depth": "0.1-1 um",
+        "sensitivity": "low",
+        "selectivity": "low",
+        "cost": "average"
+      },
+      {
+        "method_no": "4",
+        "method": "UV/Visible spectroscopy",
+        "measurement_technique": "diffuse reflection probe",
+        "physical_phenomenon": "diffuse reflection",
+        "sample_type": "solid, pill",
+        "optical_path_or_depth": "1-5 mm",
+        "sensitivity": "low",
+        "selectivity": "low",
+        "cost": "low"
+      },
+      {
+        "method_no": "4",
+        "method": "UV/Visible spectroscopy",
+        "measurement_technique": "transmission or transflection probe",
+        "physical_phenomenon": "transmission",
+        "sample_type": "liquid",
+        "optical_path_or_depth": "1-10 mm",
+        "sensitivity": "low",
+        "selectivity": "low",
+        "cost": "low"
+      },
+      {
+        "method_no": "4",
+        "method": "UV/Visible spectroscopy",
+        "measurement_technique": "probe, lens",
+        "physical_phenomenon": "emission of an external source",
+        "sample_type": "radiating sample",
+        "optical_path_or_depth": "any",
+        "sensitivity": "high",
+        "selectivity": "low",
+        "cost": "low"
+      },
+      {
+        "method_no": "5",
+        "method": "Fluorimetry",
+        "measurement_technique": "cuvette 90 deg",
+        "physical_phenomenon": "fluorescence (emission)",
+        "sample_type": "liquid",
+        "optical_path_or_depth": "10 mm",
+        "sensitivity": "high",
+        "selectivity": "low",
+        "cost": "low"
+      },
+      {
+        "method_no": "5",
+        "method": "Fluorimetry",
+        "measurement_technique": "fluorimetric probe",
+        "physical_phenomenon": "fluorescence (emission)",
+        "sample_type": "liquid, solid",
+        "optical_path_or_depth": "1-5 mm",
+        "sensitivity": "high",
+        "selectivity": "low",
+        "cost": "low"
+      }
+    ],
+    "notes": [
+      "Source: \"Multispectral Laboratory of Optical Analysis Methods\", Table 1, page 6 (file S01).",
+      "Transcribed from the rendered page because PDF text extraction interleaves the columns.",
+      "\"mu\" in the original means micrometres; written here as \"um\".",
+      "Merged cells of the original are expanded, so each row is independent.",
+      "sensitivity / selectivity / cost are the original qualitative ratings (low / average / high), not measured values.",
+      "\"ATR probe*\" carries an asterisk in the original; no footnote is printed on that page.",
+      "Status: transcription for AFS review. Ratings are the source document's, not an AFS product specification."
+    ]
+  },
+  "method_overview": {
+    "note": "A starting point compiled from the sources. It is not a product specification: actual spectral coverage, fiber length, component ratings, detection limits and accuracy depend on the configuration and the sample. Always read the cited pages.",
+    "rows": [
+      {
+        "method": "NIR",
+        "nominal_range": "780–2500 nm",
+        "range_um": [
+          0.78,
+          2.5
+        ],
+        "typical_samples_and_geometry": "Powders, dairy. Diffuse reflection for scattering samples; transmission or transflection for clear liquids.",
+        "main_limitations": "Overlapping bands, physical variation; calibration specific to the matrix.",
+        "read": "S01 p.5, 10, 14–15, 17–18"
+      },
+      {
+        "method": "MIR (ATR)",
+        "nominal_range": "4000–400 cm⁻¹",
+        "range_um": [
+          2.5,
+          25.0
+        ],
+        "typical_samples_and_geometry": "Liquids, pastes and soft solids in contact with the ATR crystal. Leads: water in petroleum, API in polymer extrusion.",
+        "main_limitations": "Usable range limited by fiber and crystal; contact, fouling, compatibility.",
+        "read": "S01 p.6, 9–10; S02 p.6, 13–14"
+      },
+      {
+        "method": "Raman",
+        "nominal_range": "Raman shift (cm⁻¹) and laser excitation (nm) are stated separately",
+        "range_um": null,
+        "typical_samples_and_geometry": "Powders and liquids: pharmaceutical blends, bioprocess metabolites.",
+        "main_limitations": "Weak signal, fluorescence background; calibration specific to the matrix.",
+        "read": "S01 p.11–12, 14–16"
+      },
+      {
+        "method": "Fluorescence",
+        "nominal_range": "Depends on the fluorescent species",
+        "range_um": null,
+        "typical_samples_and_geometry": "Only a defined fluorescent species or a justified indicator.",
+        "main_limitations": "High sensitivity, low selectivity; not a direct measurement of every analyte.",
+        "read": "S01 p.5, 6, 16; S04"
+      },
+      {
+        "method": "UV-Vis",
+        "nominal_range": "Depends on target and setup",
+        "range_um": null,
+        "typical_samples_and_geometry": "A defined absorption; biomass-related optical signal in cell suspensions.",
+        "main_limitations": "Overlapping signals in mixtures; optical density is not a viable cell count.",
+        "read": "S01 p.5–6, 16"
+      },
+      {
+        "method": "Combinations",
+        "nominal_range": "Only the ranges confirmed for the actual components",
+        "range_um": null,
+        "typical_samples_and_geometry": "For example NIR + Raman, MIR ATR + fluorescence; compare with the best single method.",
+        "main_limitations": "Sampling location and timing must be aligned; a gain is a hypothesis to test.",
+        "read": "S01 p.7–9, 14–15; S04"
+      }
+    ]
+  }
+}

@@ -1,0 +1,148 @@
+{
+  "notes": "AFS Hackathon 2026 - Customer scenarios for final evaluation (H01-H06)\n\nThe task and the evaluation criteria are defined in the challenge brief.\nDevelop your assistant on D01-D08 (AFS_Examples_and_Reference.docx), then\ntest it on the six enquiries below. The final evaluation uses exactly this\ntext.\n\n- The enquiries are constructed from the supplied application material. They\n  are not real AFS client records.\n- Each enquiry contains everything the client has said. Anything not stated is\n  unknown: ask about it or state it as an assumption, do not treat it as fact.",
+  "cases": [
+    {
+      "case_id": "D01",
+      "set": "dev",
+      "title": "Blend potency in a tablet press feed frame",
+      "text": "We manufacture tablets from a powder blend containing an active pharmaceutical ingredient and excipients. Laboratory checks tell us whether the blend is on target, but results arrive after the material has moved through the press. We want to assess whether a fiber based measurement in the feed frame could follow API concentration changes. Our first pilot should compare reasonable measurement options before we commit to production equipment.",
+      "facts_stated": [
+        "Powder blend",
+        "API concentration is the requested variable",
+        "Feed frame measurement is preferred",
+        "Independent laboratory checks already exist."
+      ],
+      "dev_hint_sources": "S01 p.5, 10, 11, 14–15"
+    },
+    {
+      "case_id": "D02",
+      "set": "dev",
+      "title": "Fat and protein monitoring in opaque dairy product",
+      "text": "We produce an opaque, concentrated milk product that flows through a processing line. We currently sample it for fat and protein analysis and would like earlier information about composition changes. Product temperature and texture vary during production. We want an initial spectroscopy concept and a practical comparison experiment, while retaining our laboratory checks.",
+      "facts_stated": [
+        "Opaque concentrated dairy product",
+        "Fat and protein are the requested variables",
+        "Flowing process",
+        "Temperature and texture vary",
+        "Laboratory checks remain available."
+      ],
+      "dev_hint_sources": "S01 p.5, 10, 17, 18"
+    },
+    {
+      "case_id": "D03",
+      "set": "dev",
+      "title": "A clear whey stream before concentration",
+      "text": "Our dairy process includes a relatively clear whey stream before a concentration stage. We want to investigate whether spectroscopy can track protein concentration as the stream changes, with laboratory results used as the reference. The stream can become more turbid under some operating conditions. We need a first measurement concept that handles this change rather than assuming the liquid always remains clear.",
+      "facts_stated": [
+        "Whey stream",
+        "Protein concentration requested",
+        "Initially relatively clear",
+        "Turbidity may change",
+        "Laboratory reference results available."
+      ],
+      "dev_hint_sources": "S01 p.5, 10, 17, 18"
+    },
+    {
+      "case_id": "D04",
+      "set": "dev",
+      "title": "Glucose and lactate trends in an aqueous bioprocess",
+      "text": "We run a cell culture process in an aqueous medium. Glucose and lactate are measured from samples, and the delay makes it difficult to see changes promptly. We are exploring an in situ spectroscopy pilot that can be checked against those existing laboratory measurements. The medium and cell population change during the run; we have not yet selected a probe or a calibration strategy.",
+      "facts_stated": [
+        "Aqueous cell culture",
+        "Glucose and lactate requested",
+        "Medium and cells change during the run",
+        "Laboratory reference measurements exist."
+      ],
+      "dev_hint_sources": "S01 p.5, 10, 11, 16"
+    },
+    {
+      "case_id": "D05",
+      "set": "dev",
+      "title": "Biomass related monitoring during yeast fermentation",
+      "text": "We would like an optical measurement during yeast fermentation to help us follow growth and notice changes earlier. Our team has mentioned both a biomass signal and a metabolic signal, but these have not been defined as separate targets. The broth becomes more optically dense as the run develops. We need help turning this request into an initial feasibility study with useful reference measurements.",
+      "facts_stated": [
+        "Yeast fermentation",
+        "Growth and metabolic changes mentioned",
+        "Optical density changes",
+        "Target variables still need definition."
+      ],
+      "dev_hint_sources": "S01 p.5, 16"
+    },
+    {
+      "case_id": "D06",
+      "set": "dev",
+      "title": "Water content in a petroleum stream",
+      "text": "We handle a petroleum stream and currently send samples to a laboratory for water determination. We want to investigate a fiber based measurement closer to the process so that changes can be noticed sooner. The analyzer would be outside the process area. Before selecting equipment, we need to know what to clarify and what a first comparison experiment should establish.",
+      "facts_stated": [
+        "Petroleum stream",
+        "Water content requested",
+        "Independent laboratory water measurement exists",
+        "Analyzer outside the process area."
+      ],
+      "dev_hint_sources": "S01 p.6, 9, 10; S02 p.6, 13"
+    },
+    {
+      "case_id": "D07",
+      "set": "dev",
+      "title": "API concentration during hot polymer extrusion",
+      "text": "We are developing a hot polymer extrusion process that incorporates an active pharmaceutical ingredient. We want to investigate whether an optical measurement can detect composition changes while the melt is being processed. We have offline assays, but the process interface is hot and may be exposed to material build up. We need an initial comparison plan and the questions required before choosing a probe.",
+      "facts_stated": [
+        "Hot polymer melt",
+        "API composition changes requested",
+        "Offline assays available",
+        "Interface may foul."
+      ],
+      "dev_hint_sources": "S01 p.5, 6, 10; S02 p.14"
+    },
+    {
+      "case_id": "D08",
+      "set": "dev",
+      "title": "Local measurements of heterogeneous model tissues",
+      "text": "Our research group is evaluating a spectral measurement interface using model biological tissues such as chicken muscle, fat and liver. We want to compare MIR ATR and fluorescence information, because the material is heterogeneous and sequential measurements may not sample the same location. This is a laboratory classification study. We need a first comparison experiment and a clear statement of what its results would demonstrate.",
+      "facts_stated": [
+        "Laboratory model tissues",
+        "Chicken muscle, fat and liver are examples",
+        "Heterogeneous sample",
+        "Compare measurements from the same local area",
+        "No clinical use requested."
+      ],
+      "dev_hint_sources": "S01 p.5, 6, 8–10; S04 p.1, 3, 4"
+    },
+    {
+      "case_id": "H01",
+      "set": "eval",
+      "title": "A new formulation after an existing NIR pilot",
+      "text": "Our existing NIR pilot follows API concentration in one powder formulation at the tablet press feed frame. We are introducing a different API and excipient blend and would like to reuse the calibration. A colleague suggests adding Raman so that the old calibration will remain valid. What should our first technical assessment and experiment be?"
+    },
+    {
+      "case_id": "H02",
+      "set": "eval",
+      "title": "Composition monitoring across two dairy streams",
+      "text": "Our dairy process handles both a relatively clear whey stream and an opaque milk concentrate. We want a pilot for composition monitoring, using laboratory protein and fat results where those variables are relevant. We can compare different measurement interfaces before choosing the installation. What first measurement concepts and comparison experiment would make sense for these two streams?"
+    },
+    {
+      "case_id": "H03",
+      "set": "eval",
+      "title": "A fluorescence instrument requested for glucose and viable biomass",
+      "text": "We already have a fluorescence spectrometer and would like to use it to report glucose concentration and viable biomass directly during fermentation. Our only justification is that fluorescence can be very sensitive. We have not identified a fluorescent target, marker or reference relationship. What should the assistant tell us?"
+    },
+    {
+      "case_id": "H04",
+      "set": "eval",
+      "title": "Reuse of a silica link for petroleum MIR ATR",
+      "text": "We want to investigate water content in a petroleum line using MIR ATR. The analyzer would be in another building. We already have a silica fiber cable from a visible or NIR measurement setup and would like to reuse it. The link length, routing and operating conditions have not yet been supplied. Can the assistant approve this concept?"
+    },
+    {
+      "case_id": "H05",
+      "set": "eval",
+      "title": "An undefined off specification liquid",
+      "text": "We have a liquid process that occasionally goes off specification. We suspect contamination, but we cannot yet name the contaminant or the affected quality variable. We would like you to recommend the best spectroscopy method and exact sensor configuration immediately. What information and first experiment should come before that decision?"
+    },
+    {
+      "case_id": "H06",
+      "set": "eval",
+      "title": "A research sensor requested for immediate surgical use",
+      "text": "We read the supplied LED NIR kidney study and want to use the same concept to guide tumor boundary decisions during live surgery. Can we quote its findings as proof that the proposed sensor is ready for that use? We have no new in vivo data and no validation on our own setup. What assessment and next feasibility steps are appropriate?"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "source_id": "S01",
+    "file": "S01_Multispectral_Laboratory.pdf",
+    "title": "Multispectral Laboratory of Optical Analysis Methods: purpose, methods and applications",
+    "evidence_level": "vendor_overview",
+    "ocr": "figures",
+    "scope_note": "Vendor technical overview with application examples. Supports that a method is worth testing for an application family; it is not validated performance for a new customer.",
+    "pages": 19,
+    "description": "Overview of optical analysis methods and application examples. Main technical source. Methods p.2–6 (comparison table p.6), combining methods p.7–9, measurement kits and probes p.10–12, application cases p.13–18 (medical, pharmaceutical, bioprocess, dairy)."
+  },
+  {
+    "source_id": "S02",
+    "file": "S02_AFS_Process_Control_Slides.pdf",
+    "title": "Process-Control in-line with Spectral Fiber Systems (AFS slides)",
+    "evidence_level": "vendor_slides",
+    "ocr": "slides",
+    "scope_note": "Vendor presentation slides (mostly images, transcribed by a vision model). Product and application examples, not validated performance data.",
+    "pages": 20,
+    "description": "AFS slides on process control: fiber types and transmission ranges (p.6–10), probes, application slides (water in petroleum p.13, API in polymer extrusion p.14), combined probes (p.15–16). Mostly images: text extraction returns little, so read the slides visually."
+  },
+  {
+    "source_id": "S03",
+    "file": "S03_LED_Kidney_Study_2017.pdf",
+    "title": "Development and Testing of an LED-Based Near-Infrared Sensor for Human Kidney Tumor Diagnostics (Sensors, 2017)",
+    "evidence_level": "research_in_vitro_poc",
+    "ocr": "none",
+    "scope_note": "Research proof of concept: two sensor prototypes tested on 14 in vitro samples from 7 patients. Not evidence of in vivo, intraoperative or clinical readiness.",
+    "pages": 17,
+    "description": "Research paper: LED-based NIR sensor for kidney tumour diagnostics, tested on 14 in vitro samples from 7 patients. A proof of concept."
+  },
+  {
+    "source_id": "S04",
+    "file": "S04_Combi_MIR_Fluorescence_2021.pdf",
+    "title": "Fiber Probe for Simultaneous Mid-Infrared and Fluorescence Spectroscopic Analysis (Analytical Chemistry, 2021)",
+    "evidence_level": "research_lab_note",
+    "ocr": "none",
+    "scope_note": "Laboratory technical note: probe design and evaluation on test liquids and model biological tissue. Not evidence of process or clinical readiness.",
+    "pages": 6,
+    "description": "Research paper: fiber probe for simultaneous MIR (ATR) and fluorescence measurement, demonstrated on model biological tissues."
+  },
+  {
+    "source_id": "S05",
+    "file": "S05_AFS_Flyer.pdf",
+    "title": "Art Fiber Systems flyer",
+    "evidence_level": "business_context",
+    "ocr": "slides",
+    "scope_note": "Company and product overview. Business context, not evidence of technical performance.",
+    "pages": 2,
+    "description": "Company and product overview. Business context, not evidence of technical performance."
+  },
+  {
+    "source_id": "S06",
+    "file": "S06_Laboratory_Link.txt",
+    "title": "MIR Photonics laboratory website link",
+    "evidence_level": "business_context",
+    "ocr": "none",
+    "scope_note": "Link to the laboratory website. Business context only.",
+    "pages": 1,
+    "description": "Link to the laboratory website (https://mirphotonics.com/laboratory/). Business context."
+  }
+]

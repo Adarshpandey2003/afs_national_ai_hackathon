@@ -1,0 +1,1089 @@
+{
+  "decision_status": "provisional",
+  "decision_rationale": "The request is a first technical assessment and method-screening experiment, not an approval, proof, guaranteed performance claim, or clinical/final readiness decision. The target variable, water in a petroleum stream, is defined, and the AFS vendor material includes a directly relevant MIR-ATR application example plus general probe, fiber range, and comparison guidance, so a provisional method-screening recommendation is justified.",
+  "summary": "Primary candidate: MIR-ATR fiber probe, because the AFS material contains a water-in-petroleum application example. NIR and Raman should be compared in a multi-method lab screening against the current laboratory water determination. The experiment should identify separable water features, select the most promising method(s), and test fiber range/distance before any equipment selection.",
+  "requirements": {
+    "stated_facts": [
+      {
+        "text": "The customer handles a petroleum stream.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "Water determination is currently performed by sending samples to a laboratory.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "The customer wants to investigate a fiber-based measurement closer to the process.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "The customer wants changes to be noticed sooner.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "The customer states that the analyzer would be outside the process area.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "The customer wants to know what to clarify before selecting equipment.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "The customer wants to know what a first comparison experiment should establish.",
+        "kind": "fact",
+        "citations": []
+      }
+    ],
+    "key_unknowns": [
+      "Petroleum stream type and composition",
+      "Whether water is dissolved, emulsified, free, or vapor",
+      "Expected water concentration range and required detection limit",
+      "Process phase and conditions at the proposed measurement point, including temperature, pressure, flow, and sampling access",
+      "Current laboratory water-determination method or standard, sampling frequency, turnaround time, and reported precision",
+      "Required response time and accuracy for the fiber-based measurement",
+      "Which process decision or problem earlier water detection is meant to support",
+      "Analyzer environment outside the process area, including distance from the sample point, sample conditioning, utilities, and area classification",
+      "Maintenance, fouling, and optical-interface requirements",
+      "Acceptance criteria and duration for the first comparison experiment"
+    ],
+    "client_premises": [
+      {
+        "statement": "A fiber-based measurement closer to the process would allow changes to be noticed sooner than the current laboratory sampling.",
+        "verdict": "unverified",
+        "explanation": "AFS materials present sampling delays as an industry challenge and real-time monitoring as the solution, and ATR probes are described for in-line/remote analysis, but no source gives a response time, latency, or head-to-head comparison against laboratory turnaround for this customer stream. Whether changes are noticed sooner depends on the measurement point, sample transport, conditioning, and stream homogeneity.",
+        "citations": [
+          {
+            "source": "S05",
+            "page": 2,
+            "label": "S05 p.2",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 10,
+            "label": "S01 p.10",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S02",
+            "page": 3,
+            "label": "S02 p.3",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "statement": "The analyzer would be located outside the process area.",
+        "verdict": "supported",
+        "explanation": "The AFS slides explicitly show a centralized installation with analyzer/multiplexer and long fibers, and ATR probes allow analysis at significant distance from the spectrometer. The actual distance, fiber type, losses, and probe range still need AFS confirmation.",
+        "citations": [
+          {
+            "source": "S02",
+            "page": 18,
+            "label": "S02 p.18",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 10,
+            "label": "S01 p.10",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S02",
+            "page": 6,
+            "label": "S02 p.6",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "statement": "A first comparison experiment should be defined before equipment selection.",
+        "verdict": "supported",
+        "explanation": "The AFS pathway begins with a multi-method laboratory test of the customer process followed by selection of key spectral features before a tailored system is developed. This matches the customer's requested sequence.",
+        "citations": [
+          {
+            "source": "S05",
+            "page": 1,
+            "label": "S05 p.1",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S02",
+            "page": 3,
+            "label": "S02 p.3",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 9,
+            "label": "S01 p.9",
+            "quote": null,
+            "url": null
+          }
+        ]
+      }
+    ]
+  },
+  "clarification_questions": [
+    {
+      "question_id": "q1",
+      "text": "What water level range must be measured in the petroleum stream, and what detection limit and accuracy are needed?",
+      "priority": 1,
+      "why_it_matters": "The water level and required accuracy determine whether the measurement is trace-level or major-component and shape the measurement approach and comparison criteria.",
+      "affects": "method"
+    },
+    {
+      "question_id": "q2",
+      "text": "What is the petroleum stream's phase and composition at the proposed measurement point, and what are the temperature, pressure, flow, and water state there?",
+      "priority": 1,
+      "why_it_matters": "Phase, composition, and process conditions determine the sample interface, measurement setup, and whether water is dissolved, emulsified, free, or vapor.",
+      "affects": "setup"
+    },
+    {
+      "question_id": "q3",
+      "text": "Which laboratory method or standard is used for water determination, how often are samples taken, and what are the laboratory turnaround and reported precision?",
+      "priority": 1,
+      "why_it_matters": "The current reference method and its sampling frequency define the comparison baseline and what a closer-to-process measurement can improve.",
+      "affects": "plan"
+    },
+    {
+      "question_id": "q4",
+      "text": "What process change or problem should be detected earlier, and how quickly must the measurement respond to support that decision?",
+      "priority": 2,
+      "why_it_matters": "The intended decision and required response time determine whether the proposed measurement location and comparison experiment are fit for purpose.",
+      "affects": "plan"
+    },
+    {
+      "question_id": "q5",
+      "text": "At the proposed measurement point, would the analyzer use a slipstream or direct interface, and what access, sample conditioning, utilities, distance, and area-classification constraints apply outside the process area?",
+      "priority": 2,
+      "why_it_matters": "These practical constraints determine whether a sample can reach an analyzer outside the process area and what setup is feasible.",
+      "affects": "setup"
+    },
+    {
+      "question_id": "q6",
+      "text": "What would make the first comparison experiment successful, including expected acceptance criteria for bias, precision, range, availability, and duration?",
+      "priority": 3,
+      "why_it_matters": "Clear acceptance criteria are needed to judge whether the fiber-based measurement is comparable to the laboratory result and ready for the next decision.",
+      "affects": "acceptance"
+    }
+  ],
+  "assumptions": [
+    "For a provisional assessment, the petroleum stream is assumed to be the process stream to be measured, not a utility or waste stream.",
+    "The current laboratory water determination is assumed to be the intended reference for the first comparison.",
+    "The analyzer being outside the process area is assumed to require a sample interface or sample transport from the process to the analyzer.",
+    "The first comparison is assumed to be a feasibility or performance comparison, not a regulatory validation."
+  ],
+  "recommendations": [
+    {
+      "method": "Mid-infrared (MIR) ATR spectroscopy",
+      "technique": "Fiber-optic ATR immersion probe (ZrO2 or diamond tip); evanescent-wave absorption, 1–6 µm effective path",
+      "role": "primary",
+      "rationale": [
+        {
+          "text": "The only AFS application example for water in petroleum shows MIR-ATR spectra separating 0.1, 0.5, 1.0 and 2.0 % water from pure oil, with water features rising above the hydrocarbon background.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S02",
+              "page": 13,
+              "label": "S02 p.13",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "MIR spectroscopy is described as highly informative and sensitive, and the ATR platform has high selectivity for liquids; the short ATR path is suitable for opaque or scattering fluids.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 9,
+              "label": "S01 p.9",
+              "quote": null,
+              "url": null
+            },
+            {
+              "source": "S01",
+              "page": 6,
+              "label": "S01 Table 1 (p.6)",
+              "quote": null,
+              "url": null
+            },
+            {
+              "source": "S01",
+              "page": 16,
+              "label": "S01 p.16",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "ATR fiber probes can be operated in-line/at-line at a significant distance from the spectrometer without discrete sampling.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 10,
+              "label": "S01 p.10",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "Therefore MIR-ATR is the simplest method with direct application evidence for this target and should be tested first.",
+          "kind": "inference",
+          "citations": [
+            {
+              "source": "S02",
+              "page": 13,
+              "label": "S02 p.13",
+              "quote": null,
+              "url": null
+            },
+            {
+              "source": "S01",
+              "page": 6,
+              "label": "S01 Table 1 (p.6)",
+              "quote": null,
+              "url": null
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        "The water concentration and required detection limit must be reachable with the short ATR path.",
+        "The sample must contact the ATR crystal and fouling must be manageable.",
+        "The installed fiber and probe must transmit the water bands used in the example over the required distance, not necessarily the full nominal MIR range."
+      ],
+      "citations": [
+        {
+          "source": "S02",
+          "page": 13,
+          "label": "S02 p.13",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S01",
+          "page": 6,
+          "label": "S01 Table 1 (p.6)",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S01",
+          "page": 9,
+          "label": "S01 p.9",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S01",
+          "page": 10,
+          "label": "S01 p.10",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S01",
+          "page": 16,
+          "label": "S01 p.16",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "method": "Near-infrared (NIR) spectroscopy",
+      "technique": "Fiber transmission or transflection probe; 1–10 mm path",
+      "role": "comparison",
+      "rationale": [
+        {
+          "text": "NIR is the most common online analysis method using fiber-optic probes and contains -OH overtone/combination bands relevant to water.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 10,
+              "label": "S01 p.10",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "The NIR transmission/transflection probe has average sensitivity and average selectivity for liquids, with average cost relative to the source's ratings.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 6,
+              "label": "S01 Table 1 (p.6)",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "No AFS petroleum/water application example supports NIR for this matrix, so it should be compared rather than assumed equivalent.",
+          "kind": "inference",
+          "citations": [
+            {
+              "source": "S02",
+              "page": 13,
+              "label": "S02 p.13",
+              "quote": null,
+              "url": null
+            },
+            {
+              "source": "S01",
+              "page": 10,
+              "label": "S01 p.10",
+              "quote": null,
+              "url": null
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        "Broad overlapping NIR bands must be resolved with a matrix-specific chemometric model.",
+        "The available fiber/probe coverage in the NIR range must be confirmed; Vis-NIR silica covers 350–2400 nm, not the full 2500 nm nominal range."
+      ],
+      "citations": [
+        {
+          "source": "S01",
+          "page": 10,
+          "label": "S01 p.10",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S01",
+          "page": 6,
+          "label": "S01 Table 1 (p.6)",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S02",
+          "page": 6,
+          "label": "S02 p.6",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "method": "Raman spectroscopy",
+      "technique": "Fiber Raman probe; 2–5 mm sampling volume",
+      "role": "comparison",
+      "rationale": [
+        {
+          "text": "Raman spectroscopy has high selectivity for liquids, and a Raman probe is listed for liquid, powder and solid samples.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 6,
+              "label": "S01 Table 1 (p.6)",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "Combining NIR and Raman gave the best result in a fluidized-bed coating application, but that does not prove it adds value for water in petroleum.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 7,
+              "label": "S01 p.7",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "Raman should be included as a comparison candidate only if the petroleum matrix does not cause prohibitive fluorescence or weak signal.",
+          "kind": "inference",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 7,
+              "label": "S01 p.7",
+              "quote": null,
+              "url": null
+            },
+            {
+              "source": "S01",
+              "page": 6,
+              "label": "S01 Table 1 (p.6)",
+              "quote": null,
+              "url": null
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        "Fluorescence background and signal-to-noise must be checked on the actual stream.",
+        "Not a first-choice method for this target; include as a comparison to see if it adds selectivity."
+      ],
+      "citations": [
+        {
+          "source": "S01",
+          "page": 6,
+          "label": "S01 Table 1 (p.6)",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S01",
+          "page": 7,
+          "label": "S01 p.7",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "method": "UV/Visible and fluorimetry",
+      "technique": "UV-Vis absorption or fluorescence probe",
+      "role": "not_recommended",
+      "rationale": [
+        {
+          "text": "Fluorimetry is primarily for substances of biological origin and most chemicals do not exhibit the required fluorescence.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 5,
+              "label": "S01 p.5",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "UV/Visible spectroscopy has low selectivity for mixtures and is not listed as a lead method for water in petroleum.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 6,
+              "label": "S01 Table 1 (p.6)",
+              "quote": null,
+              "url": null
+            },
+            {
+              "source": "S02",
+              "page": 13,
+              "label": "S02 p.13",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "There is no evidence in the AFS material that these methods directly measure water in petroleum, so they are not recommended for the first comparison.",
+          "kind": "inference",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 5,
+              "label": "S01 p.5",
+              "quote": null,
+              "url": null
+            },
+            {
+              "source": "S01",
+              "page": 6,
+              "label": "S01 Table 1 (p.6)",
+              "quote": null,
+              "url": null
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        "Could be considered only if a specific fluorescent indicator or an absorbing species is later justified."
+      ],
+      "citations": [
+        {
+          "source": "S01",
+          "page": 5,
+          "label": "S01 p.5",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S01",
+          "page": 6,
+          "label": "S01 Table 1 (p.6)",
+          "quote": null,
+          "url": null
+        }
+      ]
+    }
+  ],
+  "measurement_concept": {
+    "probe_geometry": [
+      {
+        "text": "Primary: ATR immersion probe with ZrO2 or diamond ATR tip sealed in PEEK shaft; short 1–6 µm evanescent path for contact with liquid petroleum.",
+        "kind": "sourced",
+        "citations": [
+          {
+            "source": "S02",
+            "page": 13,
+            "label": "S02 p.13",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 6,
+            "label": "S01 Table 1 (p.6)",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "text": "Comparison: NIR transmission or transflection probe with 1–10 mm path for liquid; confirm geometry after lab screening.",
+        "kind": "sourced",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 6,
+            "label": "S01 Table 1 (p.6)",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "text": "Comparison: Raman probe with 2–5 mm sampling volume if used.",
+        "kind": "sourced",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 6,
+            "label": "S01 Table 1 (p.6)",
+            "quote": null,
+            "url": null
+          }
+        ]
+      }
+    ],
+    "location": [
+      {
+        "text": "Measurement should be at or near the proposed process point where the water change is relevant, with a representative and homogeneous sample contacting the probe.",
+        "kind": "inference",
+        "citations": [
+          {
+            "source": "S02",
+            "page": 13,
+            "label": "S02 p.13",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S04",
+            "page": 2,
+            "label": "S04 p.2",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "text": "If a combined or multi-spot probe is tested, the analyzed spot must be homogeneous; inhomogeneity and rapid change may require simultaneous multi-method sampling.",
+        "kind": "sourced",
+        "citations": [
+          {
+            "source": "S04",
+            "page": 2,
+            "label": "S04 p.2",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 8,
+            "label": "S01 p.8",
+            "quote": null,
+            "url": null
+          }
+        ]
+      }
+    ],
+    "fiber_link": [
+      {
+        "text": "A centralized analyzer outside the process area connected by long fibers is shown as a supported architecture, with the analyzer/multiplexer in a control room.",
+        "kind": "sourced",
+        "citations": [
+          {
+            "source": "S02",
+            "page": 18,
+            "label": "S02 p.18",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "text": "Fiber transmission ranges limit the usable spectral range: chalcogenide CIR fibers cover 1.1–6.5 µm, so only part of the nominal MIR 4000–400 cm⁻¹ is available; Vis-NIR silica covers 350–2400 nm, only part of the nominal NIR.",
+        "kind": "sourced",
+        "citations": [
+          {
+            "source": "S02",
+            "page": 6,
+            "label": "S02 p.6",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "text": "The actual fiber length, losses, connectors, and probe range must be confirmed by AFS for the required distance.",
+        "kind": "inference",
+        "citations": [
+          {
+            "source": "S02",
+            "page": 6,
+            "label": "S02 p.6",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S02",
+            "page": 18,
+            "label": "S02 p.18",
+            "quote": null,
+            "url": null
+          }
+        ]
+      }
+    ]
+  },
+  "spectral_ranges": [
+    {
+      "method": "MIR (ATR)",
+      "range_text": "4000–400 cm⁻¹ (2.5–25 µm) nominal; the AFS petroleum water example is displayed from 4000 to 2000 cm⁻¹.",
+      "note": "Nominal range is not the usable range of the actual fiber/probe system. Chalcogenide CIR fibers cover 1.1–6.5 µm, so only the shorter-wavelength part of the MIR range is available; water features in the example near 3700–3000 cm⁻¹ and 2500–2250 cm⁻¹ fall within the CIR window, but full 4000–400 cm⁻¹ is not covered.",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 9,
+          "label": "S01 p.9",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S02",
+          "page": 13,
+          "label": "S02 p.13",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S02",
+          "page": 6,
+          "label": "S02 p.6",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "method": "NIR",
+      "range_text": "780–2500 nm nominal.",
+      "note": "The nominal NIR range is not fully covered by standard Vis-NIR silica fibers (350–2400 nm). Confirm the selected instrument, fiber and probe coverage, and inspect sample spectra before fixing a band.",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 10,
+          "label": "S01 p.10",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S02",
+          "page": 6,
+          "label": "S02 p.6",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "method": "Raman",
+      "range_text": "Raman shift (cm⁻¹) and laser excitation wavelength (nm) are stated separately; neither has been preselected for this enquiry.",
+      "note": "Do not choose an excitation or shift range without sample spectra. Fluorescence background and matrix effects should be evaluated first.",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 6,
+          "label": "S01 Table 1 (p.6)",
+          "quote": null,
+          "url": null
+        }
+      ]
+    }
+  ],
+  "risks": [
+    {
+      "text": "The supplied petroleum example is qualitative only, showing 0.1–2.0 % water traces; no detection limit, accuracy, precision, repeatability, or response time for water in petroleum is given in the AFS material.",
+      "kind": "sourced",
+      "citations": [
+        {
+          "source": "S02",
+          "page": 13,
+          "label": "S02 p.13",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "text": "Water phase (dissolved, emulsified, free, vapour), droplet size, temperature, and scattering can change the measured signal and may mimic or obscure concentration changes.",
+      "kind": "inference",
+      "citations": [
+        {
+          "source": "S04",
+          "page": 2,
+          "label": "S04 p.2",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S01",
+          "page": 8,
+          "label": "S01 p.8",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "text": "Any MIR or NIR method will require a matrix-specific chemometric model against independent water results; no calibration-transfer or robustness data for petroleum matrices is provided.",
+      "kind": "inference",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 5,
+          "label": "S01 p.5",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S01",
+          "page": 10,
+          "label": "S01 p.10",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "text": "The remote-analyzer layout may be limited by fiber transmission range and length; CIR covers only part of MIR, and silica covers only part of NIR.",
+      "kind": "sourced",
+      "citations": [
+        {
+          "source": "S02",
+          "page": 6,
+          "label": "S02 p.6",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "text": "ATR requires reliable contact with the process stream and has known contact, fouling, and compatibility limitations; no cleaning regime or maintenance interval for hydrocarbon service is stated.",
+      "kind": "inference",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 6,
+          "label": "S01 Table 1 (p.6)",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S02",
+          "page": 13,
+          "label": "S02 p.13",
+          "quote": null,
+          "url": null
+        }
+      ]
+    }
+  ],
+  "feasibility_plan": {
+    "objective": "To establish whether water-related spectral features are separable from the petroleum background and to select the most promising method(s) and spectral range(s) before equipment selection; this is method screening, not method validation.",
+    "samples": [
+      "Representative petroleum stream samples covering the client-agreed water concentration range and water states (dissolved, emulsified, free or vapour if present).",
+      "Samples spanning expected process variation (temperature, pressure, flow, matrix changes, droplet/particle variation).",
+      "A few independent production or archived samples reserved for validation of the screening model."
+    ],
+    "reference_measurements": [
+      "The customer's current laboratory water-determination method or standard as the independent reference for every sample.",
+      "Timed/paired reference samples when moving from lab screening to an at-line/in-line trial.",
+      "Documented laboratory precision, uncertainty, sampling time and turnaround to set comparison expectations."
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "Laboratory screening with candidate methods",
+        "description": "Screen the representative petroleum samples with a multi-method fiber system, starting with MIR-ATR and including NIR and Raman as comparisons; inspect whether water features can be distinguished from the hydrocarbon background across the expected concentration range.",
+        "citations": [
+          {
+            "source": "S02",
+            "page": 3,
+            "label": "S02 p.3",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S02",
+            "page": 13,
+            "label": "S02 p.13",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Reference-linked chemometric model",
+        "description": "Build and internally validate matrix-specific calibration or classification models for each candidate method against independent laboratory water results; use single methods first and only test data fusion or a combined probe if one method is likely insufficient.",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 5,
+            "label": "S01 p.5",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 7,
+            "label": "S01 p.7",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 10,
+            "label": "S01 p.10",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "order": 3,
+        "title": "At-line/in-line trial at the proposed point",
+        "description": "Test the most promising method at the proposed sample point against timed reference samples; check robustness to real process physical variation and whether the remote fiber link provides the required spectral range and signal quality over the required distance.",
+        "citations": [
+          {
+            "source": "S02",
+            "page": 18,
+            "label": "S02 p.18",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 10,
+            "label": "S01 p.10",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S02",
+            "page": 6,
+            "label": "S02 p.6",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "order": 4,
+        "title": "Simplification outlook",
+        "description": "If a method/model works, derive the key wavelengths or spectral features that could be used in a simpler dedicated multi-wavelength or LED-based sensor; this is an outlook after successful screening, not an initial purchase recommendation.",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 9,
+            "label": "S01 p.9",
+            "quote": null,
+            "url": null
+          }
+        ]
+      }
+    ],
+    "comparison": "Compare MIR-ATR as primary with NIR and Raman on the same samples, using the independent laboratory water results as reference. Single-method models should be evaluated first; data fusion is considered only if no single method meets the objective.",
+    "go_no_go": "Before the test, agree numerical acceptance criteria with the client for bias, precision, range, response, and availability. A method proceeds only if its independent-sample error, bias and lag meet those criteria, and the chosen fiber link covers the needed range over the required distance."
+  },
+  "sources": [
+    {
+      "source": "S05",
+      "page": 2,
+      "label": "S05 p.2",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 10,
+      "label": "S01 p.10",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S02",
+      "page": 3,
+      "label": "S02 p.3",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S02",
+      "page": 18,
+      "label": "S02 p.18",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S02",
+      "page": 6,
+      "label": "S02 p.6",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S05",
+      "page": 1,
+      "label": "S05 p.1",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 9,
+      "label": "S01 p.9",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S02",
+      "page": 13,
+      "label": "S02 p.13",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 6,
+      "label": "S01 Table 1 (p.6)",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 16,
+      "label": "S01 p.16",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 7,
+      "label": "S01 p.7",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 5,
+      "label": "S01 p.5",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S04",
+      "page": 2,
+      "label": "S04 p.2",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 8,
+      "label": "S01 p.8",
+      "quote": null,
+      "url": null
+    }
+  ],
+  "case_id": "D06",
+  "enquiry": "We handle a petroleum stream and currently send samples to a laboratory for water determination. We want to investigate a fiber based measurement closer to the process so that changes can be noticed sooner. The analyzer would be outside the process area. Before selecting equipment, we need to know what to clarify and what a first comparison experiment should establish.",
+  "user_answers": [],
+  "verification": {
+    "passed": true,
+    "revisions": 0,
+    "checks": [
+      {
+        "name": "citations_valid",
+        "passed": true,
+        "details": "All citations point to retrieved evidence pages."
+      },
+      {
+        "name": "numbers_supported",
+        "passed": true,
+        "details": "Every number with a unit appears in the sources or the client's text."
+      },
+      {
+        "name": "sections_complete",
+        "passed": true,
+        "details": "All sections present."
+      },
+      {
+        "name": "premises_addressed",
+        "passed": true,
+        "details": "3 of 3 client premise(s) given an explicit verdict."
+      },
+      {
+        "name": "expert_review",
+        "passed": true,
+        "details": "[warning] The claim that MIR-ATR is 'the simplest method with direct application evidence' is reasonable but the cited S01 p.6 and S02 p.13 do not explicitly state simplicity; this is an inference and should be marked as such.; [warning] The first client premise is marked 'unverified' but the explanation could more clearly state that the AFS sources do not provide a direct comparison of response time versus laboratory turnaround for this customer's stream.; [warning] Question q5 combines several practical constraints (slipstream/direct interface, access, conditioning, utilities, distance, area classification) into one question; splitting it would improve prioritization and traceability.; [warning] The feasibility plan is staged and practical, but the go/no-go criteria are described qualitatively; specifying example numerical acceptance criteria (e.g., bias, precision) would make the plan more actionable.; [warning] The recommendation includes NIR and Raman as comparisons, which is justified by the screening objective, but the rationale for including Raman could be strengthened by noting that it is optional and only if fluorescence is not prohibitive."
+      }
+    ]
+  },
+  "meta": {
+    "model": "deepseek-v4-pro",
+    "mode": "batch",
+    "generated_at": "2026-10-17T15:51:35+00:00",
+    "duration_s": 173.4
+  }
+}

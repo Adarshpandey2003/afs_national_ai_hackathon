@@ -1,0 +1,4 @@
+**Central photograph**
+- Text inside image: none legible.
+- Numeric values with units: none.
+- Visible content: a laboratory bench setup. On the left is a small blue-and-white instrument; white optical fibers run from it to a probe assembly mounted on a metal stand. In the center is an open laptop displaying a three-dimensional surface plot with colored peaks (blue, green, yellow/orange). In front of the laptop are two glass vials on a blue mat: the left vial contains a blue liquid, the right vial contains an orange/red liquid. To the right is a pump/controller with a red top and tubing. The background shows out-of-focus laboratory cabinets. No axes, ranges, or labelled parts are visible.

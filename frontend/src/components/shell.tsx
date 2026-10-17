@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { FileText, Library, Menu, Monitor, Moon, PanelLeftClose, PanelLeftOpen, SquarePen, Sun, type LucideIcon } from 'lucide-react'
-import { API_BASE, MOCK } from '../api'
+import { API_BASE } from '../api'
 import { clock, useData, useNow } from '../lib/data'
 import { Link, navigate, usePath } from '../lib/router'
 import { recents, useRun, type Recent } from '../lib/run'
@@ -51,16 +51,9 @@ function Health() {
   const pill = 'whitespace-nowrap rounded-full border px-2.5 py-1 text-[12px] font-bold'
 
   if (health.state === 'ok') {
-    const mock = MOCK || health.health.mock_mode
     return (
       <div className="flex items-center gap-2">
-        {mock && (
-          <span className={cn(pill, 'border-warn/50 bg-warn-bg text-warn')}
-            title={MOCK ? 'No backend configured (VITE_API_BASE_URL). Runs replay a canned example.' : 'The backend runs with MOCK_MODE=1 and replays a recorded run.'}>
-            Mock data
-          </span>
-        )}
-        {!mock && !health.health.llm_ready && <span className={cn(pill, 'border-warn/50 bg-warn-bg text-warn')} title="The backend reports llm_ready: false">LLM not configured</span>}
+        {!health.health.llm_ready && <span className={cn(pill, 'border-warn/50 bg-warn-bg text-warn')} title="The backend reports llm_ready: false">LLM not configured</span>}
         <span className="flex items-center gap-1.5 whitespace-nowrap text-[13px] font-semibold text-ink-2" role="status" title={`${API_BASE}, version ${health.health.version}`}>
           <span className="size-2 rounded-full bg-ok" aria-hidden /><span className="max-sm:sr-only">Backend ready</span>
         </span>
@@ -160,7 +153,7 @@ function Sidebar({ onClose, onPick }: { onClose(): void; onPick(): void }) {
             ))}
           </ul>
         ) : (
-          <p className="px-3 text-[13px] leading-snug text-ink-3">{MOCK ? 'Mock runs show here until you reload.' : 'Assessments you run show here.'}</p>
+          <p className="px-3 text-[13px] leading-snug text-ink-3">Assessments you run show here.</p>
         )}
       </div>
 

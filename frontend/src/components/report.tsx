@@ -410,12 +410,14 @@ const SOURCE_ORDER = ['S01', 'S02', 'S03', 'S04', 'S05', 'S06', 'TABLE', 'REF', 
 function SourcesList({ r }: { r: Report }) {
   const { sources } = useData()
   const index = citationIndex(r)
-  const ids = [...new Set(index.map((x) => x.cite.source))].sort((a, b) => SOURCE_ORDER.indexOf(a) - SOURCE_ORDER.indexOf(b))
+  const rank = (id: string) => (SOURCE_ORDER.includes(id) ? SOURCE_ORDER.indexOf(id) : SOURCE_ORDER.indexOf('TABLE') - 0.5) // added sources (S07+) after S06
+  const ids = [...new Set(index.map((x) => x.cite.source))].sort((a, b) => rank(a) - rank(b))
   const problems = index.flatMap(({ cite }) => {
     if (cite.source === 'EXT') return cite.quote && cite.url ? [] : [`${cite.label}: external citations need a URL and a quoted passage.`]
+    const live = sources.find((s) => s.source_id === cite.source)
     const meta = sourceMeta(cite.source)
-    if (!meta) return [`${cite.label}: unknown source.`]
-    const pages = sources.find((s) => s.source_id === cite.source)?.pages || meta.pages
+    if (!live && !meta) return [`${cite.label}: unknown source.`]
+    const pages = live?.pages || meta?.pages
     return cite.page != null && pages && cite.page > pages ? [`${cite.label}: ${cite.source} has only ${pages} pages.`] : []
   })
   if (!index.length) return <Empty>No sources cited</Empty>

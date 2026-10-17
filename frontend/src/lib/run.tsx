@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useRef, useState, type ReactNode } from 'react'
-import { api, ApiError, MOCK } from '../api'
+import { api, ApiError } from '../api'
 import type {
   AgentName, AgentStep, Answer, AssessmentSnapshot, ClarificationNeeded, CriticIssue, DecisionStatus, Mode, Question, Report, RunEvent,
 } from '../api/types'
@@ -157,13 +157,12 @@ function reducer(s: RunState, a: Action): RunState {
 const errorInfo = (e: unknown) =>
   e instanceof ApiError ? { code: e.code, message: e.message } : { code: 'unknown', message: e instanceof Error ? e.message : String(e) }
 
-/* ── Recent runs (sidebar). Kept in localStorage for the real backend; mock runs only live in this tab. ── */
+/* ── Recent runs (sidebar), kept in localStorage. ── */
 
 export interface Recent { threadId: string; enquiry: string; caseId?: string; at: number; status?: DecisionStatus | 'failed' }
 
 const RECENTS_KEY = 'recent-runs'
 const readRecents = (): Recent[] => {
-  if (MOCK) return []
   try {
     const v = JSON.parse(localStorage.getItem(RECENTS_KEY) ?? '[]')
     return Array.isArray(v) ? v : []
@@ -176,7 +175,6 @@ export const recents = createStore<Recent[]>(readRecents())
 function saveRecent(r: Recent) {
   const next = [r, ...recents.get().filter((x) => x.threadId !== r.threadId)].slice(0, 15)
   recents.set(next)
-  if (MOCK) return
   try {
     localStorage.setItem(RECENTS_KEY, JSON.stringify(next))
   } catch { /* storage unavailable: the list lasts for this tab */ }

@@ -29,6 +29,7 @@ export interface Api {
   page(sourceId: SourceId, page: number): Promise<KbPage>
   outputs(): Promise<OutputSummary[]>
   output(caseId: string): Promise<Report>
+  addDocument(form: FormData): Promise<SourceInfo>
 }
 
 export function realApi(base: string): Api {
@@ -37,7 +38,7 @@ export function realApi(base: string): Api {
     try {
       res = await fetch(base + path, {
         ...init,
-        headers: { Accept: as === 'json' ? 'application/json' : 'text/markdown', ...(init?.body ? { 'Content-Type': 'application/json' } : {}) },
+        headers: { Accept: as === 'json' ? 'application/json' : 'text/markdown', ...(typeof init?.body === 'string' ? { 'Content-Type': 'application/json' } : {}) },
       })
     } catch {
       throw new ApiError(0, 'network', 'Cannot reach the backend. It may still be waking up, or the URL or CORS settings are wrong.')
@@ -69,6 +70,7 @@ export function realApi(base: string): Api {
     sources: () => request('/kb/sources'),
     page: (s, p) => request(`/kb/${id(s)}/pages/${p}`),
     outputs: () => request('/outputs'),
+    addDocument: (form) => request('/kb/documents', { method: 'POST', body: form }),
     output: (c) => request(`/outputs/${id(c)}`),
 
     subscribe(threadId, onEvent, onTrouble) {

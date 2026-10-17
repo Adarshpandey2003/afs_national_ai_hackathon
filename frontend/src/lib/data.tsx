@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { api } from '../api'
 import type { Case, Health, OutputSummary, SourceInfo } from '../api/types'
-import bundledCases from '../mock/cases.json'
 import { SOURCES } from './kb'
 
 export type HealthState =
@@ -11,6 +10,7 @@ export type HealthState =
 interface Data {
   health: HealthState
   retryHealth(): void
+  reloadSources(): void
   cases: Case[]
   sources: SourceInfo[]
   outputs: OutputSummary[]
@@ -23,8 +23,8 @@ const WAKE_LIMIT_MS = 90_000
 export function DataProvider({ children }: { children: ReactNode }) {
   const [attempt, setAttempt] = useState(0)
   const [health, setHealth] = useState<HealthState>({ state: 'checking', since: Date.now() })
-  // Bundled copies keep presets and source names usable while a free-tier backend wakes up.
-  const [cases, setCases] = useState<Case[]>(bundledCases as Case[])
+  // Bundled source metadata keeps source names usable while a free-tier backend wakes up.
+  const [cases, setCases] = useState<Case[]>([])
   const [sources, setSources] = useState<SourceInfo[]>(SOURCES)
   const [outputs, setOutputs] = useState<OutputSummary[]>([])
   const [outputsLoaded, setOutputsLoaded] = useState(false)
@@ -64,7 +64,10 @@ export function DataProvider({ children }: { children: ReactNode }) {
   }, [ready])
 
   const value = useMemo<Data>(
-    () => ({ health, retryHealth: () => setAttempt((a) => a + 1), cases, sources, outputs, outputsLoaded }),
+    () => ({
+      health, retryHealth: () => setAttempt((a) => a + 1), cases, sources, outputs, outputsLoaded,
+      reloadSources: () => { api.sources().then((s) => s.length && setSources(s), () => {}) },
+    }),
     [health, cases, sources, outputs, outputsLoaded],
   )
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>

@@ -1,0 +1,852 @@
+{
+  "decision_status": "insufficient_information",
+  "decision_rationale": "The request is not outside the supported scope, but a method choice cannot yet be justified because the two proposed signals, biomass and metabolic, are explicitly undefined as measurement targets. Before a configuration is chosen, the targets must be defined as reference-measurable quantities with concentration ranges and acceptance criteria. Candidate methods can be listed for a scoping experiment, but no primary method is assigned.",
+  "summary": "The enquiry can become a feasibility study, but the biomass and metabolic signals must first be defined as reference-measurable targets. A screening plan should compare UV/Vis turbidity, NIR and fluorescence, with NIR + fluorescence fusion as a later hypothesis. Rising optical density is a real measurement constraint, not a sufficient target definition.",
+  "requirements": {
+    "stated_facts": [
+      {
+        "text": "The customer wants an optical measurement during yeast fermentation.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "The customer wants to follow growth and notice changes earlier.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "The customer's team mentioned both a biomass signal and a metabolic signal.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "The biomass signal and metabolic signal have not been defined as separate targets.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "The broth becomes more optically dense as the run develops.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "The customer needs help turning the request into an initial feasibility study with useful reference measurements.",
+        "kind": "fact",
+        "citations": []
+      }
+    ],
+    "key_unknowns": [
+      "What specific process problem or change must be detected earlier.",
+      "Operational definition of biomass signal and metabolic signal and their target components.",
+      "Concentration levels or ranges of the target variables.",
+      "Current reference method and sampling frequency.",
+      "Measurement point, process phase, temperature, flow, access, fouling and cleaning.",
+      "Required response time and accuracy or acceptance limits."
+    ],
+    "client_premises": [
+      {
+        "statement": "An optical measurement during yeast fermentation can help follow growth and notice changes earlier.",
+        "verdict": "supported",
+        "explanation": "Sources show UV/Vis turbidity can track cell density and continuous fiber-probe spectroscopy can record fast processes, so the premise is supported in principle. 'Earlier' is not quantified and must be judged against the current sampling interval.",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 16,
+            "label": "S01 p.16",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 10,
+            "label": "S01 p.10",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "statement": "A biomass signal and a metabolic signal are both relevant to the fermentation, although they have not been defined as separate targets.",
+        "verdict": "supported",
+        "explanation": "The sources treat growth/biomass and metabolic/molecular information as different information channels; however, the split is method-dependent and requires reference-measurable definitions before modelling.",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 16,
+            "label": "S01 p.16",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 7,
+            "label": "S01 p.7",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 6,
+            "label": "S01 Table 1 (p.6)",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "statement": "The broth becoming more optically dense as the run develops provides a basis for an optical measurement.",
+        "verdict": "supported",
+        "explanation": "Increasing turbidity can support a biomass-related optical signal, but a fixed transmission path may saturate as the broth becomes opaque. The geometry or path length must be chosen for the end-of-run optical density, or an ATR/short-path/scattering geometry used.",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 16,
+            "label": "S01 p.16",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 6,
+            "label": "S01 Table 1 (p.6)",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "statement": "The request can be turned into an initial feasibility study with useful reference measurements.",
+        "verdict": "supported",
+        "explanation": "The AFS pathway describes multi-method lab testing, feature selection, chemometric modelling and later simplification; chemometric models require independent reference values. The specific study design is not provided by the sources.",
+        "citations": [
+          {
+            "source": "S05",
+            "page": 1,
+            "label": "S05 p.1",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S02",
+            "page": 3,
+            "label": "S02 p.3",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 5,
+            "label": "S01 p.5",
+            "quote": null,
+            "url": null
+          }
+        ]
+      }
+    ]
+  },
+  "clarification_questions": [
+    {
+      "question_id": "q1",
+      "text": "What specific process problem or bottleneck are you trying to detect earlier: batch variability, yield loss, rejects, safety concerns, delays, or something else?",
+      "priority": 1,
+      "why_it_matters": "The purpose determines whether the measurement should track growth, metabolic state, contamination, or another change, and it shapes the feasibility criteria.",
+      "affects": "method"
+    },
+    {
+      "question_id": "q2",
+      "text": "What exactly should 'biomass signal' and 'metabolic signal' mean for this fermentation, and which components or quality variables should represent them?",
+      "priority": 1,
+      "why_it_matters": "Undefined signal names cannot be assessed technically; the target variables determine the spectroscopic region, reference measurements and data treatment.",
+      "affects": "method"
+    },
+    {
+      "question_id": "q3",
+      "text": "At what levels or ranges do you need to measure these variables: trace ppm, minor %, or major %?",
+      "priority": 1,
+      "why_it_matters": "The required concentration range strongly affects the optical path length, measurement mode and achievable sensitivity.",
+      "affects": "method"
+    },
+    {
+      "question_id": "q4",
+      "text": "What reference method do you currently use for growth or metabolic state, and how often is it sampled?",
+      "priority": 1,
+      "why_it_matters": "Reference measurements are needed to calibrate and validate any optical signal and to define a realistic feasibility study.",
+      "affects": "plan"
+    },
+    {
+      "question_id": "q5",
+      "text": "Where and under what conditions would the measurement be made: which fermentation phase, temperature, pressure, flow, access point, and expected fouling or cleaning regime?",
+      "priority": 1,
+      "why_it_matters": "The measurement point and process conditions determine whether an in-line or at-line setup is practical and what interface is needed.",
+      "affects": "setup"
+    },
+    {
+      "question_id": "q6",
+      "text": "What response time and accuracy would make the measurement useful for your decisions?",
+      "priority": 2,
+      "why_it_matters": "These acceptance criteria set the required sampling rate, precision and validation effort for the feasibility study.",
+      "affects": "acceptance"
+    }
+  ],
+  "assumptions": [
+    "The fermentation is assumed to be a vessel-based yeast fermentation where an optical probe can be placed, subject to confirmation of scale, phase and access.",
+    "The optical measurement is assumed to be intended for in-line or at-line use at the fermenter, subject to confirmation.",
+    "Biomass and metabolic signals are assumed to need operational definition before they can be separate measurement targets.",
+    "An initial feasibility study is assumed to include reference measurements against which optical signals are compared.",
+    "Increased optical density is assumed to be a general observation, not a quantified OD range."
+  ],
+  "recommendations": [
+    {
+      "method": "UV/Vis absorption (turbidity/biomass surrogate)",
+      "technique": "Transmission/transflection or ATR probe; choose short path or ATR for high-OD broth",
+      "role": "comparison",
+      "rationale": [
+        {
+          "text": "UV/Vis spectroscopy can provide low-cost real-time biomass monitoring because cell suspension turbidity correlates with cell density.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 16,
+              "label": "S01 p.16",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "As the broth becomes more optically dense, standard transmission can saturate; UV-ATR or a short path is the stated high-OD option.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 16,
+              "label": "S01 p.16",
+              "quote": null,
+              "url": null
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        "Define biomass as a reference-measurable quantity, such as dry cell weight or off-line optical density, and confirm the broth's OD range.",
+        "Use only if turbidity or optical density is accepted as a biomass surrogate rather than a direct cell count."
+      ],
+      "citations": []
+    },
+    {
+      "method": "NIR spectroscopy",
+      "technique": "Transmission/transflection for early clear broth; diffuse reflection for scattering broth",
+      "role": "comparison",
+      "rationale": [
+        {
+          "text": "NIR is the most common online method using fiber optic probes and can track major components in the millimolar range.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 10,
+              "label": "S01 p.10",
+              "quote": null,
+              "url": null
+            },
+            {
+              "source": "S01",
+              "page": 16,
+              "label": "S01 p.16",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "NIR spectra have broad overlapping bands and require chemometrics; sensitivity below 0.1 percent is unlikely.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 16,
+              "label": "S01 p.16",
+              "quote": null,
+              "url": null
+            },
+            {
+              "source": "S01",
+              "page": 10,
+              "label": "S01 p.10",
+              "quote": null,
+              "url": null
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        "Use if target variables are major components or bulk broth properties, not trace metabolites.",
+        "Physical variation, bubbles and turbulence must be included in the calibration."
+      ],
+      "citations": []
+    },
+    {
+      "method": "Fluorescence spectroscopy",
+      "technique": "Fluorimetric probe, excitation and emission wavelengths chosen for a defined fluorophore",
+      "role": "comparison",
+      "rationale": [
+        {
+          "text": "Fluorescence offers high sensitivity down to nM–µM for defined cofactors and amino acids such as NADH, tryptophan and riboflavin.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 16,
+              "label": "S01 p.16",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "Fluorescence has low selectivity and is useful only for a defined fluorescent species or a justified indicator.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 5,
+              "label": "S01 p.5",
+              "quote": null,
+              "url": null
+            },
+            {
+              "source": "S01",
+              "page": 6,
+              "label": "S01 Table 1 (p.6)",
+              "quote": null,
+              "url": null
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        "Define the metabolic signal as one or more fluorescent species or a validated fluorescence indicator.",
+        "Check background fluorescence and scattering interference."
+      ],
+      "citations": []
+    },
+    {
+      "method": "NIR + fluorescence data fusion",
+      "technique": "Combined NIR and fluorescence spectra with chemometric data fusion",
+      "role": "combination",
+      "rationale": [
+        {
+          "text": "The combination of NIR and fluorescence spectroscopy demonstrated more accurate biomass determination and distinguishing intra- and extracellular metabolites in yeast fermentation.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 7,
+              "label": "S01 p.7",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "Fermentation media are complex multicomponent mixtures where a single method is often insufficient; data fusion is a hypothesis to test against the best single method.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 7,
+              "label": "S01 p.7",
+              "quote": null,
+              "url": null
+            },
+            {
+              "source": "S01",
+              "page": 9,
+              "label": "S01 p.9",
+              "quote": null,
+              "url": null
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        "Test only after single methods have been assessed; require alignment of sampling location and timing."
+      ],
+      "citations": []
+    }
+  ],
+  "measurement_concept": {
+    "probe_geometry": [
+      {
+        "text": "For laboratory feasibility screening, compare a UV/Vis transmission or ATR probe, an NIR transflection or diffuse-reflection probe, and a fluorimetric probe on the same broth samples.",
+        "kind": "inference",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 6,
+            "label": "S01 Table 1 (p.6)",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 16,
+            "label": "S01 p.16",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "text": "At high optical density, use an ATR or short-path geometry for UV/Vis rather than a fixed 1–10 mm transmission path.",
+        "kind": "sourced",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 16,
+            "label": "S01 p.16",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 6,
+            "label": "S01 Table 1 (p.6)",
+            "quote": null,
+            "url": null
+          }
+        ]
+      }
+    ],
+    "location": [
+      {
+        "text": "The process measurement point is not yet defined; start with benchtop laboratory measurements on representative broth and confirm the fermenter port/access later.",
+        "kind": "assumption",
+        "citations": []
+      }
+    ],
+    "fiber_link": [
+      {
+        "text": "A remote fiber-optic link is feasible for in-line use; the fiber material must cover the chosen spectral range, for example silica for UV/Vis-NIR, but the 2400–2500 nm tail of standard silica is not fully covered without confirmation.",
+        "kind": "sourced",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 10,
+            "label": "S01 p.10",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S02",
+            "page": 6,
+            "label": "S02 p.6",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "text": "For any combined probe, the analyzed spot must be homogeneous or the methods may sample different regions.",
+        "kind": "sourced",
+        "citations": [
+          {
+            "source": "S04",
+            "page": 2,
+            "label": "S04 p.2",
+            "quote": null,
+            "url": null
+          }
+        ]
+      }
+    ]
+  },
+  "spectral_ranges": [
+    {
+      "method": "NIR spectroscopy",
+      "range_text": "780–2500 nm (nominal method range)",
+      "note": "Nominal method range, not the usable range of the selected instrument, fiber or probe; fiber transmission must be confirmed.",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 10,
+          "label": "S01 p.10",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S02",
+          "page": 6,
+          "label": "S02 p.6",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "method": "UV/Vis absorption",
+      "range_text": "Target- and setup-dependent; no single nominal range",
+      "note": "UV/Vis range depends on the chromophore or turbidity signal and detector; high-OD limitations dominate the geometry choice.",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 16,
+          "label": "S01 p.16",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "method": "Fluorescence",
+      "range_text": "Excitation in UV/visible; emission shifted to longer wavelengths",
+      "note": "Exact excitation and emission range depends on the selected fluorophore; choose after the metabolic target is defined.",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 12,
+          "label": "S01 p.12",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S01",
+          "page": 16,
+          "label": "S01 p.16",
+          "quote": null,
+          "url": null
+        }
+      ]
+    }
+  ],
+  "risks": [
+    {
+      "text": "Increasing optical density can saturate a fixed-path UV/Vis transmission measurement; if ignored, the biomass channel may fail late in the run.",
+      "kind": "sourced",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 16,
+          "label": "S01 p.16",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "text": "The terms 'biomass signal' and 'metabolic signal' are not yet reference-measurable targets; without definitions, any model may be non-specific or unvalidated.",
+      "kind": "inference",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 16,
+          "label": "S01 p.16",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S01",
+          "page": 6,
+          "label": "S01 Table 1 (p.6)",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "text": "Broad, overlapping optical signals and physical variation such as bubbles, turbulence and temperature can change spectra independently of growth or metabolism; chemometric calibration must include this variation.",
+      "kind": "sourced",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 5,
+          "label": "S01 p.5",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S01",
+          "page": 7,
+          "label": "S01 p.7",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S01",
+          "page": 10,
+          "label": "S01 p.10",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "text": "Fluorescence has high sensitivity but low selectivity; it is not a direct measurement of every metabolite.",
+      "kind": "sourced",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 5,
+          "label": "S01 p.5",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S01",
+          "page": 6,
+          "label": "S01 Table 1 (p.6)",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "text": "A published yeast-fermentation example is a reason to test a method, not proof that it will work for this specific process.",
+      "kind": "inference",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 7,
+          "label": "S01 p.7",
+          "quote": null,
+          "url": null
+        }
+      ]
+    }
+  ],
+  "feasibility_plan": {
+    "objective": "Turn the undefined biomass and metabolic signals into reference-measurable targets and identify the simplest optical method or combination that tracks them across the fermentation run.",
+    "samples": [
+      "Representative fermentation broth from early, mid and late/stationary phases of the run.",
+      "Normal batches plus, if possible, batches or perturbations representing the changes the customer wants to detect earlier."
+    ],
+    "reference_measurements": [
+      "Off-line dry cell weight or optical density for biomass.",
+      "Viable count or cell count where biomass must be interpreted as viable cells.",
+      "HPLC or enzymatic assay for a named metabolite such as glucose, acetate or lactate, or a validated metabolic indicator.",
+      "Timed supernatant or whole-broth samples matched to each spectral acquisition."
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "Define target signals and reference assays",
+        "description": "Agree operational definitions: which reference-measurable quantity represents biomass and which analyte or indicator represents the metabolic signal; set the concentration range and acceptance direction.",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 5,
+            "label": "S01 p.5",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Laboratory spectral screening",
+        "description": "Record candidate methods on the same representative samples with timed reference values; compare usable ranges and high-OD behaviour.",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 16,
+            "label": "S01 p.16",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 6,
+            "label": "S01 Table 1 (p.6)",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Build single-method chemometric models",
+        "description": "Preprocess and calibrate each method separately against the independent reference assays; validate on held-out samples or runs before considering data fusion.",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 5,
+            "label": "S01 p.5",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "order": 4,
+        "title": "Test NIR + fluorescence fusion as a hypothesis",
+        "description": "Where single methods are insufficient, test combined NIR and fluorescence against the best single method using aligned sampling and data-fusion chemometrics.",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 7,
+            "label": "S01 p.7",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 9,
+            "label": "S01 p.9",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "order": 5,
+        "title": "In-line trial and simplification outlook",
+        "description": "Move the promising method to the real measurement point; check fouling, bubbles, temperature and OD changes; if it works, identify key wavelengths for a simpler dedicated optical multisensor system.",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 10,
+            "label": "S01 p.10",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S02",
+            "page": 3,
+            "label": "S02 p.3",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S05",
+            "page": 1,
+            "label": "S05 p.1",
+            "quote": null,
+            "url": null
+          }
+        ]
+      }
+    ],
+    "comparison": "Compare prediction error, bias and ability to follow changes for UV/Vis turbidity, NIR, fluorescence, and NIR+fluorescence; choose the simplest configuration that meets the client-agreed acceptance targets.",
+    "go_no_go": "Agree numerical acceptance criteria before testing; go/no-go is based on independent validation samples or runs, not on calibration fit."
+  },
+  "sources": [
+    {
+      "source": "S01",
+      "page": 16,
+      "label": "S01 p.16",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 10,
+      "label": "S01 p.10",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 7,
+      "label": "S01 p.7",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 6,
+      "label": "S01 Table 1 (p.6)",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S05",
+      "page": 1,
+      "label": "S05 p.1",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S02",
+      "page": 3,
+      "label": "S02 p.3",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 5,
+      "label": "S01 p.5",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 9,
+      "label": "S01 p.9",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S02",
+      "page": 6,
+      "label": "S02 p.6",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S04",
+      "page": 2,
+      "label": "S04 p.2",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 12,
+      "label": "S01 p.12",
+      "quote": null,
+      "url": null
+    }
+  ],
+  "case_id": "D05",
+  "enquiry": "We would like an optical measurement during yeast fermentation to help us follow growth and notice changes earlier. Our team has mentioned both a biomass signal and a metabolic signal, but these have not been defined as separate targets. The broth becomes more optically dense as the run develops. We need help turning this request into an initial feasibility study with useful reference measurements.",
+  "user_answers": [],
+  "verification": {
+    "passed": true,
+    "revisions": 0,
+    "checks": [
+      {
+        "name": "citations_valid",
+        "passed": true,
+        "details": "All citations point to retrieved evidence pages."
+      },
+      {
+        "name": "numbers_supported",
+        "passed": true,
+        "details": "Every number with a unit appears in the sources or the client's text."
+      },
+      {
+        "name": "sections_complete",
+        "passed": true,
+        "details": "All sections present."
+      },
+      {
+        "name": "premises_addressed",
+        "passed": true,
+        "details": "4 of 4 client premise(s) given an explicit verdict."
+      },
+      {
+        "name": "expert_review",
+        "passed": true,
+        "details": "[warning] The claim that NIR is 'the most common online method' is supported by S01 p.10, but the added phrase 'using fiber optic probes' is not explicitly on that page; it is a reasonable inference from the same source.; [warning] The statement 'NIR spectra have broad overlapping bands and require chemometrics; sensitivity below 0.1 percent is unlikely' is supported by S01 p.10 and p.16, but the exact threshold '0.1 percent' is from p.16 and should be cited there rather than p.10.; [warning] The fluorescence sensitivity claim 'down to nM–µM' is supported by S01 p.16, but the cited page does not mention 'tryptophan and riboflavin' as examples; those are from the same source but not on the cited page.; [warning] The statement 'Fluorescence has low selectivity' is supported by S01 p.5 and Table 1, but the phrase 'useful only for a defined fluorescent species or a justified indicator' is an inference and should be marked as such.; [warning] The claim 'NIR + fluorescence fusion demonstrated more accurate biomass determination and distinguishing intra- and extracellular metabolites in yeast fermentation' is supported by S01 p.7, but the page does not specify 'intra- and extracellular metabolites' as separate; it says 'distinguishing between their intra- and extracellular metabolites', which is close but not identical.; [warning] The statement 'For any combined probe, the analyzed spot must be homogeneous or the methods may sample different regions' is supported by S04 p.2, but the page discusses a specific IR+fluorescence probe and not a general combined probe; the inference is reasonable but should be scoped."
+      }
+    ]
+  },
+  "meta": {
+    "model": "deepseek-v4-pro",
+    "mode": "batch",
+    "generated_at": "2026-10-17T15:51:05+00:00",
+    "duration_s": 156.4
+  }
+}

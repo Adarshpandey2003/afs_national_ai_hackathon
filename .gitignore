@@ -1,0 +1,52 @@
+# =====================================================================================================
+# What is NOT committed, and why. Everything else (code, docs, generated knowledge base, outputs) is.
+# Rule of thumb: commit what someone needs to understand, run or verify the project;
+# ignore secrets, copyrighted originals, private notes, and anything that is rebuilt automatically.
+# =====================================================================================================
+
+# --- Secrets ---------------------------------------------------------------------------------------
+# API keys (DeepSeek). Never commit them; the *.env.example files document the variables instead.
+.env
+.env.local
+backend/.env
+frontend/.env.local
+
+# --- Copyrighted source materials ------------------------------------------------------------------
+# The supplied PDFs/DOCX/XLSX (materials.zip) and uploaded documents. The S01 disclaimer forbids
+# redistribution. Not needed to run the app: the extracted knowledge base (kb/*.jsonl, kb/*.json,
+# kb/ocr_cache/) is committed. Needed only to rebuild the KB from scratch: unzip materials.zip here.
+kb/raw/
+frontend/public/materials/
+
+# --- Generated, rebuilt automatically --------------------------------------------------------------
+# FAISS vector index: rebuilt from kb/chunks.jsonl with `python kb/build_index.py` (about 1 min,
+# done at deploy time). Binary and environment-specific, so not worth versioning.
+kb/index/
+backend/kb/index/
+
+# Python virtual environment: recreated with `pip install -r backend/requirements.txt`.
+.venv/
+backend/.venv/
+
+# Python bytecode and test caches: created automatically on every run.
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Node dependencies and the frontend build: recreated with `npm install` / `npm run build`.
+node_modules/
+dist/
+
+# --- Private / working notes -----------------------------------------------------------------------
+# Personal planning notes and AI-session logs: working material, not project deliverables.
+plan.md
+claude-session.txt
+# Recording of the organisers' Q&A: contains participants' names; summarised where relevant in the docs.
+National AI Hackathon 2026 by SchubKI - Q&A*.txt
+
+# --- Editor and OS clutter -------------------------------------------------------------------------
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log

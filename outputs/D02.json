@@ -1,0 +1,920 @@
+{
+  "decision_status": "provisional",
+  "decision_rationale": "The target variables are defined enough to choose a method family (fat and protein in opaque concentrated dairy), and S01 supports NIR reflection as an application family for this matrix. The request asks for a concept and a comparison experiment, not a final configuration or guaranteed performance, so it is not outside the supported scope; and not insufficient because fat/protein are named.",
+  "summary": "Provisional: test NIR diffuse reflection as primary, with NIR transmission/transfection and MIR ATR as comparators, using retained laboratory fat/protein results as reference data before specifying any in-line equipment.",
+  "requirements": {
+    "stated_facts": [
+      {
+        "text": "The customer produces an opaque, concentrated milk product.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "The product flows through a processing line.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "The customer currently samples the product for fat and protein analysis.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "The customer wants earlier information about composition changes.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "Product temperature varies during production.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "Product texture varies during production.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "The customer wants to retain laboratory checks.",
+        "kind": "fact",
+        "citations": []
+      }
+    ],
+    "key_unknowns": [
+      "Specific composition targets beyond fat and protein, and their concentration ranges.",
+      "The process problem or decision the earlier composition information should support.",
+      "The intended measurement point and local process conditions, including phase, temperature range, pressure, flow, access, and fouling.",
+      "Required response time and accuracy or uncertainty.",
+      "Current laboratory sampling frequency, reference method details, and accuracy for fat and protein.",
+      "How texture varies and whether it affects sample representativeness or optical measurement.",
+      "Whether an in-line fiber-optic interface is required or another implementation is acceptable.",
+      "Practical constraints on the comparison experiment, such as production windows, sampling frequency, cleaning or changeover, data access, and operator time."
+    ],
+    "client_premises": [
+      {
+        "statement": "An initial spectroscopy concept and a practical comparison experiment are requested as deliverables; their feasibility and scope must be checked.",
+        "verdict": "supported",
+        "explanation": "AFS documentation describes a comparison workflow: multispectral fiber systems allow testing four spectroscopy methods and comparing spectral data to select the best process-control solution, and the AFS route starts with assessing the process.",
+        "citations": [
+          {
+            "source": "S02",
+            "page": 3,
+            "label": "S02 p.3",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S05",
+            "page": 1,
+            "label": "S05 p.1",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "statement": "The existing laboratory checks for fat and protein can be retained and used alongside the spectroscopy comparison.",
+        "verdict": "supported",
+        "explanation": "S01 describes calibrating inline NIR models with laboratory reference capability for fat/protein; the PLS regression route requires reference values, and S03 documents the validation discipline needed when models are built on limited data.",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 17,
+            "label": "S01 p.17",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 18,
+            "label": "S01 p.18",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S03",
+            "page": 6,
+            "label": "S03 p.6",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S03",
+            "page": 14,
+            "label": "S03 p.14",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "statement": "Spectroscopy can provide earlier information about composition changes in an opaque, concentrated product whose temperature and texture vary.",
+        "verdict": "unverified",
+        "explanation": "Opaque/concentrated product and fat/protein quantification are supported for NIR reflection, but temperature effects and a quantified time advantage are not covered by AFS sources; texture is a recognised risk with mitigation, not a solved problem. Therefore the full premise is unverified.",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 17,
+            "label": "S01 p.17",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S05",
+            "page": 2,
+            "label": "S05 p.2",
+            "quote": null,
+            "url": null
+          }
+        ]
+      }
+    ]
+  },
+  "clarification_questions": [
+    {
+      "question_id": "q1",
+      "text": "Which composition variables and concentration ranges must the concept measure? Are fat and protein the primary targets, and are any other components or quality variables required?",
+      "priority": 1,
+      "why_it_matters": "Target analytes and their levels determine the suitable spectral region, chemometric approach, and achievable detection limits.",
+      "affects": "method"
+    },
+    {
+      "question_id": "q2",
+      "text": "What process problem or bottleneck should the earlier composition information address, such as batch variability, yield loss, rejects, safety, or delays, and what decision will be made with it?",
+      "priority": 1,
+      "why_it_matters": "The process problem defines how timely and actionable the measurement must be and whether the concept is for monitoring or control.",
+      "affects": "method"
+    },
+    {
+      "question_id": "q3",
+      "text": "At what point in the processing line should the earlier information be available, and what are the product phase, temperature range, pressure, flow, texture variation, access, and fouling conditions there?",
+      "priority": 1,
+      "why_it_matters": "The measurement point and process conditions determine interface options, optical path, sampling representativeness, and fouling mitigation needs.",
+      "affects": "setup"
+    },
+    {
+      "question_id": "q4",
+      "text": "What response time and measurement accuracy or uncertainty would make the earlier information useful compared with the current laboratory checks?",
+      "priority": 1,
+      "why_it_matters": "The required speed and accuracy set feasibility criteria and influence whether spectroscopy can add useful earlier information.",
+      "affects": "method"
+    },
+    {
+      "question_id": "q5",
+      "text": "How often and by which reference method are fat and protein currently sampled, and what accuracy do those laboratory checks provide?",
+      "priority": 2,
+      "why_it_matters": "Reference method frequency and accuracy define the comparison baseline and the confidence with which a spectroscopy concept can be evaluated.",
+      "affects": "plan"
+    },
+    {
+      "question_id": "q6",
+      "text": "What practical constraints should the comparison experiment respect, such as production windows, sample frequency, cleaning or changeover, data access, and operator time?",
+      "priority": 3,
+      "why_it_matters": "Practical constraints shape an experiment that can be run without disrupting production and with usable reference data.",
+      "affects": "acceptance"
+    }
+  ],
+  "assumptions": [
+    "Fat and protein are the primary composition targets pending confirmation; any additional composition variables must be added to the model.",
+    "Retained laboratory fat and protein methods can provide independent reference values for the comparison experiment.",
+    "Temperature and texture variation are relevant measurement variability and must be covered in the comparison.",
+    "A spectroscopy interface can be considered at the processing line, although the exact measurement point and access are not yet defined.",
+    "No safety-critical, clinical, or regulatory acceptance requirement has been stated."
+  ],
+  "recommendations": [
+    {
+      "method": "NIR diffuse reflection",
+      "technique": "Diffuse reflection fiber-optic probe; reflectance-to-absorbance, MSC or SNV, then PLS regression for fat and protein",
+      "role": "primary",
+      "rationale": [
+        {
+          "text": "NIR reflection is primarily used for opaque or highly concentrated dairy products such as yogurt, butter, or whole milk concentrates, and the source describes PLS regression to quantify fat and protein.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 17,
+              "label": "S01 p.17",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "A diffuse reflection probe is listed for scattering media with 0.5-1 mm optical depth and average sensitivity, selectivity, and cost.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 6,
+              "label": "S01 Table 1 (p.6)",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "This is the simplest, lowest-cost candidate for an opaque flowing product, so it should be tested first before adding more complex options.",
+          "kind": "inference",
+          "citations": []
+        }
+      ],
+      "conditions": [
+        "Product must be opaque enough for backscatter measurement.",
+        "Matrix-specific calibration against retained laboratory fat/protein values is required.",
+        "MSC/SNV must be tested to handle texture and scattering variation."
+      ],
+      "citations": [
+        {
+          "source": "S01",
+          "page": 17,
+          "label": "S01 p.17",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S01",
+          "page": 6,
+          "label": "S01 Table 1 (p.6)",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "method": "NIR transmission or transflection",
+      "technique": "Transmission or transflection fiber probe with 1-10 mm optical path",
+      "role": "comparison",
+      "rationale": [
+        {
+          "text": "NIR transmission is preferred for transparent or semi-transparent liquids and may offer higher accuracy for low-concentration components because light interacts with the whole sampled cross-section.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 18,
+              "label": "S01 p.18",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "Transmission fails when the milk becomes too thick or fat-rich; a transflection probe may work for low-fat and high-fat containing milk products.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 18,
+              "label": "S01 p.18",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "The same NIR spectrometer and light source remain, making a reflection-versus-transmission/transfection comparison experimentally cheap.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 18,
+              "label": "S01 p.18",
+              "quote": null,
+              "url": null
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        "Only if the opaque product still permits a useful optical path.",
+        "Pathlength must be precisely controlled and confirmed on the real product."
+      ],
+      "citations": [
+        {
+          "source": "S01",
+          "page": 18,
+          "label": "S01 p.18",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S01",
+          "page": 6,
+          "label": "S01 Table 1 (p.6)",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "method": "MIR ATR",
+      "technique": "ATR immersion probe with mid-infrared fiber; contact evanescent-wave measurement",
+      "role": "comparison",
+      "rationale": [
+        {
+          "text": "Advanced dairy labs incorporate MIR ATR fiber-optic techniques to capture specific chemical information that NIR might miss, giving higher molecular specificity.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 18,
+              "label": "S01 p.18",
+              "quote": null,
+              "url": null
+            },
+            {
+              "source": "S01",
+              "page": 10,
+              "label": "S01 p.10",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "The ATR path is only 1-6 um, so it can measure highly scattering or opaque fluids without dilution.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 6,
+              "label": "S01 Table 1 (p.6)",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "S04 identifies triglyceride carbonyl near 1740 cm-1 and protein amide I/II bands near 1548 and 1640 cm-1, but warns that in inhomogeneous fat-rich samples lipid and protein signatures mix, reducing classification usefulness.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S04",
+              "page": 3,
+              "label": "S04 p.3",
+              "quote": null,
+              "url": null
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        "Only if NIR selectivity or robustness is insufficient for fat/protein.",
+        "Contact, fouling, crystal compatibility, and usable fiber/crystal range must be confirmed.",
+        "Higher cost and more demanding probe integration are acceptable."
+      ],
+      "citations": [
+        {
+          "source": "S01",
+          "page": 18,
+          "label": "S01 p.18",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S01",
+          "page": 6,
+          "label": "S01 Table 1 (p.6)",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S04",
+          "page": 3,
+          "label": "S04 p.3",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "method": "NIR reflection plus MIR ATR data fusion",
+      "technique": "Multispectral or combined probe measuring the same sample point, then chemometric data fusion",
+      "role": "combination",
+      "rationale": [
+        {
+          "text": "Multispectral optical analysis combines heterogeneous information and may be useful when problems of inhomogeneity and rapid changes coexist.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 7,
+              "label": "S01 p.7",
+              "quote": null,
+              "url": null
+            },
+            {
+              "source": "S01",
+              "page": 8,
+              "label": "S01 p.8",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "Any gain from a combination must be treated as a hypothesis and tested against the best single method.",
+          "kind": "inference",
+          "citations": []
+        }
+      ],
+      "conditions": [
+        "Only if a single method does not meet the agreed fat/protein error or robustness criteria.",
+        "Sampling location and timing must be aligned for the combined data."
+      ],
+      "citations": [
+        {
+          "source": "S01",
+          "page": 7,
+          "label": "S01 p.7",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S01",
+          "page": 8,
+          "label": "S01 p.8",
+          "quote": null,
+          "url": null
+        }
+      ]
+    }
+  ],
+  "measurement_concept": {
+    "probe_geometry": [
+      {
+        "text": "Start with laboratory probes: NIR diffuse reflection probe with 0.5-1 mm optical depth, NIR transmission or transflection probe with 1-10 mm path, and MIR ATR probe with 1-6 um depth.",
+        "kind": "sourced",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 6,
+            "label": "S01 Table 1 (p.6)",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "text": "For in-line use, NIR reflection can be flush-mounted into a pipe or vat to interact directly with the flowing medium.",
+        "kind": "sourced",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 17,
+            "label": "S01 p.17",
+            "quote": null,
+            "url": null
+          }
+        ]
+      }
+    ],
+    "location": [
+      {
+        "text": "The exact in-line point is not defined by the client; the comparison should first use retained laboratory samples and then move to the real measurement point.",
+        "kind": "inference",
+        "citations": []
+      },
+      {
+        "text": "The process point should be selected where the product is representative and the probe can be accessed and cleaned; pipe/vat installation is the AFS application example.",
+        "kind": "inference",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 17,
+            "label": "S01 p.17",
+            "quote": null,
+            "url": null
+          }
+        ]
+      }
+    ],
+    "fiber_link": [
+      {
+        "text": "A full 780-2500 nm NIR link is not covered end-to-end by standard Vis-NIR silica fibers, which cover only 350-2400 nm; the actual fiber and probe range must be confirmed.",
+        "kind": "sourced",
+        "citations": [
+          {
+            "source": "S02",
+            "page": 6,
+            "label": "S02 p.6",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "text": "MIR ATR fibers are band-limited; for example chalcogenide As-S fibers cover only 1.1-6.5 um, not the whole 2.5-25 um mid-infrared region.",
+        "kind": "sourced",
+        "citations": [
+          {
+            "source": "S02",
+            "page": 6,
+            "label": "S02 p.6",
+            "quote": null,
+            "url": null
+          }
+        ]
+      }
+    ]
+  },
+  "spectral_ranges": [
+    {
+      "method": "NIR",
+      "range_text": "780-2500 nm is the nominal NIR method range.",
+      "note": "This is not the usable range of a specific instrument, fiber, or probe; standard Vis-NIR silica fibers cover only 350-2400 nm, so the actual coverage must be confirmed.",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 10,
+          "label": "S01 p.10",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S02",
+          "page": 6,
+          "label": "S02 p.6",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "method": "MIR ATR",
+      "range_text": "Mid-infrared region; the usable window is set by the selected ATR fiber and crystal, for example chalcogenide As-S fiber covers 1.1-6.5 um.",
+      "note": "The ATR probe optical depth is only 1-6 um, so target bands must fall within the chosen fiber/crystal transmission window.",
+      "citations": [
+        {
+          "source": "S02",
+          "page": 6,
+          "label": "S02 p.6",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S01",
+          "page": 6,
+          "label": "S01 Table 1 (p.6)",
+          "quote": null,
+          "url": null
+        }
+      ]
+    }
+  ],
+  "risks": [
+    {
+      "text": "The S01 dairy statements are vendor application examples, not validated performance for this customer's concentrated product; no accuracy or detection limits are given.",
+      "kind": "sourced",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 17,
+          "label": "S01 p.17",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "text": "NIR reflection is sensitive to surface characteristics and fat globule size, so texture variation could mimic composition change despite MSC/SNV preprocessing.",
+      "kind": "sourced",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 17,
+          "label": "S01 p.17",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "text": "Temperature effects on dairy spectra are not covered by AFS sources and must be treated as an open experimental variable.",
+      "kind": "inference",
+      "citations": []
+    },
+    {
+      "text": "MIR ATR analyses only the crystal tip region and has contact/fouling limitations; no dairy cleaning or fouling-rate data are supplied.",
+      "kind": "sourced",
+      "citations": [
+        {
+          "source": "S04",
+          "page": 3,
+          "label": "S04 p.3",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "text": "A reflection or ATR spectrum is not itself a fat or protein calibration; a matrix-specific chemometric model with thorough validation is required.",
+      "kind": "sourced",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 17,
+          "label": "S01 p.17",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S03",
+          "page": 6,
+          "label": "S03 p.6",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S03",
+          "page": 14,
+          "label": "S03 p.14",
+          "quote": null,
+          "url": null
+        }
+      ]
+    }
+  ],
+  "feasibility_plan": {
+    "objective": "Determine whether NIR diffuse reflection, alone or compared with NIR transmission/transfection and MIR ATR, can provide earlier fat/protein information under real temperature and texture variation, using retained laboratory checks as reference.",
+    "samples": [
+      "Representative production batches across the expected fat and protein ranges and texture states.",
+      "Samples taken at the intended measurement point, including low, mid, and high temperature/texture conditions as available."
+    ],
+    "reference_measurements": [
+      "Existing laboratory fat and protein reference assays with documented sampling time and uncertainty.",
+      "Any additional target variables, if the client confirms them later, should have independent reference values."
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "Laboratory screening of candidate methods",
+        "description": "Record spectra on representative retained samples using NIR diffuse reflection, NIR transmission/transfection, and MIR ATR probes. Record sample temperature and texture at each measurement and identify the usable spectral window for each method.",
+        "citations": [
+          {
+            "source": "S02",
+            "page": 3,
+            "label": "S02 p.3",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 17,
+            "label": "S01 p.17",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 6,
+            "label": "S01 Table 1 (p.6)",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Build first chemometric models",
+        "description": "Build fat/protein PLS models for each viable method against retained laboratory reference values. Apply MSC or SNV for NIR reflection and include temperature/texture as variability. Use segmented and random-subset validation to avoid overfitting.",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 17,
+            "label": "S01 p.17",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S03",
+            "page": 6,
+            "label": "S03 p.6",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S03",
+            "page": 14,
+            "label": "S03 p.14",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "order": 3,
+        "title": "In-line or in-situ trial",
+        "description": "Move the best laboratory candidate to the agreed process point. Take timed reference samples and compare model predictions with laboratory results while checking robustness to temperature, texture, and any fouling or cleaning effects.",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 17,
+            "label": "S01 p.17",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S05",
+            "page": 1,
+            "label": "S05 p.1",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S05",
+            "page": 2,
+            "label": "S05 p.2",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "order": 4,
+        "title": "Data fusion comparison",
+        "description": "Only if no single method meets the agreed requirements, test combined NIR reflection plus MIR ATR or other chosen methods with aligned sampling location and timing. A combination must beat the best single method.",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 7,
+            "label": "S01 p.7",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 8,
+            "label": "S01 p.8",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "order": 5,
+        "title": "Outlook to a simplified sensor",
+        "description": "If a model works, identify the key informative wavelengths and assess whether a simplified OMS or LED-based multi-wavelength sensor could replace the full-spectrum instrument for routine use.",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 9,
+            "label": "S01 p.9",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S03",
+            "page": 14,
+            "label": "S03 p.14",
+            "quote": null,
+            "url": null
+          }
+        ]
+      }
+    ],
+    "comparison": "Compare single-method prediction error, bias, and robustness on independent samples against client-agreed fat and protein thresholds. Choose the simplest configuration that meets them; consider data fusion only if it beats the best single method.",
+    "go_no_go": "Agree numerical acceptance criteria with the client before the test, such as fat/protein prediction error, bias, response delay, and robustness to temperature and texture. The go/no-go decision is made against those agreed thresholds; no acceptance numbers are invented here."
+  },
+  "sources": [
+    {
+      "source": "S02",
+      "page": 3,
+      "label": "S02 p.3",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S05",
+      "page": 1,
+      "label": "S05 p.1",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 17,
+      "label": "S01 p.17",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 18,
+      "label": "S01 p.18",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S03",
+      "page": 6,
+      "label": "S03 p.6",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S03",
+      "page": 14,
+      "label": "S03 p.14",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S05",
+      "page": 2,
+      "label": "S05 p.2",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 6,
+      "label": "S01 Table 1 (p.6)",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 10,
+      "label": "S01 p.10",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S04",
+      "page": 3,
+      "label": "S04 p.3",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 7,
+      "label": "S01 p.7",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 8,
+      "label": "S01 p.8",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S02",
+      "page": 6,
+      "label": "S02 p.6",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 9,
+      "label": "S01 p.9",
+      "quote": null,
+      "url": null
+    }
+  ],
+  "case_id": "D02",
+  "enquiry": "We produce an opaque, concentrated milk product that flows through a processing line. We currently sample it for fat and protein analysis and would like earlier information about composition changes. Product temperature and texture vary during production. We want an initial spectroscopy concept and a practical comparison experiment, while retaining our laboratory checks.",
+  "user_answers": [],
+  "verification": {
+    "passed": true,
+    "revisions": 0,
+    "checks": [
+      {
+        "name": "citations_valid",
+        "passed": true,
+        "details": "All citations point to retrieved evidence pages."
+      },
+      {
+        "name": "numbers_supported",
+        "passed": true,
+        "details": "Every number with a unit appears in the sources or the client's text."
+      },
+      {
+        "name": "sections_complete",
+        "passed": true,
+        "details": "All sections present."
+      },
+      {
+        "name": "premises_addressed",
+        "passed": true,
+        "details": "3 of 3 client premise(s) given an explicit verdict."
+      },
+      {
+        "name": "expert_review",
+        "passed": true,
+        "details": "[warning] The claim that S01 p.18 says transmission is preferred for transparent or semi-transparent liquids and fails when milk becomes too thick or fat-rich is supported, but the draft also cites S01 p.18 for 'transmission fails when the milk becomes too thick or fat-rich' in the comparison rationale; that page does mention this, so it is accurate.; [warning] The draft cites S01 p.17 for 'NIR reflection is primarily used for opaque or highly concentrated dairy products' and for 'sensitive to surface characteristics and fat globule size'; both are supported by the cited page.; [warning] The draft cites S01 p.6 for the diffuse reflection probe optical depth of 0.5-1 mm and for the ATR probe depth of 1-6 um; both are supported by the table on that page.; [warning] The draft cites S02 p.6 for the fiber transmission ranges, including standard VIS-NIR silica fibers covering 350-2400 nm and chalcogenide As-S fibers covering 1.1-6.5 um; both are supported by the page.; [warning] The draft cites S04 p.3 for the triglyceride carbonyl near 1740 cm-1 and protein amide I/II bands near 1548 and 1640 cm-1, and for the warning about inhomogeneous fat-rich samples; all are supported by the page.; [warning] The draft cites S01 p.7 and p.8 for multispectral combination benefits and the need to test combinations against single methods; both pages support the general idea, though the specific 'must be treated as a hypothesis' is an inference."
+      }
+    ]
+  },
+  "meta": {
+    "model": "deepseek-v4-pro",
+    "mode": "batch",
+    "generated_at": "2026-10-17T15:48:42+00:00",
+    "duration_s": 167.3
+  }
+}

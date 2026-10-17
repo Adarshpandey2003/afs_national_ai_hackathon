@@ -1,0 +1,766 @@
+{
+  "decision_status": "provisional",
+  "decision_rationale": "The target variable, API concentration, is defined and the feed-frame location is a documented pharmaceutical use case, so a method concept can be tested. However, the two premises about reusing the old NIR calibration and Raman preserving it are refuted by the evidence that NIR spectra need chemometric modelling per formulation and that NIR+Raman fusion rebuilds models on a new augmented matrix. The case is provisional because a corrected experiment can be designed, not outside supported scope.",
+  "summary": "Do not reuse the existing NIR calibration unchanged and do not expect Raman to keep it valid. Test a new matrix-specific NIR diffuse-reflection calibration on the new blend first, with Raman and NIR+Raman fusion as comparison candidates. Start with laboratory screening before any feed-frame trial.",
+  "requirements": {
+    "stated_facts": [
+      {
+        "text": "The customer has an existing NIR pilot at a tablet press feed frame.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "The existing NIR pilot follows API concentration in one powder formulation.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "The customer is introducing a different API and excipient blend.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "The customer would like to reuse the existing calibration.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "A colleague suggests adding Raman so that the old calibration will remain valid.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "The customer asks what the first technical assessment and experiment should be.",
+        "kind": "fact",
+        "citations": []
+      }
+    ],
+    "key_unknowns": [
+      "Identity and concentrations of the new API and excipient blend",
+      "Expected API concentration range in the new formulation (trace ppm or major %)",
+      "Scope and validation status of the existing NIR calibration",
+      "Current reference method and sampling frequency for API concentration",
+      "Process conditions and material presentation at the tablet press feed frame",
+      "Required measurement accuracy and response time",
+      "Whether Raman is intended as an addition to NIR or a replacement"
+    ],
+    "client_premises": [
+      {
+        "statement": "The existing NIR calibration can be reused for a different API and excipient blend.",
+        "verdict": "refuted",
+        "explanation": "The supplied NIR evidence describes broad overlapping absorption bands that require chemometric modelling; a different API and excipient blend is a different chemical matrix, so the existing model has no stated basis to transfer unchanged.",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 10,
+            "label": "S01 p.10",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "statement": "Adding Raman will make the old calibration remain valid.",
+        "verdict": "refuted",
+        "explanation": "NIR+Raman fusion is described as merging synchronized spectra into a new augmented matrix and then applying regression models, i.e. rebuilding a model, not preserving the old NIR-only calibration. Fusion gains are a hypothesis to test.",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 15,
+            "label": "S01 p.15",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 8,
+            "label": "S01 p.8",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "statement": "The existing NIR pilot at the tablet press feed frame is the appropriate starting point for assessing the new formulation.",
+        "verdict": "supported",
+        "explanation": "The feed frame is the documented pharmaceutical use case for in-line NIR and NIR+Raman probes, so the platform is appropriate; however it is a starting point for a new measurement, not evidence that the calibration transfers.",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 15,
+            "label": "S01 p.15",
+            "quote": null,
+            "url": null
+          }
+        ]
+      }
+    ]
+  },
+  "clarification_questions": [
+    {
+      "question_id": "q1",
+      "text": "What are the new API and excipient blend, and what API concentration range must be measured (for example, trace ppm or major %)?",
+      "priority": 1,
+      "why_it_matters": "Chemical identity and concentration range determine whether NIR, Raman, or fusion has sufficient spectral contrast and what calibration span is needed.",
+      "affects": "method"
+    },
+    {
+      "question_id": "q2",
+      "text": "What exactly is the existing NIR calibration (API/excipient, concentration range, spectral range, validation status), and what has changed in the new formulation?",
+      "priority": 1,
+      "why_it_matters": "This directly determines whether any model update or transfer strategy is plausible and what experiment must be run.",
+      "affects": "method"
+    },
+    {
+      "question_id": "q3",
+      "text": "What reference method is used now for API concentration, and how often are samples taken?",
+      "priority": 1,
+      "why_it_matters": "A named independent reference method and sampling frequency are required to build and validate a new chemometric model.",
+      "affects": "plan"
+    },
+    {
+      "question_id": "q4",
+      "text": "What process problem or bottleneck is driving this change, and what accuracy and response time are needed?",
+      "priority": 1,
+      "why_it_matters": "Performance requirements define the go/no-go criteria and whether a simpler or more complex method is acceptable.",
+      "affects": "acceptance"
+    },
+    {
+      "question_id": "q5",
+      "text": "What are the feed-frame conditions and material presentation (temperature, flow, dust or fouling, access, window or probe interface)?",
+      "priority": 2,
+      "why_it_matters": "These conditions determine probe geometry, cleaning, and whether Raman can be added practically.",
+      "affects": "setup"
+    },
+    {
+      "question_id": "q6",
+      "text": "Is Raman proposed as an addition to NIR or as a replacement, and what decision should the first experiment deliver (reuse old model, build new NIR model, or add Raman)?",
+      "priority": 2,
+      "why_it_matters": "This clarifies the proposed configuration and the acceptance criteria for the first technical assessment.",
+      "affects": "acceptance"
+    }
+  ],
+  "assumptions": [
+    "The existing NIR pilot is available for a feasibility experiment at the tablet press feed frame.",
+    "The existing calibration is a quantitative API-concentration model, not only a qualitative identity model.",
+    "The new formulation is intended to be measured at the same feed-frame location as the existing formulation.",
+    "A first technical assessment can be limited to feasibility and risk identification rather than method validation or approval."
+  ],
+  "recommendations": [
+    {
+      "method": "NIR",
+      "technique": "Diffuse reflection probe",
+      "role": "primary",
+      "rationale": [
+        {
+          "text": "The pharmaceutical feed-frame example supports NIR reflection for monitoring blend potency in powders.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 15,
+              "label": "S01 p.15",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "NIR has average sensitivity, average selectivity, and average cost, the simplest incumbent option for this existing pilot.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 6,
+              "label": "S01 Table 1 (p.6)",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "Because NIR bands are broad and overlapping, the old calibration cannot be reused; a new matrix-specific calibration must be built and tested for the new blend.",
+          "kind": "inference",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 10,
+              "label": "S01 p.10",
+              "quote": null,
+              "url": null
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        "The new API has NIR-detectable bands that are not fully masked by the new excipients.",
+        "The expected concentration range can be spanned by representative laboratory and feed-frame samples.",
+        "The existing NIR probe/fiber and feed-frame interface are suitable for the new powder."
+      ],
+      "citations": []
+    },
+    {
+      "method": "Raman",
+      "technique": "Raman probe, 785 nm excitation",
+      "role": "comparison",
+      "rationale": [
+        {
+          "text": "Raman provides complementary chemical information to NIR and is used in the pharmaceutical feed-frame example with 785 nm excitation.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 15,
+              "label": "S01 p.15",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "Raman has high selectivity but high cost, and its weak signal can be affected by fluorescence background.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 6,
+              "label": "S01 Table 1 (p.6)",
+              "quote": null,
+              "url": null
+            },
+            {
+              "source": "S01",
+              "page": 11,
+              "label": "S01 p.11",
+              "quote": null,
+              "url": null
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        "Use only if NIR alone has insufficient selectivity or if excipient fluorescence can be controlled.",
+        "A fresh calibration for the new blend must be built; Raman addition does not preserve the old model."
+      ],
+      "citations": []
+    },
+    {
+      "method": "NIR + Raman",
+      "technique": "Simultaneous probe with low-level data fusion",
+      "role": "combination",
+      "rationale": [
+        {
+          "text": "The feed-frame pharma example reports that fused NIR+Raman models can predict API potency with higher accuracy and robustness than single-method models.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 15,
+              "label": "S01 p.15",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "Fusion spectra must be collected from the same small area, making this a hypothesis to test with aligned sampling.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 8,
+              "label": "S01 p.8",
+              "quote": null,
+              "url": null
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        "Test only after single-method models are built and only if one method alone is unlikely to meet the requirement.",
+        "A new fused model must be built on the new blend; the old NIR-only model is not preserved."
+      ],
+      "citations": []
+    },
+    {
+      "method": "Reuse existing NIR calibration or add Raman to preserve it",
+      "technique": "No new experiment / model transfer",
+      "role": "not_recommended",
+      "rationale": [
+        {
+          "text": "The evidence does not support calibration transfer to a different API/excipient matrix; broad overlapping NIR bands require chemometric modelling per formulation.",
+          "kind": "inference",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 10,
+              "label": "S01 p.10",
+              "quote": null,
+              "url": null
+            }
+          ]
+        },
+        {
+          "text": "Adding Raman in fusion is reported as rebuilding a model on a merged augmented matrix, not preserving the existing NIR calibration.",
+          "kind": "sourced",
+          "citations": [
+            {
+              "source": "S01",
+              "page": 15,
+              "label": "S01 p.15",
+              "quote": null,
+              "url": null
+            }
+          ]
+        }
+      ],
+      "conditions": [],
+      "citations": []
+    }
+  ],
+  "measurement_concept": {
+    "probe_geometry": [
+      {
+        "text": "For NIR, use a diffuse reflection probe; the table lists 0.5–1 mm depth for scattering media and powder.",
+        "kind": "sourced",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 6,
+            "label": "S01 Table 1 (p.6)",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "text": "For Raman comparison, use a Raman probe; the table lists 2–5 mm depth and high selectivity for liquid/powder/solid.",
+        "kind": "sourced",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 6,
+            "label": "S01 Table 1 (p.6)",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "text": "A multispectral NIRaman combi probe fits in a tablet press feed frame, if simultaneous sampling is testable.",
+        "kind": "sourced",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 15,
+            "label": "S01 p.15",
+            "quote": null,
+            "url": null
+          }
+        ]
+      }
+    ],
+    "location": [
+      {
+        "text": "The existing pilot is at the tablet press feed frame.",
+        "kind": "fact",
+        "citations": []
+      },
+      {
+        "text": "The feed frame is a documented pharmaceutical use case; probes can be inserted directly into the process flow and capture spectra without interrupting production.",
+        "kind": "sourced",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 15,
+            "label": "S01 p.15",
+            "quote": null,
+            "url": null
+          }
+        ]
+      }
+    ],
+    "fiber_link": [
+      {
+        "text": "Fiber coupling allows the spectrometers or light sources to be located away from vibration and dust.",
+        "kind": "sourced",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 15,
+            "label": "S01 p.15",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "text": "Standard Vis-NIR silica fibers cover 350–2400 nm only, so the full 780–2500 nm NIR range is not guaranteed; the actual probe and fiber working range must be confirmed with AFS.",
+        "kind": "sourced",
+        "citations": [
+          {
+            "source": "S02",
+            "page": 6,
+            "label": "S02 p.6",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 10,
+            "label": "S01 p.10",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "text": "The existing fiber/probe from the pilot is assumed to be available, but its compatible spectral coverage must be checked against the selected method.",
+        "kind": "assumption",
+        "citations": []
+      }
+    ]
+  },
+  "spectral_ranges": [
+    {
+      "method": "NIR",
+      "range_text": "780–2500 nm nominal method range",
+      "note": "This is the general NIR range; specify only the usable range of the selected fiber and probe. S02 p.6 shows Vis-NIR silica 350–2400 nm, so full 2500 nm coverage cannot be assumed.",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 10,
+          "label": "S01 p.10",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S02",
+          "page": 6,
+          "label": "S02 p.6",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "method": "Raman",
+      "range_text": "Excitation 785 nm; Raman shift expressed in cm⁻¹",
+      "note": "The supplied Raman spectrometer records visible and shortwave NIR radiation in the 400–1100 nm region; the laser excitation is stated separately from the Raman shift. Confirm the Raman fiber/probe link for 785 nm excitation.",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 11,
+          "label": "S01 p.11",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S01",
+          "page": 15,
+          "label": "S01 p.15",
+          "quote": null,
+          "url": null
+        }
+      ]
+    }
+  ],
+  "risks": [
+    {
+      "text": "A different API/excipient blend is a new matrix, and the old NIR calibration will likely fail or bias results because broad overlapping NIR bands require chemometric calibration.",
+      "kind": "inference",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 10,
+          "label": "S01 p.10",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "text": "Raman addition is not a validity-preserving fix; fused NIR+Raman spectra require a rebuilt model and aligned sampling.",
+      "kind": "inference",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 15,
+          "label": "S01 p.15",
+          "quote": null,
+          "url": null
+        },
+        {
+          "source": "S01",
+          "page": 8,
+          "label": "S01 p.8",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "text": "Raman's weak signal and possible excipient fluorescence may prevent useful spectra, so a standalone NIR model should be assessed first.",
+      "kind": "sourced",
+      "citations": [
+        {
+          "source": "S01",
+          "page": 11,
+          "label": "S01 p.11",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "text": "The usable fiber/probe range is not confirmed; standard silica fibers do not cover the full NIR range, so the actual working window must be checked before the trial.",
+      "kind": "inference",
+      "citations": [
+        {
+          "source": "S02",
+          "page": 6,
+          "label": "S02 p.6",
+          "quote": null,
+          "url": null
+        }
+      ]
+    },
+    {
+      "text": "No accuracy, detection limit, response time, or reference-method uncertainty has been given, so go/no-go criteria cannot yet be defined.",
+      "kind": "assumption",
+      "citations": []
+    }
+  ],
+  "feasibility_plan": {
+    "objective": "Determine whether NIR alone, or NIR+Raman fusion, can quantify API concentration in the new blend, and explicitly reject the idea of reusing the old calibration unchanged.",
+    "samples": [
+      "Representative new API/excipient blend samples across the client-agreed API concentration range.",
+      "Samples spanning the expected physical variation likely at the feed frame (particle size, density, flow condition).",
+      "A few old-formulation samples only for spectral contrast, not for transferring the old model."
+    ],
+    "reference_measurements": [
+      "Independent API concentration reference assay, such as HPLC or another named pharmacopoeial method, with documented sampling time and uncertainty."
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "title": "Laboratory screening of new blend",
+        "description": "Record NIR and Raman spectra on representative new-blend samples with standard laboratory spectrometers; check API-specific bands, excipient interferences, Raman fluorescence, and usable spectral windows.",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 9,
+            "label": "S01 p.9",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S05",
+            "page": 1,
+            "label": "S05 p.1",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Build single-method chemometric models",
+        "description": "Build an NIR calibration first against the independent reference API assay, then a Raman calibration if needed; validate on held-out samples before considering fusion.",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 10,
+            "label": "S01 p.10",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 12,
+            "label": "S01 p.12",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Compare with fused NIR+Raman model",
+        "description": "Only if single-method models are insufficient, record synchronized NIR and Raman spectra from the same small area and build a fused PLS model; compare with the best single method.",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 15,
+            "label": "S01 p.15",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S01",
+            "page": 8,
+            "label": "S01 p.8",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "order": 4,
+        "title": "Feed-frame trial",
+        "description": "Test the chosen candidate at the actual feed frame against timed reference samples; check robustness to powder flow, fouling, vibration, and drift.",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 15,
+            "label": "S01 p.15",
+            "quote": null,
+            "url": null
+          }
+        ]
+      },
+      {
+        "order": 5,
+        "title": "Outlook for simplified sensor",
+        "description": "If the model works, use the identified key wavelengths to evaluate a simpler dedicated multi-wavelength sensor; this is a later development step.",
+        "citations": [
+          {
+            "source": "S01",
+            "page": 9,
+            "label": "S01 p.9",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S03",
+            "page": 14,
+            "label": "S03 p.14",
+            "quote": null,
+            "url": null
+          },
+          {
+            "source": "S05",
+            "page": 1,
+            "label": "S05 p.1",
+            "quote": null,
+            "url": null
+          }
+        ]
+      }
+    ],
+    "comparison": "Compare prediction error, bias, and robustness on independent samples for: NIR-only, Raman-only (if viable), and fused NIR+Raman. Choose the simplest configuration that meets agreed acceptance criteria.",
+    "go_no_go": "Agree numerical acceptance criteria with the client before the test (e.g., maximum prediction error and bias relative to the reference method). Go/no-go is based on independent validation samples, not on training data or the old calibration."
+  },
+  "sources": [
+    {
+      "source": "S01",
+      "page": 10,
+      "label": "S01 p.10",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 15,
+      "label": "S01 p.15",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 8,
+      "label": "S01 p.8",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 6,
+      "label": "S01 Table 1 (p.6)",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 11,
+      "label": "S01 p.11",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S02",
+      "page": 6,
+      "label": "S02 p.6",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 9,
+      "label": "S01 p.9",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S05",
+      "page": 1,
+      "label": "S05 p.1",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S01",
+      "page": 12,
+      "label": "S01 p.12",
+      "quote": null,
+      "url": null
+    },
+    {
+      "source": "S03",
+      "page": 14,
+      "label": "S03 p.14",
+      "quote": null,
+      "url": null
+    }
+  ],
+  "case_id": "H01",
+  "enquiry": "Our existing NIR pilot follows API concentration in one powder formulation at the tablet press feed frame. We are introducing a different API and excipient blend and would like to reuse the calibration. A colleague suggests adding Raman so that the old calibration will remain valid. What should our first technical assessment and experiment be?",
+  "user_answers": [],
+  "verification": {
+    "passed": true,
+    "revisions": 0,
+    "checks": [
+      {
+        "name": "citations_valid",
+        "passed": true,
+        "details": "All citations point to retrieved evidence pages."
+      },
+      {
+        "name": "numbers_supported",
+        "passed": true,
+        "details": "Every number with a unit appears in the sources or the client's text."
+      },
+      {
+        "name": "sections_complete",
+        "passed": true,
+        "details": "All sections present."
+      },
+      {
+        "name": "premises_addressed",
+        "passed": true,
+        "details": "3 of 3 client premise(s) given an explicit verdict."
+      },
+      {
+        "name": "expert_review",
+        "passed": true,
+        "details": "[warning] S01 p.9 and S05 p.1 are cited for laboratory screening and simplified sensor outlook, but neither page explicitly describes recording NIR/Raman spectra on new-blend samples or deriving a dedicated multi-wavelength sensor; the plan step is reasonable but the citations are only indirect.; [warning] The third client premise is marked 'supported' based only on S01 p.15, but that page shows the feed frame as a use case for NIR+Raman, not that the existing NIR pilot is the appropriate starting point for a new formulation; a 'partially supported' or 'needs evidence' verdict would be more precise.; [warning] Question q4 asks about process problem and accuracy/response time, but does not ask for the existing calibration's spectral range or model type, which would directly determine whether any transfer strategy is plausible.; [warning] The plan includes a feed-frame trial but does not specify a staged go/no-go after laboratory screening before committing to the in-line trial; adding an explicit decision gate after step 2 would strengthen the staged approach.; [warning] The NIR+Raman combination is listed as a comparison candidate with conditions, but the rationale does not explicitly state that it should be tested only if single-method models fail to meet agreed criteria; the conditions imply this but could be clearer.; [warning] The draft states that the old NIR calibration 'will likely fail or bias results' as a risk, but the evidence only shows that NIR requires chemometric modelling per formulation; the failure is probable but not certain, so the wording could be softened to 'may fail'."
+      }
+    ]
+  },
+  "meta": {
+    "model": "deepseek-v4-pro",
+    "mode": "batch",
+    "generated_at": "2026-10-17T16:01:59+00:00",
+    "duration_s": 162.3
+  }
+}

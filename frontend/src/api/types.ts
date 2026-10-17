@@ -7,6 +7,7 @@ export type EvidenceLevel =
   | "research_in_vitro_poc"
   | "research_lab_note"
   | "business_context"
+  | "expert_notes"
   | "reference_doc"
   | "external";
 

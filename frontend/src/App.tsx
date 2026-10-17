@@ -1,16 +1,19 @@
+import type { ReactNode } from 'react'
 import { Shell } from './components/shell'
+import { SignIn } from './components/sign-in'
 import { SourceDrawer } from './components/source-drawer'
 import { TooltipLayer } from './components/ui'
+import { authRequired, session } from './lib/auth'
 import { DataProvider } from './lib/data'
 import { Link, usePath } from './lib/router'
 import { RunProvider } from './lib/run'
-import { ChatPage } from './pages/chat'
+import { StudioPage } from './pages/studio'
 import { ReportPage, ReportsPage } from './pages/reports'
 import { SourcesPage } from './pages/sources'
 
 function Page() {
   const path = usePath()
-  if (path === '/') return <ChatPage />
+  if (path === '/') return <StudioPage />
   if (path === '/reports' || path === '/reports/') return <ReportsPage />
   if (path.startsWith('/reports/')) return <ReportPage caseId={decodeURIComponent(path.slice('/reports/'.length))} />
   if (path === '/sources') return <SourcesPage />
@@ -23,16 +26,25 @@ function Page() {
   )
 }
 
+/** While the backend asks for sign-in and there is no token, only the sign-in screen shows. */
+function Gate({ children }: { children: ReactNode }) {
+  const required = authRequired.use()
+  const signedIn = session.use() !== null
+  return required && !signedIn ? <SignIn /> : <>{children}</>
+}
+
 export default function App() {
   return (
     <DataProvider>
-      <RunProvider>
-        <Shell>
-          <Page />
-        </Shell>
-        <SourceDrawer />
-        <TooltipLayer />
-      </RunProvider>
+      <Gate>
+        <RunProvider>
+          <Shell>
+            <Page />
+          </Shell>
+          <SourceDrawer />
+          <TooltipLayer />
+        </RunProvider>
+      </Gate>
     </DataProvider>
   )
 }

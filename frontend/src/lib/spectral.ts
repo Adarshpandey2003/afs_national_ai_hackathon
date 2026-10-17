@@ -55,3 +55,12 @@ if (import.meta.env.DEV) {
   eq('785 nm excitation', null)
   console.assert(coverage([780, 2500], [350, 2400]) > 0.9 && coverage([2500, 25000], [350, 2400]) === 0, 'coverage')
 }
+
+/** The wavelength window stated for a method in the report's spectral ranges (none for combinations). */
+export function windowFor(method: string, ranges: { method: string; range_text: string }[]): [number, number] | null {
+  const m = method.toLowerCase().trim()
+  if (m.includes('+')) return null
+  const hit = ranges.find((r) => r.method.toLowerCase().trim() === m)
+    ?? ranges.find((r) => { const n = r.method.toLowerCase().trim(); return !n.includes('+') && (n.includes(m) || m.includes(n)) })
+  return hit ? parseRangeNm(hit.range_text) : null
+}

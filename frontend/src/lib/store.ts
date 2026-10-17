@@ -15,5 +15,6 @@ export function createStore<T>(initial: T) {
       subs.forEach((f) => f())
     },
     use: () => useSyncExternalStore(subscribe, () => value),
+    subscribe,
   }
 }

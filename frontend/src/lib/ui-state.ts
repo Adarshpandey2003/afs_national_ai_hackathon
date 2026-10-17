@@ -17,5 +17,9 @@ export function openSource(t: DrawerTarget) {
 }
 export const closeSource = () => drawerStore.set(null)
 
+/** What the reader points at, so the agent log and the answer light up each other's part: "cite:S02:6" or "agent:writer". */
+export const traceStore = createStore<string | null>(null)
+export const citeKey = (c: { source: string; page: number | null }) => `cite:${c.source}:${c.page ?? 'table'}`
+
 /** Text to place in the chat composer on arrival (e.g. "Run this enquiry live" from a report). */
 export const draftStore = createStore<{ text: string; caseId?: string } | null>(null)

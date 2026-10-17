@@ -7,7 +7,6 @@ export type EvidenceLevel =
   | "research_in_vitro_poc"
   | "research_lab_note"
   | "business_context"
-  | "expert_notes"
   | "reference_doc"
   | "external";
 
@@ -105,7 +104,9 @@ export interface AssessmentSnapshot {
 export interface SourceInfo { source_id: SourceId; title: string; file: string; pages: number; evidence_level: EvidenceLevel; description: string; }
 export interface KbPage { source_id: SourceId; page: number; title: string; evidence_level: EvidenceLevel; text: string; }
 
-export interface Health { status: "ok"; version: string; llm_ready: boolean; mock_mode: boolean; }
+export interface Health { status: "ok"; version: string; llm_ready: boolean; mock_mode: boolean; auth_required?: boolean; }
+/** POST /auth/login (see AUTH.md). */
+export interface LoginResult { access_token: string; token_type: string; expires_in?: number; user?: { name: string } }
 export interface OutputSummary { case_id: string; generated_at: string; decision_status: DecisionStatus; }
 export interface Answer { question_id: string; answer: string; }
 

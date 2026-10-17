@@ -1,6 +1,8 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { api } from '../api'
 import type { Case, Health, OutputSummary, SourceInfo } from '../api/types'
+import bundledCases from '../mock/cases.json'
+import { session, setAuthRequired } from './auth'
 import { SOURCES } from './kb'
 
 export type HealthState =
@@ -10,7 +12,6 @@ export type HealthState =
 interface Data {
   health: HealthState
   retryHealth(): void
-  reloadSources(): void
   cases: Case[]
   sources: SourceInfo[]
   outputs: OutputSummary[]
@@ -23,8 +24,8 @@ const WAKE_LIMIT_MS = 90_000
 export function DataProvider({ children }: { children: ReactNode }) {
   const [attempt, setAttempt] = useState(0)
   const [health, setHealth] = useState<HealthState>({ state: 'checking', since: Date.now() })
-  // Bundled source metadata keeps source names usable while a free-tier backend wakes up.
-  const [cases, setCases] = useState<Case[]>([])
+  // Bundled copies keep presets and source names usable while a free-tier backend wakes up.
+  const [cases, setCases] = useState<Case[]>(bundledCases as Case[])
   const [sources, setSources] = useState<SourceInfo[]>(SOURCES)
   const [outputs, setOutputs] = useState<OutputSummary[]>([])
   const [outputsLoaded, setOutputsLoaded] = useState(false)
@@ -38,7 +39,9 @@ export function DataProvider({ children }: { children: ReactNode }) {
     const check = async () => {
       try {
         const h = await api.health()
-        if (!cancelled) setHealth({ state: 'ok', since, health: h })
+        if (cancelled) return
+        setAuthRequired(!!h.auth_required)
+        setHealth({ state: 'ok', since, health: h })
       } catch (e) {
         if (cancelled) return
         const error = e instanceof Error ? e.message : String(e)
@@ -56,18 +59,17 @@ export function DataProvider({ children }: { children: ReactNode }) {
   }, [attempt])
 
   const ready = health.state === 'ok'
+  // Signing in (again) loads what a protected backend refused before.
+  const signedIn = session.use() !== null
   useEffect(() => {
     if (!ready) return
     api.cases().then((c) => c.length && setCases(c), () => {})
     api.sources().then((s) => s.length && setSources(s), () => {})
     api.outputs().then(setOutputs, () => {}).finally(() => setOutputsLoaded(true))
-  }, [ready])
+  }, [ready, signedIn])
 
   const value = useMemo<Data>(
-    () => ({
-      health, retryHealth: () => setAttempt((a) => a + 1), cases, sources, outputs, outputsLoaded,
-      reloadSources: () => { api.sources().then((s) => s.length && setSources(s), () => {}) },
-    }),
+    () => ({ health, retryHealth: () => setAttempt((a) => a + 1), cases, sources, outputs, outputsLoaded }),
     [health, cases, sources, outputs, outputsLoaded],
   )
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>

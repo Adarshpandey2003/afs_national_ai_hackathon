@@ -21,7 +21,9 @@ const str = (v: unknown) => (typeof v === 'string' ? v : '')
 export const citeLabel = (c: Citation) =>
   c.label || (c.source === 'TABLE' ? 'S01 Table 1 (p.6)' : c.page != null ? `${c.source} p.${c.page}` : c.source)
 
-const cites = (v: Citation[] | null | undefined) => arr(v).map((c) => ({ ...c, label: citeLabel(c) }))
+// The spec gives TABLE citations page null; the backend sends 6 (Table 1 sits on S01 p.6).
+const cites = (v: Citation[] | null | undefined) =>
+  arr(v).map((c) => ({ ...c, page: c.source === 'TABLE' ? null : c.page, label: citeLabel(c) }))
 const claims = (v: Claim[] | null | undefined) =>
   arr(v).map((c) => ({ ...c, text: str(c.text), kind: c.kind in KIND ? c.kind : 'inference', citations: cites(c.citations) }))
 
@@ -117,19 +119,22 @@ export function citationIndex(r: Report) {
   return [...map.values()]
 }
 
-/** Inline references like "[S01 p.14–15]" or "[S01 Table 1 (p.6)]" in free text. */
-const INLINE = /\[(S0[1-6]|REF)\b([^\]]*)\]/g
+/** Inline references like "[S01 p.14–15]", "[S01 Table 1 (p.6)]", or several in one: "[S01 p.14, S04 p.1, 3]". */
+const INLINE = /\[(?:S0[1-6]|REF)\b[^\]]*\]/g
 export function splitInlineCitations(text: string): (string | Citation)[] {
   const out: (string | Citation)[] = []
   let last = 0
   for (const m of text.matchAll(INLINE)) {
     out.push(text.slice(last, m.index))
-    const rest = m[2]
-    const page = /p\.\s*(\d+)/.exec(rest)
-    const table = m[1] === 'S01' && /table\s*1/i.test(rest)
-    out.push(table
-      ? { source: 'TABLE', page: null, label: 'S01 Table 1 (p.6)' }
-      : { source: m[1] as Citation['source'], page: page ? Number(page[1]) : null, label: m[0].slice(1, -1) })
+    let source = ''
+    for (const part of m[0].slice(1, -1).split(',').map((p) => p.trim())) {
+      const own = /^(S0[1-6]|REF)\b/.exec(part)?.[1]
+      source = own ?? source // a bare "p.14" or "3" belongs to the source before it
+      const page = /(?:^|p\.\s*)(\d+)/.exec(part)
+      out.push(source === 'S01' && /table\s*1\b/i.test(part)
+        ? { source: 'TABLE', page: null, label: 'S01 Table 1 (p.6)' }
+        : { source: source as Citation['source'], page: page ? Number(page[1]) : null, label: own ? part : /^\d/.test(part) ? `${source} p.${part}` : `${source} ${part}` })
+    }
     last = m.index + m[0].length
   }
   out.push(text.slice(last))
@@ -150,4 +155,6 @@ if (import.meta.env.DEV) {
   console.assert(findQuote('NIR spectra (780–2500 nm) contain', 'spectra (780-2500 nm)') !== null, 'findQuote')
   const parts = splitInlineCitations('Supported [S01 p.14–15] and [S01 Table 1 (p.6)].')
   console.assert(parts.length === 5 && (parts[1] as Citation).page === 14 && (parts[3] as Citation).source === 'TABLE', 'inline citations')
+  const many = splitInlineCitations('[S01 Table 1 (p.6), S02 p.8, p.14] [S04 p.1, 3] [S01 p.16, Table 1 (p.6)]').filter((p) => typeof p !== 'string') as Citation[]
+  console.assert(many.map((c) => `${c.source}${c.page ?? ''}`).join() === 'TABLE,S028,S0214,S041,S043,S0116,TABLE', 'several citations in one bracket')
 }

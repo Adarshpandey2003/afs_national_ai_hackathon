@@ -18,7 +18,7 @@ export function MethodTable({ highlight }: { highlight?: string }) {
   return (
     <div className="overflow-x-auto rounded-lg border border-rule">
       <table className="w-full min-w-[46rem] text-left text-[13px]">
-        <thead className="bg-surface-2 text-[12px] text-ink-3">
+        <thead className="bg-surface-2 text-[13px] text-ink-3">
           <tr>
             {['Method', 'Technique', 'Phenomenon', 'Sample type', 'Optical path', 'Sensitivity', 'Selectivity', 'Cost'].map((h) => (
               <th key={h} scope="col" className="px-3 py-2 font-bold">{h}</th>
@@ -184,11 +184,11 @@ export function SourceDrawer() {
           {page != null && load.status === 'ok' && (
             <>
               {text.trim().length < 160 && target.source === 'S02' && (
-                <p className="mb-4 rounded-lg bg-surface-2 p-3 text-[13.5px] text-ink-2">
+                <p className="mb-4 rounded-lg bg-surface-2 p-3 text-[14px] text-ink-2">
                   The AFS slides are mostly images, so the extracted text is thin.{pdf ? ' Open the original slide to see the figure.' : ''}
                 </p>
               )}
-              <div className="max-w-[65ch] whitespace-pre-wrap text-[14.5px] leading-[1.7] text-ink">
+              <div className="max-w-[65ch] whitespace-pre-wrap text-[15px] leading-[1.7] text-ink">
                 <Highlighted text={text} quote={onCitedPage ? target.quote : undefined} />
               </div>
             </>

@@ -1,8 +1,9 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useRef, useState, type ReactNode } from 'react'
-import { api, ApiError } from '../api'
+import { API_BASE, api, ApiError } from '../api'
 import type {
-  AgentName, AgentStep, Answer, AssessmentSnapshot, ClarificationNeeded, CriticIssue, DecisionStatus, Mode, Question, Report, RunEvent,
+  AgentName, AgentStep, Answer, AssessmentSnapshot, ClarificationNeeded, CriticIssue, Mode, Question, Report, RunEvent,
 } from '../api/types'
+import { session } from './auth'
 import { setQueryParam } from './router'
 import { createStore } from './store'
 
@@ -27,7 +28,10 @@ export interface AnsweredRound { round: number; questions: Question[]; answers: 
 export interface RunState {
   phase: Phase
   threadId?: string
+  /** What the agents received: for a follow-up, the whole conversation so far. */
   enquiry: string
+  /** What the user typed for this question. */
+  message?: string
   mode: Mode
   caseId?: string
   groups: Group[]
@@ -53,7 +57,8 @@ const initial: RunState = {
 }
 
 type Action =
-  | { type: 'start'; enquiry: string; mode: Mode; caseId?: string; restoring?: boolean }
+  | { type: 'start'; enquiry: string; message?: string; mode: Mode; caseId?: string; restoring?: boolean }
+  | { type: 'restore'; state: RunState }
   | { type: 'started'; threadId: string }
   | { type: 'event'; ev: RunEvent; at: number }
   | { type: 'snapshot'; snap: AssessmentSnapshot; restored?: boolean }
@@ -112,7 +117,9 @@ function applyEvent(s: RunState, ev: RunEvent, at: number): RunState {
 function reducer(s: RunState, a: Action): RunState {
   switch (a.type) {
     case 'start':
-      return { ...initial, phase: 'starting', enquiry: a.enquiry, mode: a.mode, caseId: a.caseId, startedAt: Date.now(), restoring: !!a.restoring }
+      return { ...initial, phase: 'starting', enquiry: a.enquiry, message: a.message ?? a.enquiry, mode: a.mode, caseId: a.caseId, startedAt: Date.now(), restoring: !!a.restoring }
+    case 'restore':
+      return settle(a.state)
     case 'started':
       return { ...s, phase: 'running', threadId: a.threadId }
     case 'event':
@@ -157,39 +164,78 @@ function reducer(s: RunState, a: Action): RunState {
 const errorInfo = (e: unknown) =>
   e instanceof ApiError ? { code: e.code, message: e.message } : { code: 'unknown', message: e instanceof Error ? e.message : String(e) }
 
-/* ── Recent runs (sidebar), kept in localStorage. ── */
+/* ── Chats: every question asked in one conversation, kept in this browser with answers and logs so Recent can reopen them. ── */
 
-export interface Recent { threadId: string; enquiry: string; caseId?: string; at: number; status?: DecisionStatus | 'failed' }
+export interface Chat { id: string; at: number; turns: RunState[] }
 
-const RECENTS_KEY = 'recent-runs'
-const readRecents = (): Recent[] => {
+// Mock and real backends keep separate lists, and so does each signed-in person.
+const chatsKey = () => {
+  const id = session.get()?.id
+  return `chats:${API_BASE}${id ? `:${id}` : ''}`
+}
+const readChats = (): Chat[] => {
   try {
-    const v = JSON.parse(localStorage.getItem(RECENTS_KEY) ?? '[]')
+    const v = JSON.parse(localStorage.getItem(chatsKey()) ?? '[]')
     return Array.isArray(v) ? v : []
   } catch {
     return []
   }
 }
-export const recents = createStore<Recent[]>(readRecents())
+export const chats = createStore<Chat[]>(readChats())
+session.subscribe(() => chats.set(readChats()))
 
-function saveRecent(r: Recent) {
-  const next = [r, ...recents.get().filter((x) => x.threadId !== r.threadId)].slice(0, 15)
-  recents.set(next)
-  try {
-    localStorage.setItem(RECENTS_KEY, JSON.stringify(next))
-  } catch { /* storage unavailable: the list lasts for this tab */ }
+function settle(s: RunState): RunState {
+  return { ...s, link: 'idle', submitting: false, answerError: undefined, pending: undefined, restoring: false }
+}
+
+function saveChat(chat: Chat) {
+  let next = [chat, ...chats.get().filter((c) => c.id !== chat.id)].sort((a, b) => b.at - a.at).slice(0, 20)
+  chats.set(next)
+  // Reports are large: when storage is full, drop the oldest chats until the list fits.
+  while (next.length) {
+    try {
+      localStorage.setItem(chatsKey(), JSON.stringify(next))
+      return
+    } catch {
+      next = next.slice(0, -1)
+    }
+  }
+}
+
+/**
+ * The backend assesses one enquiry per run, so a follow-up sends the whole conversation:
+ * the first enquiry, the answers the customer gave, earlier follow-ups, then the new message.
+ */
+export function withContext(turns: RunState[], message: string) {
+  const [first, ...rest] = turns
+  const answered = turns.flatMap((t) => {
+    const asked = [...(t.report?.clarification_questions ?? []), ...t.rounds.flatMap((r) => r.questions)]
+    const given = t.report?.user_answers?.length ? t.report.user_answers : t.rounds.flatMap((r) => r.answers)
+    return given.map((a) => `- ${asked.find((q) => q.question_id === a.question_id)?.text ?? 'Question'} ${a.answer}`)
+  })
+  return [
+    first ? first.message ?? first.enquiry : '',
+    answered.length ? `Answers the customer gave:\n${[...new Set(answered)].join('\n')}` : '',
+    ...rest.map((t) => `Follow-up: ${t.message ?? t.enquiry}`),
+    `Follow-up: ${message}`,
+  ].filter(Boolean).join('\n\n')
 }
 
 export interface Run extends RunState {
-  /** Earlier assessments in this conversation, oldest first. */
+  /** Earlier questions in this chat, oldest first. */
   turns: RunState[]
+  chatId: string | null
   start(enquiry: string, mode: Mode, caseId?: string): void
+  /** Ask more in the same chat; the agents re-assess with everything said so far. */
+  ask(message: string, mode: Mode): void
   submit(answers: Answer[], proceed: boolean): void
   retry(): void
-  /** Start a new, empty conversation. */
+  /** Start a new, empty chat. */
   reset(): void
-  /** Show a run the server still has (from the URL or the recent list). */
+  /** Show a run the server still has (from the URL). */
   open(threadId: string): void
+  /** Reopen a chat from Recent, with its answers and logs. */
+  openChat(id: string): void
 }
 
 const Ctx = createContext<Run | null>(null)
@@ -197,8 +243,12 @@ const Ctx = createContext<Run | null>(null)
 export function RunProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(reducer, initial)
   const [turns, setTurns] = useState<RunState[]>([])
+  const [chatId, setChatId] = useState<string | null>(null)
+  const chat = useRef<string | null>(null)
   const latest = useRef(state)
   latest.current = state
+  const earlier = useRef(turns)
+  earlier.current = turns
   const token = useRef(0)
   const unsubscribe = useRef<() => void>(() => {})
   const poller = useRef<number | undefined>(undefined)
@@ -243,13 +293,17 @@ export function RunProvider({ children }: { children: ReactNode }) {
     )
   }, [close, poll])
 
-  const launch = useCallback(async (enquiry: string, mode: Mode, caseId: string | undefined, keepCurrent: boolean) => {
+  const launch = useCallback(async (enquiry: string, mode: Mode, caseId: string | undefined, keepCurrent: boolean, message = enquiry) => {
     close()
     const previous = latest.current
-    // A finished assessment stays in the conversation above the new one.
+    // A finished assessment stays in the chat above the new one.
     if (keepCurrent && previous.phase !== 'idle' && !previous.restoring) setTurns((t) => [...t, previous])
+    if (!chat.current) {
+      chat.current = `chat-${Date.now().toString(36)}`
+      setChatId(chat.current)
+    }
     const mine = ++token.current
-    dispatch({ type: 'start', enquiry, mode, caseId })
+    dispatch({ type: 'start', enquiry, message, mode, caseId })
     try {
       const r = await api.startAssessment({ enquiry, mode, ...(caseId ? { case_id: caseId } : {}) })
       if (mine !== token.current) return
@@ -263,10 +317,15 @@ export function RunProvider({ children }: { children: ReactNode }) {
 
   const start = useCallback((enquiry: string, mode: Mode, caseId?: string) => void launch(enquiry, mode, caseId, true), [launch])
 
-  // Retrying replaces the failed attempt instead of stacking it in the conversation.
+  const ask = useCallback(
+    (message: string, mode: Mode) => void launch(withContext([...earlier.current, latest.current], message), mode, undefined, true, message),
+    [launch],
+  )
+
+  // Retrying replaces the failed attempt instead of stacking it in the chat.
   const retry = useCallback(() => {
-    const { enquiry, mode, caseId } = latest.current
-    void launch(enquiry, mode, caseId, false)
+    const { enquiry, message, mode, caseId } = latest.current
+    void launch(enquiry, mode, caseId, false, message)
   }, [launch])
 
   const submit = useCallback(async (answers: Answer[], proceed: boolean) => {
@@ -284,6 +343,8 @@ export function RunProvider({ children }: { children: ReactNode }) {
   const reset = useCallback(() => {
     close()
     token.current++
+    chat.current = null
+    setChatId(null)
     setTurns([])
     dispatch({ type: 'reset' })
     setQueryParam('thread', null)
@@ -292,6 +353,8 @@ export function RunProvider({ children }: { children: ReactNode }) {
   const open = useCallback((id: string) => {
     close()
     const mine = ++token.current
+    chat.current = `chat-${id}`
+    setChatId(chat.current)
     setTurns([])
     setQueryParam('thread', id)
     dispatch({ type: 'start', enquiry: '', mode: 'interactive', restoring: true })
@@ -309,26 +372,52 @@ export function RunProvider({ children }: { children: ReactNode }) {
     )
   }, [close, listen])
 
-  // Restore a run from ?thread=… after a reload (frontend.md §5).
+  const openChat = useCallback((id: string) => {
+    const c = chats.get().find((x) => x.id === id)
+    const last = c?.turns.at(-1)
+    if (!c || !last) return
+    close()
+    const mine = ++token.current
+    chat.current = id
+    setChatId(id)
+    setTurns(c.turns.slice(0, -1))
+    dispatch({ type: 'restore', state: last })
+    setQueryParam('thread', last.threadId ?? null)
+    // A question that was still running when the page closed: pick it up again if the server still has it.
+    const tid = last.threadId
+    if (!tid || finished(last.phase)) return
+    api.snapshot(tid).then(
+      (snap) => {
+        if (mine !== token.current) return
+        dispatch({ type: 'snapshot', snap })
+        if (!finished(snap.status)) listen(tid)
+      },
+      (e) => mine === token.current && dispatch({ type: 'fail', ...errorInfo(e) }),
+    )
+  }, [close, listen])
+
+  // Restore from ?thread=… after a reload (frontend.md §5): from the stored chat when there is one, else from the server.
   useEffect(() => {
     const id = new URLSearchParams(location.search).get('thread')
-    if (id) open(id)
+    const c = id ? chats.get().find((x) => x.turns.some((t) => t.threadId === id)) : undefined
+    if (c) openChat(c.id)
+    else if (id) open(id)
     return close
-  }, [open, close])
+  }, [open, openChat, close])
 
-  // Keep the sidebar's recent list in step with the active run.
-  const { threadId, enquiry, caseId, startedAt, report, phase } = state
+  // Keep the chat in Recent in step with its questions.
+  const { threadId, phase, report, rounds, endedAt } = state
   useEffect(() => {
-    if (!threadId || !enquiry) return
-    saveRecent({
-      threadId, enquiry, caseId: caseId ?? report?.case_id, at: startedAt ?? Date.now(),
-      status: report?.decision_status ?? (phase === 'failed' ? 'failed' : undefined),
-    })
-  }, [threadId, enquiry, caseId, startedAt, report, phase])
+    const id = chat.current
+    const current = latest.current
+    if (!id || !current.threadId) return
+    const all = [...turns, current].map(settle)
+    saveChat({ id, at: Math.max(...all.map((t) => t.endedAt ?? t.startedAt ?? 0)), turns: all })
+  }, [turns, threadId, phase, report, rounds, endedAt])
 
   const value = useMemo<Run>(
-    () => ({ ...state, turns, start, submit, retry, reset, open }),
-    [state, turns, start, submit, retry, reset, open],
+    () => ({ ...state, turns, chatId, start, ask, submit, retry, reset, open, openChat }),
+    [state, turns, chatId, start, ask, submit, retry, reset, open, openChat],
   )
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>
 }

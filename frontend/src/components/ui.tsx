@@ -7,7 +7,7 @@ import {
 import type { AgentName, Citation, Claim, DecisionStatus, EvidenceLevel, Question } from '../api/types'
 import { EVIDENCE, pageTopic, sourceMeta } from '../lib/kb'
 import { KIND, STATUS, citeLabel, splitInlineCitations } from '../lib/report'
-import { openSource, tipStore, tooltip } from '../lib/ui-state'
+import { citeKey, openSource, tipStore, tooltip, traceStore } from '../lib/ui-state'
 
 export const cn = (...c: (string | false | null | undefined)[]) => c.filter(Boolean).join(' ')
 
@@ -61,7 +61,7 @@ const TONE = {
 
 export function EvidenceTag({ level }: { level: EvidenceLevel }) {
   const e = EVIDENCE[level] ?? { label: level, tone: 'neutral' as const }
-  return <span className={cn('inline-flex items-center rounded px-1.5 py-0.5 text-[11.5px] font-bold', TONE[e.tone])}>{e.label}</span>
+  return <span className={cn('inline-flex items-center rounded px-1.5 py-0.5 text-[12px] font-bold', TONE[e.tone])}>{e.label}</span>
 }
 
 export const Empty = ({ children = 'None stated' }: { children?: ReactNode }) => (
@@ -84,7 +84,7 @@ function CitePreview({ c }: { c: Citation }) {
       </p>
       {level && <EvidenceTag level={level} />}
       {c.quote && <blockquote className="border-l-2 border-sourced pl-2 text-[13px] italic leading-snug text-ink">“{c.quote}”</blockquote>}
-      <p className="text-[12px] text-ink-3">{c.source === 'EXT' ? 'Opens the external page' : 'Click to read the page'}</p>
+      <p className="text-[13px] text-ink-3">{c.source === 'EXT' ? 'Opens the external page' : 'Click to read the page'}</p>
     </div>
   )
 }
@@ -92,8 +92,15 @@ function CitePreview({ c }: { c: Citation }) {
 export function CitationChip({ c }: { c: Citation }) {
   const label = citeLabel(c)
   const level = c.source === 'EXT' ? 'external' : sourceMeta(c.source)?.evidence_level
-  const show = (e: MouseEvent | FocusEvent) => tooltip.show(e.currentTarget, <CitePreview c={c} />)
-  const events = { onMouseEnter: show, onFocus: show, onMouseLeave: tooltip.hide, onBlur: tooltip.hide }
+  const show = (e: MouseEvent | FocusEvent) => {
+    tooltip.show(e.currentTarget, <CitePreview c={c} />)
+    traceStore.set(citeKey(c))
+  }
+  const hide = () => {
+    tooltip.hide()
+    traceStore.set(null)
+  }
+  const events = { onMouseEnter: show, onFocus: show, onMouseLeave: hide, onBlur: hide }
   if (c.source === 'EXT' && c.url) {
     return (
       <a className="cite" data-tone="ext" href={c.url} target="_blank" rel="noopener noreferrer" {...events}>
@@ -151,7 +158,7 @@ const AFFECTS: Record<Question['affects'], string> = {
 export function PriorityTag({ p }: { p: Question['priority'] }) {
   return (
     <span className={cn(
-      'inline-flex items-center rounded px-1.5 py-0.5 text-[11.5px] font-bold',
+      'inline-flex items-center rounded px-1.5 py-0.5 text-[12px] font-bold',
       p === 1 ? 'bg-clarifier text-surface' : p === 2 ? 'border border-clarifier/50 text-clarifier' : 'bg-surface-3 text-ink-3',
     )}>
       P{p}
@@ -160,7 +167,7 @@ export function PriorityTag({ p }: { p: Question['priority'] }) {
 }
 
 export const AffectsTag = ({ affects }: { affects: Question['affects'] }) => (
-  <span className="text-[12.5px] font-semibold text-ink-3">{AFFECTS[affects] ?? affects}</span>
+  <span className="text-[13px] font-semibold text-ink-3">{AFFECTS[affects] ?? affects}</span>
 )
 
 export function Rating({ value }: { value: string }) {

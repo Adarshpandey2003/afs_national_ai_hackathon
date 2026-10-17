@@ -19,7 +19,6 @@ export const EVIDENCE: Record<EvidenceLevel, { label: string; tone: 'info' | 'wa
   research_in_vitro_poc: { label: 'In vitro proof of concept', tone: 'warn' },
   research_lab_note: { label: 'Lab research note', tone: 'neutral' },
   business_context: { label: 'Business context', tone: 'muted' },
-  expert_notes: { label: 'AFS expert notes', tone: 'neutral' },
   reference_doc: { label: 'Reference document', tone: 'neutral' },
   external: { label: 'External source', tone: 'ext' },
 }
@@ -83,4 +82,29 @@ export function pdfUrl(sourceId: string, page: number | null) {
   const meta = sourceMeta(sourceId)
   if (!MATERIALS || !meta?.file.endsWith('.pdf')) return null
   return `${MATERIALS.replace(/\/?$/, '/')}${meta.file}${page ? `#page=${page}` : ''}`
+}
+
+const FIBER_WORDS: [RegExp, string][] = [
+  [/hollow|\bHWG\b/i, 'Hollow waveguide (HWG)'],
+  [/chalcogenide|\bCIR\b/i, 'Chalcogenide (CIR)'],
+  [/polycrystalline|\bPIR\b|silver.?halide/i, 'Polycrystalline (PIR)'],
+  [/indium fluoride|\bInF/i, 'Indium fluoride'],
+  [/zirconium fluoride|\bZrF|ZBLAN/i, 'Zirconium fluoride'],
+  [/UV.?Vis(ible)?\s+silica/i, 'UV-Vis silica'],
+]
+
+/** Fiber families named in free text, in the order of the S02 p.6 figure. Plain "silica" means Vis-NIR silica. */
+export function detectFibers(text: string): FiberFamily[] {
+  const names = new Set(FIBER_WORDS.filter(([re]) => re.test(text)).map(([, n]) => n))
+  const silica = (text.match(/silica/gi) ?? []).length
+  const uvSilica = (text.match(/UV.?Vis(ible)?\s+silica/gi) ?? []).length
+  if (silica > uvSilica) names.add('Vis-NIR silica')
+  return FIBERS.filter((f) => names.has(f.name))
+}
+
+if (import.meta.env.DEV) {
+  const names = (t: string) => detectFibers(t).map((f) => f.name).join(',')
+  console.assert(names('reuse the existing silica fiber cable') === 'Vis-NIR silica', 'detectFibers silica')
+  console.assert(names('an IR fiber such as chalcogenide or PIR') === 'Chalcogenide (CIR),Polycrystalline (PIR)', 'detectFibers IR')
+  console.assert(names('UV-Vis silica fibers only') === 'UV-Vis silica', 'detectFibers UV silica')
 }

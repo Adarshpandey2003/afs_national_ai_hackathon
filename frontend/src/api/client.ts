@@ -1,6 +1,7 @@
+import { currentToken } from '../lib/auth'
 import {
   EVENT_TYPES,
-  type Answer, type AssessmentSnapshot, type Case, type Health, type KbPage, type Mode,
+  type Answer, type AssessmentSnapshot, type Case, type Health, type KbPage, type LoginResult, type Mode,
   type OutputSummary, type Report, type RunEvent, type RunStatus, type SourceId, type SourceInfo,
 } from './types'
 
@@ -19,6 +20,7 @@ export type StreamTrouble = (failures: number, closed: boolean) => void
 
 export interface Api {
   health(): Promise<Health>
+  login(body: { username: string; password: string }): Promise<LoginResult>
   cases(): Promise<Case[]>
   startAssessment(body: { enquiry: string; mode: Mode; case_id?: string }): Promise<{ thread_id: string; status: RunStatus }>
   answer(threadId: string, body: { answers: Answer[]; proceed_with_assumptions: boolean }): Promise<{ thread_id: string; status: RunStatus }>
@@ -29,16 +31,20 @@ export interface Api {
   page(sourceId: SourceId, page: number): Promise<KbPage>
   outputs(): Promise<OutputSummary[]>
   output(caseId: string): Promise<Report>
-  addDocument(form: FormData): Promise<SourceInfo>
 }
 
 export function realApi(base: string): Api {
   async function request<T>(path: string, init?: RequestInit, as: 'json' | 'text' = 'json'): Promise<T> {
     let res: Response
+    const token = currentToken()
     try {
       res = await fetch(base + path, {
         ...init,
-        headers: { Accept: as === 'json' ? 'application/json' : 'text/markdown', ...(typeof init?.body === 'string' ? { 'Content-Type': 'application/json' } : {}) },
+        headers: {
+          Accept: as === 'json' ? 'application/json' : 'text/markdown',
+          ...(init?.body ? { 'Content-Type': 'application/json' } : {}),
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
       })
     } catch {
       throw new ApiError(0, 'network', 'Cannot reach the backend. It may still be waking up, or the URL or CORS settings are wrong.')
@@ -48,10 +54,12 @@ export function realApi(base: string): Api {
       let message = res.statusText || 'Request failed'
       try {
         const body = await res.json()
-        if (body?.error) {
-          code = body.error.code ?? code
-          message = body.error.message ?? message
-        } else if (body?.detail) message = typeof body.detail === 'string' ? body.detail : 'The request was not valid.'
+        // FastAPI's HTTPException nests the spec's error object under "detail"; its own 422 sends a list there.
+        const error = body?.error ?? body?.detail?.error
+        if (error) {
+          code = error.code ?? code
+          message = error.message ?? message
+        } else if (body?.detail) message = typeof body.detail === 'string' ? body.detail : body.detail[0]?.msg ?? 'The request was not valid.'
       } catch { /* non-JSON error body */ }
       throw new ApiError(res.status, code, message)
     }
@@ -62,6 +70,7 @@ export function realApi(base: string): Api {
 
   return {
     health: () => request('/health'),
+    login: (body) => request('/auth/login', post(body)),
     cases: () => request('/cases'),
     startAssessment: (body) => request('/assessments', post(body)),
     answer: (t, body) => request(`/assessments/${id(t)}/answers`, post(body)),
@@ -70,11 +79,12 @@ export function realApi(base: string): Api {
     sources: () => request('/kb/sources'),
     page: (s, p) => request(`/kb/${id(s)}/pages/${p}`),
     outputs: () => request('/outputs'),
-    addDocument: (form) => request('/kb/documents', { method: 'POST', body: form }),
     output: (c) => request(`/outputs/${id(c)}`),
 
     subscribe(threadId, onEvent, onTrouble) {
-      const es = new EventSource(`${base}/assessments/${id(threadId)}/events`)
+      // EventSource cannot send headers, so the token rides in the query string (AUTH.md).
+      const token = currentToken()
+      const es = new EventSource(`${base}/assessments/${id(threadId)}/events${token ? `?access_token=${id(token)}` : ''}`)
       const seen = new Set<string>()
       let failures = 0
       const deliver = (type: RunEvent['type'], ev: MessageEvent) => {

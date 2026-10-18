@@ -17,12 +17,12 @@
 >
 > | Case | Enquiry | Decision status | Key point | Answer |
 > |---|---|---|---|---|
-> | H01 | New API blend at the tablet-press feed frame | Provisional | "Reuse the old NIR calibration" and "adding Raman keeps it valid": both refuted | [H01.md](outputs/H01.md) · [json](outputs/H01.json) |
-> | H02 | Clear whey and opaque milk concentrate | Provisional | Two different streams need different measurement interfaces, compared against lab protein and fat | [H02.md](outputs/H02.md) · [json](outputs/H02.json) |
-> | H03 | Fluorescence for glucose and viable biomass | Provisional | "Fluorescence is very sensitive, so it fits": refuted, because sensitivity is not selectivity and no fluorescent target has been identified | [H03.md](outputs/H03.md) · [json](outputs/H03.json) |
-> | H04 | MIR ATR for water in a petroleum line | Outside supported scope | "Reuse the silica fiber for MIR ATR": refuted; the request to approve the concept can't be granted | [H04.md](outputs/H04.md) · [json](outputs/H04.json) |
-> | H05 | Off-spec liquid, unknown contaminant | Insufficient information | "Give the exact sensor configuration now": refuted; it asks the deciding questions and proposes a scoping experiment first | [H05.md](outputs/H05.md) · [json](outputs/H05.json) |
-> | H06 | In vitro kidney study used as proof for surgery | Outside supported scope | "Quote the study as proof of surgical readiness": refuted | [H06.md](outputs/H06.md) · [json](outputs/H06.json) |
+> | H01 | New API blend at the tablet-press feed frame | Provisional | "Reuse the old NIR calibration" and "adding Raman keeps it valid": both refuted | [H01.md](outputs/H01.md) |
+> | H02 | Clear whey and opaque milk concentrate | Provisional | Two different streams need different measurement interfaces, compared against lab protein and fat | [H02.md](outputs/H02.md) |
+> | H03 | Fluorescence for glucose and viable biomass | Provisional | "Fluorescence is very sensitive, so it fits": refuted, because sensitivity is not selectivity and no fluorescent target has been identified | [H03.md](outputs/H03.md) |
+> | H04 | MIR ATR for water in a petroleum line | Outside supported scope | "Reuse the silica fiber for MIR ATR": refuted; the request to approve the concept can't be granted | [H04.md](outputs/H04.md) |
+> | H05 | Off-spec liquid, unknown contaminant | Insufficient information | "Give the exact sensor configuration now": refuted; it asks the deciding questions and proposes a scoping experiment first | [H05.md](outputs/H05.md) |
+> | H06 | In vitro kidney study used as proof for surgery | Outside supported scope | "Quote the study as proof of surgical readiness": refuted | [H06.md](outputs/H06.md) |
 >
 > Each report ends with its critic checks: citations valid, numbers supported, sections complete, premises addressed, expert review. [outputs/EVAL.md](outputs/EVAL.md) summarises grounding and verification across all 14 reports. To regenerate them, see [Generating the H01–H06 answers](#generating-the-h01h06-answers).
 
@@ -37,7 +37,7 @@
 | Instructions for loading the supplied AFS materials | [2. Knowledge base](#2-knowledge-base) |
 | Short description of the system architecture | [Architecture](#architecture) |
 | How the assistant uses the AFS knowledge base | [How the AFS materials are used](#how-the-afs-materials-are-used) |
-| Assistant-generated answers for H01–H06 | [outputs/](outputs/): `H01.md` … `H06.md` (readable) and `H01.json` … `H06.json` (full structured report) |
+| Assistant-generated answers for H01–H06 | [outputs/](outputs/): `H01.md` … `H06.md`, with an index of which section covers each required item. D01–D08 there are the development test cases. |
 
 ---
 

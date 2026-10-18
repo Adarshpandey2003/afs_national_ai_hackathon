@@ -73,6 +73,14 @@ export function SignIn() {
           {waking && <p className="text-center text-[13px] text-ink-3">The server is waking up. The first sign-in can take up to a minute.</p>}
         </form>
 
+        {!MOCK && (
+          <p className="mt-4 text-center text-[13px] leading-relaxed text-ink-3">
+            Jury and reviewers: the username and password are in the{' '}
+            <a href="https://github.com/Adarshpandey2003/afs_national_ai_hackathon#for-the-jury" target="_blank" rel="noreferrer"
+              className="font-semibold text-ink-2 underline underline-offset-2">GitHub README</a>.
+          </p>
+        )}
+
         {MOCK && (
           <p className="mt-4 text-center text-[13px] leading-relaxed text-ink-3">
             Mock mode: sign in with a demo account from <code className="font-mono">src/mock/users.json</code>, for example{' '}

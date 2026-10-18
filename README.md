@@ -8,6 +8,10 @@
 > [!IMPORTANT]
 > **Live app: [afsnationalaihackathon.vercel.app](https://afsnationalaihackathon.vercel.app/)**
 >
+> **Backend API (Render): [afs-national-ai-hackathon.onrender.com](https://afs-national-ai-hackathon.onrender.com/health)** · [interactive API docs](https://afs-national-ai-hackathon.onrender.com/docs)
+>
+> **Presentation slides (PDF): [docs/AFS_Spectroscopy_Assistant_Pitch.pdf](docs/AFS_Spectroscopy_Assistant_Pitch.pdf)**
+>
 > **Username:** `admin`  **Password:** `12345678`
 >
 > If the backend has been idle, the first sign-in can take up to a minute while the server wakes up.
@@ -37,6 +41,7 @@
 | Instructions for loading the supplied AFS materials | [2. Knowledge base](#2-knowledge-base) |
 | Short description of the system architecture | [Architecture](#architecture) |
 | How the assistant uses the AFS knowledge base | [How the AFS materials are used](#how-the-afs-materials-are-used) |
+| Presentation slides (PDF) | [docs/AFS_Spectroscopy_Assistant_Pitch.pdf](docs/AFS_Spectroscopy_Assistant_Pitch.pdf): approach, architecture, use of the AFS materials, an example recommendation with its feasibility plan, limitations |
 | Assistant-generated answers for H01–H06 | [outputs/](outputs/): `H01.md` … `H06.md`, with an index of which section covers each required item. D01–D08 there are the development test cases. |
 
 ---
@@ -193,6 +198,7 @@ The vision transcriptions are cached in `kb/ocr_cache/` and committed. A rebuild
 │   ├── pages.jsonl  chunks.jsonl  sources.json  methods.json  fibers.json  cases.json
 │   ├── reference/             challenge brief, answer guidelines, worked examples
 │   └── raw/                   supplied materials (git-ignored, see Setup)
+├── docs/                      presentation slides (PDF)
 ├── frontend/                  React + Vite UI (see frontend/README.md and frontend/AUTH.md)
 └── outputs/                   generated reports (H01–H06, D01–D08) and EVAL.md, never edited by hand
 ```
@@ -381,7 +387,7 @@ Frontend: `npm run typecheck` and `npm run build` in `frontend/`.
 
 The live app runs as follows:
 - **Frontend:** Vercel ([afsnationalaihackathon.vercel.app](https://afsnationalaihackathon.vercel.app/)). Project root `frontend`, build `npm run build`, output `dist`, and `VITE_API_BASE_URL` set to the backend URL. `vercel.json` contains the SPA rewrite.
-- **Backend:** Render, as a Python web service with root directory `backend`.
+- **Backend:** Render ([afs-national-ai-hackathon.onrender.com](https://afs-national-ai-hackathon.onrender.com/health), API docs at [/docs](https://afs-national-ai-hackathon.onrender.com/docs)), as a Python web service with root directory `backend`.
   - Build: `pip install -r requirements.txt && python ../kb/build_index.py`.
   - Start: `uvicorn api:app --host 0.0.0.0 --port $PORT`.
   - Set the variables from the table above, with `CORS_ORIGINS` set to the Vercel URL.

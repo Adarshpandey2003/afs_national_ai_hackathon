@@ -1,6 +1,6 @@
 # AFS Spectroscopy Assistant — frontend
 
-React + Vite + TypeScript + Tailwind UI for the AFS in-line spectroscopy assistant. It implements the contract in `frontend.md` (routes, SSE events, `Report` types) and runs against the real backend or a built-in mock.
+React + Vite + TypeScript + Tailwind UI for the AFS in-line spectroscopy assistant. It implements the contract in `frontend.md` (routes, SSE events, `Report` types) and runs against the real backend or a built-in mock
 
 ## Run it
 

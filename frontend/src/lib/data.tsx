@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
-import { api } from '../api'
+import { MOCK, api } from '../api'
 import type { Case, Health, OutputSummary, SourceInfo } from '../api/types'
 import bundledCases from '../mock/cases.json'
 import { session, setAuthRequired } from './auth'
@@ -22,6 +22,8 @@ interface Data {
 
 const Ctx = createContext<Data | null>(null)
 const WAKE_LIMIT_MS = 90_000
+/** Free-tier hosts (Render) put the backend to sleep after 15 minutes without traffic; a ping every 10 keeps it awake. */
+const KEEP_ALIVE_MS = 10 * 60_000
 
 export function DataProvider({ children }: { children: ReactNode }) {
   const [attempt, setAttempt] = useState(0)
@@ -61,6 +63,13 @@ export function DataProvider({ children }: { children: ReactNode }) {
   }, [attempt])
 
   const ready = health.state === 'ok'
+
+  // Keep the backend awake while the app is open, so the next assessment does not wait for a cold start.
+  useEffect(() => {
+    if (MOCK || !ready) return
+    const timer = window.setInterval(() => { api.health().catch(() => { /* the next ping or a request retries */ }) }, KEEP_ALIVE_MS)
+    return () => clearInterval(timer)
+  }, [ready])
   // Signing in (again) loads what a protected backend refused before.
   const signedIn = session.use() !== null
   useEffect(() => {

@@ -71,10 +71,17 @@ class _Embedder:
         return vectors
 
 
+@lru_cache(maxsize=None)
+def get_embedder(model_name: str) -> _Embedder:
+    """One embedding model per process. It is the largest object in memory (~120-160 MB), so the retriever, uploads
+    and index builds share it; loading a second copy during an upload overflowed a 512 MB host."""
+    return _Embedder(model_name)
+
+
 def build_index(kb: KnowledgeBase, index_dir: Path = INDEX_DIR) -> int:
     """Embed every chunk and write a cosine-similarity FAISS index plus the chunk order."""
     index_dir.mkdir(parents=True, exist_ok=True)
-    vectors = _Embedder().passages([embedding_text(c) for c in kb.chunks])
+    vectors = get_embedder(EMBED_MODEL).passages([embedding_text(c) for c in kb.chunks])
     index = faiss.IndexFlatIP(vectors.shape[1])
     index.add(vectors)
     faiss.write_index(index, str(index_dir / "chunks.faiss"))
@@ -87,7 +94,7 @@ def add_to_index(chunks: list[dict], index_dir: Path = INDEX_DIR) -> int:
     """Embed only the new chunks and append them to the existing index (incremental; no full rebuild)."""
     meta = _read_json(index_dir / "meta.json")
     index = faiss.read_index(str(index_dir / "chunks.faiss"))
-    index.add(_Embedder(meta["embed_model"]).passages([embedding_text(c) for c in chunks]))
+    index.add(get_embedder(meta["embed_model"]).passages([embedding_text(c) for c in chunks]))
     faiss.write_index(index, str(index_dir / "chunks.faiss"))
     meta["chunk_ids"] += [c["chunk_id"] for c in chunks]
     (index_dir / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
@@ -117,7 +124,7 @@ class HybridRetriever:
             raise RuntimeError("kb/index is out of date with kb/chunks.jsonl; run kb/build_index.py")
         self.chunks = [by_id[cid] for cid in meta["chunk_ids"]]
         self.index = faiss.read_index(str(index_dir / "chunks.faiss"))
-        self.embedder = _Embedder(meta["embed_model"])
+        self.embedder = get_embedder(meta["embed_model"])
         self.bm25 = BM25Okapi([tokenize(embedding_text(c)) for c in self.chunks])
 
     def search(self, query: str, k: int = 6, sources: list[str] | None = None,

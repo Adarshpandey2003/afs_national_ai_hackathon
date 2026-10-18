@@ -12,17 +12,17 @@
 | D06 | provisional | 33 | 7 / 17 / 9 / 0 | 79% | 76 / 0 | yes | 0 | 3 | pass | 0 | 173 s |
 | D07 | provisional | 31 | 7 / 18 / 5 / 1 | 74% | 66 / 3 | yes | 0 | 3 | pass | 0 | 193 s |
 | D08 | provisional | 24 | 8 / 15 / 1 / 0 | 67% | 66 / 0 | yes | 0 | 4 | pass | 0 | 148 s |
-| H01 | provisional | 28 | 7 / 14 / 5 / 2 | 68% | 40 / 0 | yes | 0 | 3 | pass | 0 | 162 s |
-| H02 | provisional | 25 | 5 / 14 / 6 / 0 | 80% | 60 / 0 | yes | 0 | 3 | pass | 0 | 295 s |
-| H03 | outside_supported_scope | 30 | 6 / 14 / 9 / 1 | 77% | 65 / 0 | yes | 0 | 4 | pass | 0 | 294 s |
-| H04 | outside_supported_scope | 26 | 7 / 11 / 8 / 0 | 69% | 57 / 0 | yes | 0 | 4 | pass | 0 | 255 s |
-| H05 | outside_supported_scope | 30 | 6 / 19 / 5 / 0 | 70% | 54 / 0 | yes | 0 | 4 | pass | 0 | 157 s |
-| H06 | outside_supported_scope | 23 | 6 / 11 / 6 / 0 | 70% | 37 / 0 | yes | 0 | 3 | pass | 0 | 143 s |
+| H01 | provisional | 29 | 6 / 13 / 10 / 0 | 66% | 43 / 0 | yes | 0 | 2 | pass | 0 | 133 s |
+| H02 | provisional | 27 | 5 / 18 / 3 / 1 | 74% | 51 / 0 | yes | 0 | 3 | pass | 0 | 138 s |
+| H03 | provisional | 26 | 4 / 15 / 4 / 3 | 73% | 49 / 0 | yes | 0 | 3 | pass | 0 | 139 s |
+| H04 | outside_supported_scope | 29 | 9 / 17 / 2 / 1 | 59% | 49 / 0 | yes | 0 | 4 | pass | 0 | 143 s |
+| H05 | insufficient_information | 21 | 6 / 10 / 4 / 1 | 52% | 35 / 0 | yes | 0 | 2 | pass | 0 | 112 s |
+| H06 | outside_supported_scope | 28 | 6 / 15 / 7 / 0 | 61% | 44 / 0 | yes | 0 | 2 | pass | 0 | 143 s |
 
 ## Totals
 
 - Reports passing all checks: **14 / 14**
-- Claims: 382, of which 71% carry a citation (the rest are client facts, inferences or labelled assumptions)
-- Citations: 770 to AFS pages, 4 to external papers (quote-verified)
-- Client premises given an explicit verdict: 47
+- Claims: 380, of which 68% carry a citation (the rest are client facts, inferences or labelled assumptions)
+- Citations: 728 to AFS pages, 4 to external papers (quote-verified)
+- Client premises given an explicit verdict: 42
 - Writer revisions needed: 0

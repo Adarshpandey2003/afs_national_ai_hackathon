@@ -56,3 +56,6 @@ code_explainer.md
 understand_arc.md
 frontend.md
 frontend/frontend.md
+
+# Claude Code local settings
+.claude/

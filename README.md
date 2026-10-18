@@ -44,7 +44,7 @@ The assistant does not replace the expert. Its output is built to be reviewed: e
    interactive:  │      │    get_page
    questions ────┘      │    method_table
    ↔ user answers       │    fiber_check
-   (≤ 3 rounds)         │         │
+   (1 round, ≤ 3 Qs)    │         │
                         │         ▼
                         │   evidence pack: every page the tools returned
                         │   (the only pages the writer may cite)
@@ -52,7 +52,7 @@ The assistant does not replace the expert. Its output is built to be reviewed: e
 
 | Agent | Model | What it does |
 |---|---|---|
-| **1. Clarifier** | `deepseek-flash` | Extracts stated facts, requested variables, **client premises to check**, key unknowns, prioritised questions (P1 = could change method or setup), working assumptions and scope concerns. **Interactive mode:** pauses and asks the user, up to 3 rounds, until no P1 question is open, or the user clicks *Proceed with assumptions*. **Batch mode:** one pass; open questions and assumptions go into the report. It never invents answers. |
+| **1. Clarifier** | `deepseek-flash` | Extracts stated facts, requested variables, **client premises to check**, key unknowns, prioritised questions (P1 = could change method or setup), working assumptions and scope concerns. **Interactive mode:** pauses once and asks the user its 3 most decisive questions (or the user clicks *Proceed with assumptions*), then folds the answers in. **Batch mode:** one pass; open questions and assumptions go into the report. It never invents answers. |
 | **2. Researcher** | `deepseek-flash`, reasoning off, ReAct (`langchain.agents.create_agent`) | Calls the knowledge-base tools to cover every requested variable and every client premise, with at most 12 tool calls (`ToolCallLimitMiddleware`). It ends with research notes: candidate methods, premise verdicts, spectral ranges and fiber link, limitations, evidence gaps. Every tool call is streamed to the UI. |
 | **3a. Writer** | `deepseek-v4-pro`, reasoning on | Writes the structured report (`ReportBody` Pydantic schema) from the intake, the research notes and the evidence pack. Its prompt includes the organisers' answer guidelines and the worked D01/D02 examples. |
 | **3b. Critic** | code checks + `deepseek-v4-pro`, reasoning off | **Deterministic checks:** every citation points to a page in the evidence pack; every number with a unit appears in the sources or the client's text; all sections are present; every client premise has a verdict. **LLM review against the jury criteria:** citation scope, invented facts, premise verdicts, decision status, question quality, plan practicality. If any *error* remains, the writer revises, up to `MAX_REVISIONS` (default 2). |
@@ -129,7 +129,6 @@ The vision transcriptions are cached in `kb/ocr_cache/` and committed. A rebuild
 │   └── raw/                   supplied materials (git-ignored, see Setup)
 ├── frontend/                  React + Vite UI (see frontend/README.md)
 ├── outputs/                   generated reports (H01–H06 etc.), never edited by hand
-├── frontend.md                API contract between backend and frontend
 └── plan.md                    project plan
 ```
 
@@ -183,6 +182,11 @@ backend\.venv\Scripts\python kb\build_index.py
 - CLI: `backend\.venv\Scripts\python kb\ingest.py notes.md --title "AFS notes: …" --evidence-level expert_notes`.
 
 The source list (title, evidence level, scope note, OCR mode) lives in [kb/sources.yaml](kb/sources.yaml).
+
+**Removing an added document** (S07 onwards; the supplied S01–S06 are protected) also works without a rebuild. Its pages, chunks, index vectors, raw file and OCR cache are deleted, and a `# removed: S07` line stays in `sources.yaml`, so its ID is never reused for another document. There are three ways:
+- UI: *Knowledge base → Remove from knowledge base*;
+- API: `DELETE /kb/sources/{source_id}`;
+- CLI: `backend\.venv\Scripts\python kb\ingest.py --remove S07`.
 
 ### 3. Frontend
 
@@ -240,7 +244,7 @@ After a batch, [`outputs/EVAL.md`](outputs/EVAL.md) summarises grounding and ver
 
 ## API
 
-Full contract: [`frontend.md`](frontend.md). Interactive docs: `http://localhost:8000/docs`.
+Full, interactive contract (all routes and schemas): `http://localhost:8000/docs` (OpenAPI JSON at `/openapi.json`).
 
 | Method | Path | Purpose |
 |---|---|---|
